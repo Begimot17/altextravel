@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AtexTravel.API.Commands;
-using AtexTravel.API.Queries;
-using Microsoft.AspNetCore.Http;
+﻿using AltexTravel.API.Commands;
+using AltexTravel.API.Queries;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace AltexTravel.API.Controllers
 {
