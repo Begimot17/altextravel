@@ -1,7 +1,7 @@
-﻿using AltexTravel.API.DAL.Queries.Features.User;
+﻿using AltexTravel.API.DAL.Queries.Features.Users;
 using FluentValidation;
 
-namespace AltexTravel.API.Models
+namespace AltexTravel.API.DAL.QueryHandlers.Features.Users
 {
     public class UserValidator : AbstractValidator<UserQuery>
     {

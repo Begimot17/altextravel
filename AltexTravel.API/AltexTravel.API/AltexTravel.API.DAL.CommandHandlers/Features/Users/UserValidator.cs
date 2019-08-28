@@ -1,7 +1,7 @@
-﻿using AltexTravel.API.DAL.Commands.Features.User;
+﻿using AltexTravel.API.DAL.Commands.Features.Users;
 using FluentValidation;
 
-namespace AltexTravel.API.DAL.CommandHandlers.Features.User
+namespace AltexTravel.API.DAL.CommandHandlers.Features.Users
 {
     public class UserValidator : AbstractValidator<UserCommand>
     {

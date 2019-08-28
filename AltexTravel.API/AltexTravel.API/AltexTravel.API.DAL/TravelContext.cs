@@ -1,4 +1,4 @@
-﻿using AltexTravel.API.DAL.Features.User;
+﻿using AltexTravel.API.DAL.Features.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace AltexTravel.API.DAL

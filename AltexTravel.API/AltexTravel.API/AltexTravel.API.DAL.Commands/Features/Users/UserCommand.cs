@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace AltexTravel.API.DAL.Commands.Features.User
+namespace AltexTravel.API.DAL.Commands.Features.Users
 {
     public class UserCommand : IRequest<bool>
     {

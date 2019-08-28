@@ -1,4 +1,4 @@
-﻿namespace AltexTravel.API.DAL.Queries.Features.User
+﻿namespace AltexTravel.API.DAL.Queries.Features.Users
 {
     public class UserQuery
     {
