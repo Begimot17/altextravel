@@ -1,4 +1,4 @@
-﻿namespace AltexTravel.API.Dtos.User
+﻿namespace AltexTravel.API.Dtos.Features.User
 {
     public class UserDto
     {

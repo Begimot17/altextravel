@@ -1,8 +1,9 @@
-﻿namespace AltexTravel.API.DAL.Commands.Models
+﻿namespace AltexTravel.API.DAL.Features.User
 {
-    public class UserCommand
+    public class User
     {
         public string Id { get; set; }
         public string Name { get; set; }
+
     }
 }

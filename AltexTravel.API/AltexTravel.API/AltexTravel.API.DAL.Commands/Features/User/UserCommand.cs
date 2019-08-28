@@ -1,6 +1,6 @@
-﻿namespace AltexTravel.API.Domain.Models
+﻿namespace AltexTravel.API.DAL.Commands.Features.User
 {
-    public class UserDomain
+    public class UserCommand
     {
         public string Id { get; set; }
         public string Name { get; set; }

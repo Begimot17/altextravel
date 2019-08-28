@@ -1,11 +1,11 @@
 ﻿using AltexTravel.API.DAL.Entity;
-using AltexTravel.API.Domain.Models;
+using AltexTravel.API.Dtos.User;
 
-namespace AltexTravel.API.DAL.BaseHandlers.Mappers
+namespace AltexTravel.API.DAL.Features.User
 {
     public class UserMapper
     {
-        public User ToEntity(UserDomain model)
+        public User ToEntity(UserDto model)
         {
             return new User
             {
@@ -13,9 +13,9 @@ namespace AltexTravel.API.DAL.BaseHandlers.Mappers
                 Name = model.Name
             };
         }
-        public UserDomain ToDto(User model)
+        public UserDto ToDto(User model)
         {
-            return new UserDomain
+            return new UserDto
             {
                 Id = model.Id,
                 Name = model.Name
