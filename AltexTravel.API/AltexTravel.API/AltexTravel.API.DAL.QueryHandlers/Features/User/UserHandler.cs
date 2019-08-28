@@ -10,13 +10,13 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.User
 {
     public class UserHandler : BaseRepository, IRequest<UserQuery>
     {
-        public Domain.User GetUser(string id)
+        public UserQuery GetUser(string id)
         {
-            Domain.User userDomain = null;
+            UserQuery userDomain = null;
             WithContext(context =>
             {
                 var user = context.Users.Single(x => x.Id.Equals(id));
-                userDomain = new Domain.User { Id = user.Id, Name = user.Name };
+                userDomain = new UserQuery { Id = user.Id, Name = user.Name };
             });
             return userDomain;
         }
