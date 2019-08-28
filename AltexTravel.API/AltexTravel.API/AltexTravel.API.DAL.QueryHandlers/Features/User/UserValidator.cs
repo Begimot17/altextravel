@@ -7,7 +7,7 @@ namespace AltexTravel.API.Models
     {
         public UserValidator()
         {
-            RuleFor(customer => customer.Name).NotNull();
+            RuleFor(x => x.Name).NotNull();
         }
     }
 }

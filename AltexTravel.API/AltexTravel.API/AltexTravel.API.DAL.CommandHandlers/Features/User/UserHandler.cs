@@ -21,7 +21,6 @@ namespace AltexTravel.API.DAL.CommandHandlers.Features.User
             WithContext(context =>
             {
                 var user = context.Users.Single(x => x.Id.Equals(model.Id));
-                user.Id = model.Id;
                 user.Name = model.Name;
                 context.SaveChanges();
             });

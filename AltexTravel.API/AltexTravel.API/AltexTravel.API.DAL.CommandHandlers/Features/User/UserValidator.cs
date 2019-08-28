@@ -7,7 +7,7 @@ namespace AltexTravel.API.DAL.CommandHandlers.Features.User
     {
         public UserValidator()
         {
-            RuleFor(customer => customer.Name).NotNull();
+            RuleFor(x => x.Name).NotNull();
         }
     }
 }
