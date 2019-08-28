@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AltexTravel.API.Queries
+namespace AltexTravel.API.Models
 {
-    public class QueriesService
+    public class User
     {
-
     }
 }
