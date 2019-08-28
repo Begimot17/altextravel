@@ -1,12 +1,13 @@
-﻿using System;
+﻿using AltexTravel.API.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AltexTravel.API.Queries
 {
-    public interface IQueriesService
+    public interface IQueries
     {
-        Task GetAllPostId();
+        Task<User> GetOrderAsync(int id);
     }
 }

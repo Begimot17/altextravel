@@ -27,7 +27,7 @@ namespace AltexTravel.API
         {
             
             //Add MediatR
-            //services.AddMediatR();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             //AddSwagger
             services.AddSwaggerGen(options =>
             {
@@ -41,7 +41,9 @@ namespace AltexTravel.API
                 });
             });
             //Add FluentValidation 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation();
+            services.AddMvc().AddFluentValidation(fv => {
+                fv.ImplicitlyValidateChildProperties = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
