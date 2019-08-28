@@ -7,15 +7,15 @@ using System.Text;
 
 namespace AltexTravel.API.DAL.QueryHandlers.Features.User
 {
-    public class UserHandler : BaseRepository, IRequest<UserDomain>
+    public class UserHandler : BaseRepository, IRequest<Domain.User>
     {
-        public UserDomain GetUser(string id)
+        public Domain.User GetUser(string id)
         {
-            UserDomain userDomain = null;
+            Domain.User userDomain = null;
             WithContext(context =>
             {
                 var user = context.Users.Single(x => x.Id.Equals(id));
-                userDomain = new UserDomain { Id = user.Id, Name = user.Name };
+                userDomain = new Domain.User { Id = user.Id, Name = user.Name };
             });
             return userDomain;
         }

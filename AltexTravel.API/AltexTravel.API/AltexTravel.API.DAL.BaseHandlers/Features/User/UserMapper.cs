@@ -5,7 +5,7 @@ namespace AltexTravel.API.DAL.BaseHandlers.Features.User
 {
     public static class UserMapper
     {
-        public static DAL.Features.User.User ToEntity(UserDomain model)
+        public static DAL.Features.User.User ToEntity(Domain.User model)
         {
             return new DAL.Features.User.User
             {
@@ -13,9 +13,9 @@ namespace AltexTravel.API.DAL.BaseHandlers.Features.User
                 Name = model.Name
             };
         }
-        public static UserDomain ToDomain(DAL.Features.User.User model)
+        public static Domain.User ToDomain(DAL.Features.User.User model)
         {
-            return new UserDomain
+            return new Domain.User
             {
                 Id = model.Id,
                 Name = model.Name
