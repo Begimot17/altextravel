@@ -14,7 +14,7 @@ namespace AltexTravel.API.Queries
         {
             _connectionString = !string.IsNullOrWhiteSpace(constr) ? constr : throw new ArgumentNullException(nameof(constr));
         }
-        public Task<User> GetOrderAsync(int id)
+        public Task<UserViewModel> GetOrderAsync(int id)
         {
             throw new NotImplementedException();
         }

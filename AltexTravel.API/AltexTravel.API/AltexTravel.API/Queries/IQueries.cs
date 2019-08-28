@@ -8,6 +8,6 @@ namespace AltexTravel.API.Queries
 {
     public interface IQueries
     {
-        Task<User> GetOrderAsync(int id);
+        Task<UserViewModel> GetOrderAsync(int id);
     }
 }

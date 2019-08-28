@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AltexTravel.API.Domain.Models
+namespace AltexTravel.API.DAL.Queries.Models
 {
-    public class UserDomain
+    public class UserQuery
     {
         public string Id { get; set; }
         public string Name { get; set; }

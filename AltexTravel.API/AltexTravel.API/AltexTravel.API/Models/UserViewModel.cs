@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AltexTravel.API.Models
 {
-    public class User
+    public class UserViewModel
     {
         public string Id { get; set; }
         public string Name { get; set; }

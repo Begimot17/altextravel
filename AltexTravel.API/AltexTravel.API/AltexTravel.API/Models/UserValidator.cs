@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AltexTravel.API.Models
 {
-    public class UserValidator : AbstractValidator<User>
+    public class UserValidator : AbstractValidator<UserViewModel>
     {
         public UserValidator()
         {

@@ -10,11 +10,11 @@ namespace AltexTravel.API.Commands
 {
     [DataContract]
 
-    public class CreateUserCommand : IRequest<bool>
+    public class CreateUserCommand : IRequest
     {
 
         [DataMember]
-        private readonly List<User> _userItems;
+        private readonly List<UserViewModel> _userItems;
         [DataMember]
         public string Id { get; set; }
         [DataMember]
@@ -24,7 +24,7 @@ namespace AltexTravel.API.Commands
 
         public CreateUserCommand()
         {
-            _userItems = new List<User>();
+            _userItems = new List<UserViewModel>();
         }
 
         public CreateUserCommand(string id, string name, int age)

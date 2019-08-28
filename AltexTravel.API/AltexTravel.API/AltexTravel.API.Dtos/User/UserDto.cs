@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace AltexTravel.API.Dtos.User
 {
-    class UserDto
+    public class UserDto
     {
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }
