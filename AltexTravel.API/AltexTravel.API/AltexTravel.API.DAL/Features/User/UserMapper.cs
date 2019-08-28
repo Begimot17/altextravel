@@ -1,7 +1,7 @@
-﻿using AltexTravel.API.DAL.Entity;
-using AltexTravel.API.Dtos.User;
+﻿using AltexTravel.API.DAL.Features.User;
+using AltexTravel.API.Dtos.Features.User;
 
-namespace AltexTravel.API.DAL.Features.User
+namespace AltexTravel.API.DAL.Mappers
 {
     public class UserMapper
     {

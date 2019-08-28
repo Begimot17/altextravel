@@ -1,12 +1,9 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AltexTravel.API.DAL.Queries.Features.User;
+using FluentValidation;
 
 namespace AltexTravel.API.Models
 {
-    public class UserValidator : AbstractValidator<UserViewModel>
+    public class UserValidator : AbstractValidator<UserQuery>
     {
         public UserValidator()
         {
