@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="7.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AltexTravel.API.DAL\AltexTravel.API.DAL.csproj" />
     <ProjectReference Include="..\AltexTravel.API.Domain\AltexTravel.API.Domain.csproj" />
   </ItemGroup>

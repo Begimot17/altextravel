@@ -1,4 +1,5 @@
-﻿using AltexTravel.API.Domain;
+﻿using AltexTravel.API.DAL.Queries.Features.User;
+using AltexTravel.API.Domain;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace AltexTravel.API.DAL.QueryHandlers.Features.User
 {
-    public class UserHandler : BaseRepository, IRequest<Domain.User>
+    public class UserHandler : BaseRepository, IRequest<UserQuery>
     {
         public Domain.User GetUser(string id)
         {

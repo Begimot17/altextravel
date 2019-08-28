@@ -1,6 +1,8 @@
-﻿namespace AltexTravel.API.DAL.Commands.Features.User
+﻿using MediatR;
+
+namespace AltexTravel.API.DAL.Commands.Features.User
 {
-    public class UserCommand
+    public class UserCommand : IRequest<bool>
     {
         public string Id { get; set; }
         public string Name { get; set; }
