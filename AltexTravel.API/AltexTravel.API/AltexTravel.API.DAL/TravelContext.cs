@@ -15,5 +15,5 @@ namespace AltexTravel.API.DAL
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AltexTravel.API;Trusted_Connection=True;");
         }
         public DbSet<User> Users { get; set; }
-    }
+    } 
 }
