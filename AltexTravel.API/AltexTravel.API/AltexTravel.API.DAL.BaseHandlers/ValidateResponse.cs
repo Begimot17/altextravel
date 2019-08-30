@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using FluentValidation.Results;
+using MediatR;
 
-public class ValidateResponse<TResult>
+namespace AltexTravel.API.DAL.BaseHandlers
 {
-    public virtual bool IsValid { get; }
-    public IList<ValidationFailure> Errors { get; }
-    public TResult Result { get; set; }
-}
+    public class ValidatedResponse<TResponse>
+    {
+        public virtual bool IsValid { get; }
+        public IList<ValidationFailure> Errors { get; }
+        public TResponse Result { get; set; }
+    }
 }
