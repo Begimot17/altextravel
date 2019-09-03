@@ -15,7 +15,9 @@ namespace AltexTravel.API.DAL.BaseHandlers
         {
             _validator = validator;
         }
+
         protected abstract Task HandleAsync(TRequest request, CancellationToken cancellationToken);
+
         public async Task<ValidatedEmptyResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
             var validationResult = _validator.Validate(request);
@@ -33,7 +35,5 @@ namespace AltexTravel.API.DAL.BaseHandlers
                 IsValid = true
             };
         }
-
     }
-
 }

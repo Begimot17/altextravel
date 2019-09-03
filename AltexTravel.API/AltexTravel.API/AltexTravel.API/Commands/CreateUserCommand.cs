@@ -15,10 +15,13 @@ namespace AltexTravel.API.Commands
 
         [DataMember]
         private readonly List<UserViewModel> _userItems;
+
         [DataMember]
         public string Id { get; set; }
+
         [DataMember]
         public string Name { get; set; }
+
         [DataMember]
         public int Age { get; set; }
 

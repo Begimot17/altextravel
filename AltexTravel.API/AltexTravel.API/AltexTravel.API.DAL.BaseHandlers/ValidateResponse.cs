@@ -10,13 +10,4 @@ namespace AltexTravel.API.DAL.BaseHandlers
         public IList<ValidationFailure> Errors { get; set; }
         public TResponse Result { get; set; }
     }
-    public class ValidatedEmptyResponse : ValidatedResponse<Empty>
-    {
-
-    }
-
-    public class Empty
-    {
-
-    }
 }

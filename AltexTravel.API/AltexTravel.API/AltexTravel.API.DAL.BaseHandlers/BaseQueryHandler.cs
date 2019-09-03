@@ -14,16 +14,18 @@ namespace AltexTravel.API.DAL.BaseHandlers
         {
             _validator = validator;
         }
+
         protected abstract Task<TResponse> HandleAsync(TRequest request, CancellationToken cancellationToken);
+
         public async Task<ValidatedResponse<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
         {
             var validationResult = _validator.Validate(request);
             if (!validationResult.IsValid)
             {
-                return  new ValidatedResponse<TResponse>
+                return new ValidatedResponse<TResponse>
                 {
                     IsValid = false,
-                    Errors= validationResult.Errors
+                    Errors = validationResult.Errors
                 };
             }
             var result = await HandleAsync(request, cancellationToken);
@@ -33,6 +35,5 @@ namespace AltexTravel.API.DAL.BaseHandlers
                 IsValid = true
             };
         }
-
     }
 }
