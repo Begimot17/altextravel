@@ -1,32 +1,39 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using AltexTravel.API.Domain;
+using FluentValidation;
+using MediatR;
 
 namespace AltexTravel.API.DAL.BaseHandlers
 {
-    public abstract class BaseCommandHandler<TRequest ,ValidateResponse<TResponse>> :  ValidateResponse<TResponse>, IRequestHandler<TRequest> 
-        {   private readonly IValidator<TRequest> _validator;
-
-    protected BaseCommandHandler(IValidator<TRequest> validator)
+    public abstract class BaseCommandHandler<TRequest> : IRequestHandler<TRequest, ValidatedEmptyResponse>
+        where TRequest : IRequest<ValidatedEmptyResponse>
     {
-        _validator = validator;
+        private readonly IValidator<TRequest> _validator;
+
+        protected BaseCommandHandler(IValidator<TRequest> validator)
+        {
+            _validator = validator;
+        }
+
+        protected abstract Task HandleAsync(TRequest request, CancellationToken cancellationToken);
+
+        public async Task<ValidatedEmptyResponse> Handle(TRequest request, CancellationToken cancellationToken)
+        {
+            var validationResult = _validator.Validate(request);
+            if (!validationResult.IsValid)
+            {
+                return new ValidatedEmptyResponse
+                {
+                    IsValid = false,
+                    Errors = validationResult.Errors
+                };
+            }
+            await HandleAsync(request, cancellationToken);
+            return new ValidatedEmptyResponse
+            {
+                IsValid = true
+            };
+        }
     }
-    protected abstract Task<ValidateResponse<TResponse>> HandleAsync(TRequest request, CancellationToken cancellationToken);
-    public Task<ValidateResponse<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
-    {
-        var validationRezult = _validator.Validate(request);
-        return HandleAsync(request, cancellationToken);
-    }
 }
-
-
-public class ValidateResponse<TResult>
-{
-    public virtual bool IsValid { get; }
-    public IList<ValidationFailure> Errors { get; }
-    public TResult Result { get; set; }
-}
-}
-

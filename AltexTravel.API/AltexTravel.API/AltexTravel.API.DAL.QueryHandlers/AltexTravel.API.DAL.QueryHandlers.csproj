@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AltexTravel.API.DAL.BaseHandlers\AltexTravel.API.DAL.BaseHandlers.csproj" />
     <ProjectReference Include="..\AltexTravel.API.DAL.Queries\AltexTravel.API.DAL.Queries.csproj" />
     <ProjectReference Include="..\AltexTravel.API.DAL\AltexTravel.API.DAL.csproj" />
     <ProjectReference Include="..\AltexTravel.API.Domain\AltexTravel.API.Domain.csproj" />

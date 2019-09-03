@@ -15,6 +15,7 @@ namespace AltexTravel.API.Controllers
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
+
         [HttpPost]
         public async Task<IActionResult> Method(string returnUrl = null)
         {

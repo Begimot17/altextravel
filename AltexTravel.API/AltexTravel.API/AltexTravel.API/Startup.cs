@@ -25,7 +25,7 @@ namespace AltexTravel.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             //Add MediatR
             services.AddMediatR(Assembly.GetExecutingAssembly());
             //AddSwagger
@@ -41,7 +41,8 @@ namespace AltexTravel.API
                 });
             });
             //Add FluentValidation 
-            services.AddMvc().AddFluentValidation(fv => {
+            services.AddMvc().AddFluentValidation(fv =>
+            {
                 fv.ImplicitlyValidateChildProperties = true;
             });
         }

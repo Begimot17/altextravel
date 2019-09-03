@@ -12,6 +12,7 @@ namespace AltexTravel.API.DAL.BaseHandlers.Features.Users
                 Name = model.Name
             };
         }
+
         public static Domain.User ToDomain(User model)
         {
             return new Domain.User
