@@ -6,8 +6,17 @@ namespace AltexTravel.API.DAL.BaseHandlers
 {
     public class ValidatedResponse<TResponse>
     {
-        public virtual bool IsValid { get; }
-        public IList<ValidationFailure> Errors { get; }
+        public bool IsValid { get; set; }
+        public IList<ValidationFailure> Errors { get; set; }
         public TResponse Result { get; set; }
+    }
+    public class ValidatedEmptyResponse : ValidatedResponse<Empty>
+    {
+
+    }
+
+    public class Empty
+    {
+
     }
 }

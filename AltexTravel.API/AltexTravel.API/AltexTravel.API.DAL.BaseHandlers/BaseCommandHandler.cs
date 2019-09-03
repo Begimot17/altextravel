@@ -6,8 +6,8 @@ using MediatR;
 
 namespace AltexTravel.API.DAL.BaseHandlers
 {
-    public abstract class BaseCommandHandler<TRequest, TResponse> : IRequestHandler<TRequest, ValidatedResponse<TResponse>>
-        where TRequest : IRequest<ValidatedResponse<TResponse>>
+    public abstract class BaseCommandHandler<TRequest> : IRequestHandler<TRequest, ValidatedEmptyResponse>
+        where TRequest : IRequest<ValidatedEmptyResponse>
     {
         private readonly IValidator<TRequest> _validator;
 
@@ -15,13 +15,23 @@ namespace AltexTravel.API.DAL.BaseHandlers
         {
             _validator = validator;
         }
-        protected abstract Task<ValidatedResponse<TResponse>> HandleAsync(TRequest request, CancellationToken cancellationToken);
-        public Task<ValidatedResponse<TResponse>> Handle(TRequest request, CancellationToken cancellationToken)
+        protected abstract Task HandleAsync(TRequest request, CancellationToken cancellationToken);
+        public async Task<ValidatedEmptyResponse> Handle(TRequest request, CancellationToken cancellationToken)
         {
             var validationResult = _validator.Validate(request);
-
-
-            return HandleAsync(request, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                return new ValidatedEmptyResponse
+                {
+                    IsValid = false,
+                    Errors = validationResult.Errors
+                };
+            }
+            await HandleAsync(request, cancellationToken);
+            return new ValidatedEmptyResponse
+            {
+                IsValid = true
+            };
         }
 
     }
