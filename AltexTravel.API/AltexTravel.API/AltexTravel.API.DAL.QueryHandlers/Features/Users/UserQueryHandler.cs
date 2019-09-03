@@ -12,7 +12,6 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Users
 {
     public class UserQueryHandler : BaseQueryHandler<UserQuery, bool>
     {
-        
         public UserQueryHandler(IValidator<UserQuery> validator) :
         base(validator)
         {
