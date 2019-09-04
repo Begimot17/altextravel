@@ -1,23 +1,24 @@
-﻿using AltexTravel.API.Commands;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AltexTravel.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PostsController : ControllerBase
+    public class VersionController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public PostsController(IMediator mediator)
+        public VersionController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Method(string returnUrl = null)
+        [HttpGet]
+        public IActionResult Version()
         {
             return Ok();
         }
