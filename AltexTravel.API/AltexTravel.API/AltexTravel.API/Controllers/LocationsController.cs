@@ -19,7 +19,7 @@ namespace AltexTravel.API.Controllers
         }
         [HttpGet]
         [ProducesResponseType(typeof(List<LocationViewModel>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(int), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(List<LocationViewModel>), StatusCodes.Status400BadRequest)]
         public IActionResult Locations(string search, int count)
         {
             var locations = DefaultLocations.GetLocations();
