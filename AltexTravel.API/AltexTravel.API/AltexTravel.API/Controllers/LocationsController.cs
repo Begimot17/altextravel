@@ -1,8 +1,10 @@
 ﻿using AltexTravel.API.Models;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace AltexTravel.API.Controllers
 {
@@ -16,9 +18,16 @@ namespace AltexTravel.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
         [HttpGet]
-        public List<LocationViewModel> Locations(string search, int count)
+        [ProducesResponseType(typeof(LocationViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult Locations(string search, int count)
         {
-            return DefaultLocations.GetLocations();
+            var locations = DefaultLocations.GetLocations();
+            if (locations==null)
+            {
+                return BadRequest();
+            }
+            return Ok(locations);
         }
     }
 }
