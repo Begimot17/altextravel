@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace AltexTravel.API.Models
 {
-    public class IataCode
+    public class Travellers
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public int Adult { get; set; }
+        public int Child { get; set; }
+        public int Infant { get; set; }
     }
 }

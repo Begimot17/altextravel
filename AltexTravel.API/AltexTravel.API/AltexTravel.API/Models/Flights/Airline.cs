@@ -7,7 +7,7 @@ namespace AltexTravel.API.Models.Flights
 {
     public class Airline
     {
-        public string code { get; set; }
-        public string name { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
     }
 }

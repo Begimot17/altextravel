@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace AltexTravel.API.Models
 {
-    public class SortingDescriptor
+    public partial class SortingDescriptor
     {
+        public Direction Direction { get; set; }
+        public string Property { get; set; }
     }
 }

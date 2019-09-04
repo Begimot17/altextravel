@@ -7,5 +7,7 @@ namespace AltexTravel.API.Models.Flights.Search
 {
     public class RequestSegment
     {
+        public DateTime DepartureDate { get; set; }
+        public AirportCodePair Route { get; set; }
     }
 }

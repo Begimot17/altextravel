@@ -7,5 +7,7 @@ namespace AltexTravel.API.Models.Flights
 {
     public class AirportPair
     {
+        public Airport ArrivalPort { get; set; }
+        public Airport DeparturePort { get; set; }
     }
 }

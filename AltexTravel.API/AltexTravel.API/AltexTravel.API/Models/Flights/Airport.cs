@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace AltexTravel.API.Models.Flights
 {
-    public class Segment
+    public class Airport
     {
-        public string ElapseFlyingTime { get; set; }
-        public List<Flight> Flights { get; set; }
+        public City City { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
     }
 }

@@ -7,9 +7,9 @@ namespace AltexTravel.API.Models
 {
     public class Customer
     {
-        public string email { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string phoneNumber { get; set; }
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
