@@ -18,7 +18,7 @@ namespace AltexTravel.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
         [HttpGet]
-        [ProducesResponseType(typeof(LocationViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(List<LocationViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public IActionResult Locations(string search, int count)
         {
