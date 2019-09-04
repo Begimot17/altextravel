@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace AltexTravel.API.Controllers
 {
@@ -15,9 +16,9 @@ namespace AltexTravel.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
         [HttpGet]
-        public IActionResult Locations(string search,int count)
+        public List<LocationViewModel> Locations(string search, int count)
         {
-            return Ok();
+            return DefaultLocations.GetLocations();
         }
     }
 }

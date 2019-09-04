@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AltexTravel.API.Models
 {
-    public class Location
+    public class LocationViewModel
     {
-        public List<IataCode> Airports { get; set; }
+        public List<IataCodeViewModel> Airports { get; set; }
         public string Type { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
