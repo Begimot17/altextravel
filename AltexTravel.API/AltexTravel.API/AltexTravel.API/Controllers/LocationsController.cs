@@ -1,10 +1,17 @@
-﻿using AltexTravel.API.Models;
+﻿using AltexTravel.API.DAL;
+using AltexTravel.API.DAL.Queries.Features.Locations;
+using AltexTravel.API.DAL.QueryHandlers.Features.Locations;
+using AltexTravel.API.Mappers;
+using AltexTravel.API.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AltexTravel.API.Controllers
 {
@@ -17,17 +24,36 @@ namespace AltexTravel.API.Controllers
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
+
         [HttpGet]
         [ProducesResponseType(typeof(List<LocationViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<LocationViewModel>), StatusCodes.Status400BadRequest)]
-        public IActionResult Locations(string search, int count)
+        public async Task<IActionResult> Locations(string search, int count)
         {
-            var locations = DefaultLocations.GetLocations();
-            if (locations==null)
+            var request = new LocationQuery { Search = search, Count = count };
+            var responce = await _mediator.Send(request);
+            if (responce.Result!=null)
             {
-                return BadRequest();
+                var result = responce.Result.Locations.ToViewModel();
+                return responce.ToAction(result);
             }
-            return Ok(locations);
+            return responce.ToAction();
+
         }
+        public static void SetDefaultDB()
+        {
+            const string CONNECTION_STRING = @"Server=(localdb)\MSSQLLocalDB;Database=Booking-API;Trusted_Connection=True";
+
+            var optionsBuilder = new DbContextOptionsBuilder<TravelContext>();
+
+            var options = optionsBuilder
+                    .UseSqlServer(CONNECTION_STRING)
+                    .Options;
+            using (var context = new TravelContext(options))
+            {
+                TravelContextSeed.SeedAsync(context);
+            }
+        }
+
     }
 }

@@ -1,8 +1,10 @@
-﻿namespace AltexTravel.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AltexTravel.API.Models
 {
     public class IataCodeViewModel
     {
-        public string Code { get; set; }
         public string Name { get; set; }
+        public string Code { get; set; }
     }
 }

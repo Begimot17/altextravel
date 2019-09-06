@@ -1,9 +1,13 @@
-﻿using FluentValidation;
+﻿using AltexTravel.API.DAL;
+using AltexTravel.API.DAL.BaseHandlers;
+using AltexTravel.API.DAL.QueryHandlers.Features.Locations;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -25,26 +29,32 @@ namespace AltexTravel.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             //Add MediatR
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddMediatR(typeof(LocationQueryHandler));
+
             //AddSwagger
             services.AddSwaggerGen(options =>
             {
                 options.DescribeAllEnumsAsStrings();
                 options.SwaggerDoc("v1", new Info
                 {
-                    Title = "AltexTravel.Identity.API - Identity.API HTTP API",
+                    Title = "AltexTravel.API - API HTTP API",
                     Version = "v1",
                     Description = "The Catalog Microservice HTTP API. This is a Data-Driven/CRUD microservice sample",
                     TermsOfService = "Terms Of Service"
                 });
             });
+
             //Add FluentValidation 
-            services.AddMvc().AddFluentValidation(fv =>
-            {
-                fv.ImplicitlyValidateChildProperties = true;
-            });
+
+            services.AddMvc()
+  .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
+
+
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=Booking-API;Trusted_Connection=True;ConnectRetryCount=0";
+            //ADD EF
+            services.AddDbContext<TravelContext>
+                (options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +72,6 @@ namespace AltexTravel.API
 
             app.UseHttpsRedirection();
             app.UseMvc();
-
             //AddSwagger
             app.UseStaticFiles();
             var pathBase = Configuration["DefaultConnection"];
@@ -73,7 +82,7 @@ namespace AltexTravel.API
             app.UseSwagger()
               .UseSwaggerUI(c =>
               {
-                  c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Identity.API");
+                  c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Booking.API");
                   c.RoutePrefix = "swagger";
               });
 
