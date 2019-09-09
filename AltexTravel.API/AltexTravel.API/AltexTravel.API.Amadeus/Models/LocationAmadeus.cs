@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace AltexTravel.API.DAL.Amadeus
+namespace AltexTravel.API.Amadeus.Models
 {
     public class LocationAmadeus
     {

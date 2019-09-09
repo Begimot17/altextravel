@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using AltexTravel.API.DAL.Features.IataCodes;
+using AltexTravel.API.DAL.Features.Locations;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -6,13 +8,25 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace AltexTravel.API.Amadeus.Amadeus
+namespace AltexTravel.API.Amadeus.BLL
 {
 
-    public static class Amadeus
+    public static class AmadeusManager
     {
-        public static LocationsModel GetData()
+        public static List<IataCode> GetIatas()
+        {
+            var Iatas = new List<IataCode>();
+            foreach (var item in GetLocations())
+            {
+                if (item.Airports != null)
+                {
+
+                    Iatas.AddRange(item.Airports);
+                }
+            }
+            return Iatas;
+        }
+        public static List<Location> GetLocations()
         {
             const string URL = "https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT,CITY&keyword=r&page[limit]=1000";
             string token = GetToken();
@@ -25,7 +39,7 @@ namespace AltexTravel.API.Amadeus.Amadeus
             Task<HttpResponseMessage> response = client.SendAsync(request);
             string myJsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
             client.Dispose();
-            return JsonToAmadeusModel(myJsonResponse).ToLocations();
+            return JsonToAmadeusModel(myJsonResponse).Data.ToLocations();
 
         }
 

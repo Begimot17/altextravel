@@ -1,4 +1,5 @@
-﻿using AltexTravel.API.DAL.Features.IataCodes;
+﻿using AltexTravel.API.Amadeus.Models;
+using AltexTravel.API.DAL.Features.IataCodes;
 using AltexTravel.API.DAL.Features.Locations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,14 +9,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-namespace AltexTravel.API.DAL.Amadeus
+namespace AltexTravel.API.Amadeus
 {
 
     public static class AmadeusManager
     {
-        public static List<IataCode> GetIatas()
+        public static List<IataCodeDal> GetIatas()
         {
-            var Iatas = new List<IataCode>();
+            var Iatas = new List<IataCodeDal>();
             foreach (var item in GetLocations())
             {
                 if (item.Airports != null)
@@ -26,17 +27,17 @@ namespace AltexTravel.API.DAL.Amadeus
             }
             return Iatas;
         }
-        public static List<Location> GetLocations()
+        public static List<LocationDal> GetLocations()
         {
             const string URL = "https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT,CITY&keyword=r&page[limit]=1000";
             string token = GetToken();
-            HttpClient client = new HttpClient
+            var client = new HttpClient
             {
                 BaseAddress = new Uri(URL)
             };
             client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, "");
-            Task<HttpResponseMessage> response = client.SendAsync(request);
+            var request = new HttpRequestMessage(HttpMethod.Get, "");
+            var response = client.SendAsync(request);
             string myJsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
             client.Dispose();
             return JsonToAmadeusModel(myJsonResponse).Data.ToLocations();
@@ -50,25 +51,24 @@ namespace AltexTravel.API.DAL.Amadeus
             const string tokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token";
 
             string postData = $"grant_type=client_credentials&client_id={apikey}&client_secret={apisecret}";
-            HttpClient client = new HttpClient
+            var client = new HttpClient
             {
                 BaseAddress = new Uri(tokenURL)
             };
 
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "")
+            var request = new HttpRequestMessage(HttpMethod.Post, "")
             {
                 Content = new StringContent(postData,
                                     Encoding.UTF8,
                                     "application/x-www-form-urlencoded")
             };
 
-            Task<HttpResponseMessage> response = client.SendAsync(request);
+            var response = client.SendAsync(request);
             if (response.Result.IsSuccessStatusCode)
             {
-                string myJsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
-                JObject jsonObject = JObject.Parse(myJsonResponse);
+                string jsonResponse = JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
+                var jsonObject = JObject.Parse(jsonResponse);
                 client.Dispose();
-
                 string token = (string)jsonObject["access_token"];
                 return token;
             }

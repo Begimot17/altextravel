@@ -32,9 +32,9 @@ namespace AltexTravel.API.Controllers
         {
             var request = new LocationQuery { Search = search, Count = count };
             var responce = await _mediator.Send(request);
-            if (responce.Result!=null)
+            var result = responce.Result.Locations.ToViewModel();
+            if (result!=null)
             {
-                var result = responce.Result.Locations.ToViewModel();
                 return responce.ToAction(result);
             }
             return responce.ToAction();

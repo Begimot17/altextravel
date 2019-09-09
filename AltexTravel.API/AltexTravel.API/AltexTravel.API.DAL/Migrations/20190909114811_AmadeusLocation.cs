@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AltexTravel.API.DAL.Migrations
 {
-    public partial class Test : Migration
+    public partial class AmadeusLocation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,5 +1,4 @@
-﻿using AltexTravel.API.DAL.Amadeus;
-using Microsoft.Extensions.Logging;
+﻿using AltexTravel.API.Amadeus;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,12 +14,12 @@ namespace AltexTravel.API.DAL
             {
                 if (!context.Locations.Any())
                 {
-                    context.Locations.AddRange(AmadeusManager.GetLocations());
+                    context.Locations.AddRange(AmadeusManager.GetLocations().ToLocations());
                     await context.SaveChangesAsync();
                 }
                 if (!context.IataCodes.Any())
                 {
-                    context.IataCodes.AddRange(AmadeusManager.GetIatas());
+                    context.IataCodes.AddRange(AmadeusManager.GetIatas().ToIataCode());
                     await context.SaveChangesAsync();
                 }
             }

@@ -1,4 +1,4 @@
-﻿namespace AltexTravel.API.DAL.Amadeus
+﻿namespace AltexTravel.API.Amadeus.Models
 {
     public class IataAmadeus
     { 

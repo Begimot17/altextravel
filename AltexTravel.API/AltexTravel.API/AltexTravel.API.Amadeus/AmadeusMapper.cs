@@ -1,17 +1,18 @@
-﻿using AltexTravel.API.DAL.Features.IataCodes;
+﻿using AltexTravel.API.Amadeus.Models;
+using AltexTravel.API.DAL.Features.IataCodes;
 using AltexTravel.API.DAL.Features.Locations;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AltexTravel.API.DAL.Amadeus
+namespace AltexTravel.API.Amadeus
 {
     public static class AmadeusMapper
     {
-        public static List<IataCode> ToIataCode(this IEnumerable<IataAmadeus> locations)
+        public static List<IataCodeDal> ToIataCode(this IEnumerable<IataAmadeus> locations)
         {
             return locations.Select(x => x.ToIataCode()).ToList();
         }
-        public static List<Location> ToLocations(this IEnumerable<LocationAmadeus> locations)
+        public static List<LocationDal> ToLocations(this IEnumerable<LocationAmadeus> locations)
         {
             return locations.Select(x => x.ToLocation()).ToList();
         }
@@ -31,23 +32,23 @@ namespace AltexTravel.API.DAL.Amadeus
             }
             return new IataAmadeus();
         }
-        public static IataCode ToIataCode(this IataAmadeus model)
+        public static IataCodeDal ToIataCode(this IataAmadeus model)
         {
             if (model != null)
             {
-                return new IataCode
+                return new IataCodeDal
                 {
                     Name = model.Name,
                     Code = model.Code
                 };
             }
-            return new IataCode();
+            return new IataCodeDal();
         }
-        public static Location ToLocation(this LocationAmadeus model)
+        public static LocationDal ToLocation(this LocationAmadeus model)
         {
             if (model.Airports != null)
             {
-                return new Location
+                return new LocationDal
                 {
                     Name = model.Name,
                     Code = model.Code,
@@ -55,7 +56,7 @@ namespace AltexTravel.API.DAL.Amadeus
                     Airports = model.Airports.ToIataCode()
                 };
             }
-            return new Location
+            return new LocationDal
             {
                 Name = model.Name,
                 Code = model.Code,

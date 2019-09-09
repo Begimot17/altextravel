@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AltexTravel.API.DAL.Amadeus
+namespace AltexTravel.API.Amadeus.Models
 {
     public class LocationAmadeusModel
     {
-        public List<Location> Locations { get; set; }
+        public List<LocationDal> Locations { get; set; }
     }
 }
