@@ -27,24 +27,13 @@ namespace AltexTravel.API.DAL.Features.Locations
                } :
            new IataCode();
         }
-        public static Location ToLocation(this LocationAmadeus model)
+        public static Location ToLocation(this LocationAmadeus model) => new Location
         {
-            return (model.Airports != null) ?
-               new Location
-               {
-                   Name = model.Name,
-                   Code = model.Code,
-                   Type = model.Type,
-                   Airports = model.Airports.ToIata()
-               } :
-           new Location
-           {
-               Name = model.Name,
-               Code = model.Code,
-               Type = model.Type,
-               Airports = null
-           };
-        }
+            Name = model.Name,
+            Code = model.Code,
+            Type = model.Type,
+            Airports = model.Airports?.ToIata()
+        };
 
 
     }

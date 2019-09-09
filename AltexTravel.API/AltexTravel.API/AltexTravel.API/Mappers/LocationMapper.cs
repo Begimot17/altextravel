@@ -9,39 +9,23 @@ namespace AltexTravel.API.Mappers
 {
     public static class LocationMapper
     {
-        public static IEnumerable<LocationViewModel> ToViewModel(this IEnumerable<Domain.Location> models)
-        {
-            return models.Select(x => x.ToViewModel());
+        public static IEnumerable<LocationViewModel> ToViewModel(this IEnumerable<Domain.Location> models) =>
+            models.Select(x => x.ToViewModel());
 
-        }
-        public static LocationViewModel ToViewModel(this Domain.Location model)
+        public static LocationViewModel ToViewModel(this Domain.Location model) => new LocationViewModel
         {
-            if (model.Airports != null)
-            {
-                return new LocationViewModel
-                {
-                    Name = model.Name,
-                    Code = model.Code,
-                    Type = model.Type,
-                    Airports = model.Airports.ToViewModel()
-                };
-            }
-            return new LocationViewModel
-            {
-                Name = model.Name,
-                Code = model.Code,
-                Type = model.Type,
-                Airports = null
-            };
-        }
-        public static List<IataCode> ToIatas(this List<IataAmadeus> locations)
-        {
-            return locations.Select(x => x.ToIata()).ToList();
-        }
-        public static IEnumerable<Location> ToLocations(this List<LocationAmadeus> locations)
-        {
-            return locations.Select(x => x.ToLocation());
-        }
+            Name = model.Name,
+            Code = model.Code,
+            Type = model.Type,
+            Airports = model.Airports?.ToViewModel()
+        };
+
+        public static List<IataCode> ToIatas(this List<IataAmadeus> locations) =>
+            locations.Select(x => x.ToIata()).ToList();
+
+        public static IEnumerable<Location> ToLocations(this List<LocationAmadeus> locations) =>
+            locations.Select(x => x.ToLocation());
+
         public static IataCode ToIata(this IataAmadeus model)
         {
             return (model != null) ?
@@ -52,23 +36,14 @@ namespace AltexTravel.API.Mappers
                } :
            new IataCode();
         }
-        public static Location ToLocation(this LocationAmadeus model)
+
+        public static Location ToLocation(this LocationAmadeus model) => new Location
         {
-            return (model.Airports != null) ?
-               new Location
-               {
-                   Name = model.Name,
-                   Code = model.Code,
-                   Type = model.Type,
-                   Airports = model.Airports.ToIatas()
-               } :
-           new Location
-           {
-               Name = model.Name,
-               Code = model.Code,
-               Type = model.Type,
-               Airports = null
-           };
-        }
+            Name = model.Name,
+            Code = model.Code,
+            Type = model.Type,
+            Airports = model.Airports?.ToIatas()
+        };
+
     }
 }
