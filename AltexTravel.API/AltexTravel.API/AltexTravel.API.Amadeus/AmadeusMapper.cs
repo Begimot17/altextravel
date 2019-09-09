@@ -22,47 +22,41 @@ namespace AltexTravel.API.Amadeus
         }
         public static IataAmadeus ToIataAmadeus(this LocationAmadeus model)
         {
-            if (model!=null)
-            {
-                return new IataAmadeus
-                {
-                    Name = model.Name,
-                    Code = model.Code
-                };
-            }
-            return new IataAmadeus();
+            return (model != null) ?
+               new IataAmadeus
+               {
+                   Name = model.Name,
+                   Code = model.Code,
+               } :
+           new IataAmadeus();
         }
         public static IataCodeDal ToIataCode(this IataAmadeus model)
         {
-            if (model != null)
-            {
-                return new IataCodeDal
-                {
-                    Name = model.Name,
-                    Code = model.Code
-                };
-            }
-            return new IataCodeDal();
+            return (model != null) ?
+               new IataCodeDal
+               {
+                   Name = model.Name,
+                   Code = model.Code,
+               } :
+           new IataCodeDal();
         }
         public static LocationDal ToLocation(this LocationAmadeus model)
         {
-            if (model.Airports != null)
-            {
-                return new LocationDal
-                {
-                    Name = model.Name,
-                    Code = model.Code,
-                    Type = model.Type,
-                    Airports = model.Airports.ToIataCode()
-                };
-            }
-            return new LocationDal
-            {
-                Name = model.Name,
-                Code = model.Code,
-                Type = model.Type,
-                Airports = null
-            };
+            return (model.Airports != null) ?
+               new LocationDal
+               {
+                   Name = model.Name,
+                   Code = model.Code,
+                   Type = model.Type,
+                   Airports = model.Airports.ToIataCode()
+               } :
+           new LocationDal
+           {
+               Name = model.Name,
+               Code = model.Code,
+               Type = model.Type,
+               Airports = null
+           };
         }
 
     }

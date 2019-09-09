@@ -16,33 +16,29 @@ namespace AltexTravel.API.Amadeus
         {
             return locations.Select(x => x.ToLocation()).ToList();
         }
-        
-        
+
+
         public static IataCode ToIataCode(this IataCodeDal model)
         {
-            if (model != null)
-            {
-                return new IataCode
-                {
-                    Name = model.Name,
-                    Code = model.Code
-                };
-            }
-            return new IataCode();
+            return (model != null) ?
+               new IataCode
+               {
+                   Name = model.Name,
+                   Code = model.Code,
+               } :
+           new IataCode();
         }
         public static Location ToLocation(this LocationDal model)
         {
-            if (model.Airports != null)
-            {
-                return new Location
+            return (model.Airports != null) ?
+                new Location
                 {
                     Name = model.Name,
                     Code = model.Code,
                     Type = model.Type,
                     Airports = model.Airports.ToIataCode()
-                };
-            }
-            return new Location
+                } :
+            new Location
             {
                 Name = model.Name,
                 Code = model.Code,

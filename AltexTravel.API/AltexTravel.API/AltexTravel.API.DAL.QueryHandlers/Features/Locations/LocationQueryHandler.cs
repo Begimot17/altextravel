@@ -27,7 +27,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Locations
         }
         protected override async Task<LocationQueryResponce> HandleAsync(LocationQuery request, CancellationToken cancellationToken)
         {
-            var airports = await _context.IataCodes.Select(x => x).ToListAsync(cancellationToken);
+            var airports = await _context.IataCodes.ToListAsync(cancellationToken);
             var locations = await _context.Locations.Where(x => x.Name.Contains(request.Search)).Take(request.Count).ToListAsync(cancellationToken);
             foreach (var loc in locations)
             {
