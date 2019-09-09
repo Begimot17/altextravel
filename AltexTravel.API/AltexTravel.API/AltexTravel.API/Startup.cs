@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -65,21 +67,22 @@ namespace AltexTravel.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            var pathBase = Configuration["PathBase"];
+
 
             app.UseHttpsRedirection();
+
             app.UseMvc();
+
             //AddSwagger
             app.UseStaticFiles();
-            var pathBase = Configuration["DefaultConnection"];
-            app.UseSwagger(c =>
-            {
-                c.RouteTemplate = $"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json";
-            });
+
+            //AddSwagger
             app.UseSwagger()
               .UseSwaggerUI(c =>
               {
-                  c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Booking.API");
-                  c.RoutePrefix = "swagger";
+                  c.SwaggerEndpoint("../swagger/v1/swagger.json", "Identity.API");
+                  c.RoutePrefix = string.Empty;
               });
 
             app.UseAuthentication();
