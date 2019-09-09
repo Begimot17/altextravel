@@ -5,14 +5,14 @@ namespace AltexTravel.API.DAL
 {
     public class TravelContext:DbContext
     {
-        public TravelContext()
+        public TravelContext(DbContextOptions<TravelContext> options)
+            : base(options)
         {
-            Database.EnsureCreated();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public TravelContext()
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AltexTravel.API;Trusted_Connection=True;");
+            Database.EnsureCreated();
         }
 
         public DbSet<User> Users { get; set; }
