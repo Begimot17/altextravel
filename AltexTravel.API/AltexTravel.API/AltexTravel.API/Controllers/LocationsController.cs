@@ -1,16 +1,11 @@
-﻿using AltexTravel.API.DAL;
-using AltexTravel.API.DAL.Queries.Features.Locations;
-using AltexTravel.API.DAL.QueryHandlers.Features.Locations;
+﻿using AltexTravel.API.DAL.Queries.Features.Locations;
 using AltexTravel.API.Mappers;
 using AltexTravel.API.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace AltexTravel.API.Controllers

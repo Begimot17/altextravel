@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AltexTravel.API.Models
+﻿namespace AltexTravel.API.Models
 {
     public class IataCodeViewModel
     {

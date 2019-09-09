@@ -8,12 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 namespace AltexTravel.API.Amadeus
 {
-
     public static class AmadeusManager
     {
+        const string URL = "https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT,CITY&keyword=r&page[limit]=1000";
+        const string apikey = "gZCS7tiyaRIIVihAoQFo2vARev7AnAVh";
+        const string apisecret = "yb3SXyWAeLGblN8K";
+        const string tokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token";
         public static List<IataCodeDal> GetIatas()
         {
             var Iatas = new List<IataCodeDal>();
@@ -29,7 +31,6 @@ namespace AltexTravel.API.Amadeus
         }
         public static List<LocationDal> GetLocations()
         {
-            const string URL = "https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT,CITY&keyword=r&page[limit]=1000";
             string token = GetToken();
             var client = new HttpClient
             {
@@ -38,7 +39,7 @@ namespace AltexTravel.API.Amadeus
             client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
             var request = new HttpRequestMessage(HttpMethod.Get, "");
             var response = client.SendAsync(request);
-            string myJsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
+            string myJsonResponse = JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
             client.Dispose();
             return JsonToAmadeusModel(myJsonResponse).Data.ToLocations();
 
@@ -46,10 +47,6 @@ namespace AltexTravel.API.Amadeus
 
         private static string GetToken()
         {
-            const string apikey = "gZCS7tiyaRIIVihAoQFo2vARev7AnAVh";
-            const string apisecret = "yb3SXyWAeLGblN8K";
-            const string tokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token";
-
             string postData = $"grant_type=client_credentials&client_id={apikey}&client_secret={apisecret}";
             var client = new HttpClient
             {
@@ -82,14 +79,14 @@ namespace AltexTravel.API.Amadeus
             var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
             var airports = new List<IataAmadeus>();
             airports = data.Data.Where(x => x.Type == "AIRPORT").ToIataAmadeus();
-            if (airports!=null)
+            if (airports != null)
             {
                 foreach (var city in data.Data.Where(x => x.Type == "CITY"))
                 {
                     city.Airports = new List<IataAmadeus>();
                     foreach (var air in airports)
                     {
-                        if (air.Code == city.Code )
+                        if (air.Code == city.Code)
                         {
                             city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Code });
                         }

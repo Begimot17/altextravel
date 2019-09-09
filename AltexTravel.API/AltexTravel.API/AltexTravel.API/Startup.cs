@@ -1,19 +1,13 @@
 ﻿using AltexTravel.API.DAL;
-using AltexTravel.API.DAL.BaseHandlers;
 using AltexTravel.API.DAL.QueryHandlers.Features.Locations;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace AltexTravel.API
 {
