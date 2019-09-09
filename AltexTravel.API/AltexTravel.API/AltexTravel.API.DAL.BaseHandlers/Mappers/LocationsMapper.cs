@@ -13,13 +13,24 @@ namespace AltexTravel.API.DAL.BaseHandlers.Mappers
         }
         public static Domain.Location ToDomain(this Location model)
         {
+            if (model.Airports!=null)
+            {
+                return new Domain.Location
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Code = model.Code,
+                    Type = model.Type,
+                    Airports = model.Airports.ToDomain()
+                };
+            }
             return new Domain.Location
             {
                 Id = model.Id,
                 Name = model.Name,
                 Code = model.Code,
                 Type = model.Type,
-                Airports = model.Airports.ToDomain()
+                Airports = null
             };
         }
     }

@@ -15,13 +15,25 @@ namespace AltexTravel.API.Mappers
         }
         public static LocationViewModel ToViewModel(this Domain.Location model)
         {
+            if (model.Airports!=null)
+            {
+                return new LocationViewModel
+                {
+                    Name = model.Name,
+                    Code = model.Code,
+                    Type = model.Type,
+                    Airports = model.Airports.ToViewModel()
+                };
+            }
             return new LocationViewModel
             {
                 Name = model.Name,
                 Code = model.Code,
                 Type = model.Type,
-                Airports = model.Airports.ToViewModel()
+                Airports = null
             };
         }
+
+
     }
 }

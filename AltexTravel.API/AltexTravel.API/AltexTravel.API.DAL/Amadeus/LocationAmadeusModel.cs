@@ -5,8 +5,8 @@ using System.Text;
 
 namespace AltexTravel.API.DAL.Amadeus
 {
-    public class Locations
+    public class LocationAmadeusModel
     {
-        public List<Location> MyProperty { get; set; }
+        public List<Location> Locations { get; set; }
     }
 }

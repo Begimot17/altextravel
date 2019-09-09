@@ -29,17 +29,25 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Locations
         {
             var airports = await _context.IataCodes.Select(x => x).ToListAsync(cancellationToken);
             var locations = await _context.Locations.Where(x => x.Name.Contains(request.Search)).Take(request.Count).ToListAsync(cancellationToken);
-            //foreach (var loc in locations)
-            //{
-            //    foreach (var air in airports)
-            //    {
-            //        if (air.Location.Id==loc.Id)
-            //        {
-            //            loc.Airports.Add(air);
-            //        }
-            //    }
-            //}
-            return new LocationQueryResponce { Locations = locations.ToDomain() };
-        }
+            foreach (var loc in locations)
+            {
+                foreach (var air in airports)
+
+                    try
+                    {
+                        if (air.Location != null && air.Location.Id == loc.Id)
+                        {
+                            loc.Airports.Add(air);
+                        }
+                    }
+                    catch (ArgumentNullException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+            }
+        
+            return new LocationQueryResponce { Locations = locations.ToDomain()
+    };
+}
     }
 }

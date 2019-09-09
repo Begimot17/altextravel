@@ -40,20 +40,5 @@ namespace AltexTravel.API.Controllers
             return responce.ToAction();
 
         }
-        public static void SetDefaultDB()
-        {
-            const string CONNECTION_STRING = @"Server=(localdb)\MSSQLLocalDB;Database=Booking-API;Trusted_Connection=True";
-
-            var optionsBuilder = new DbContextOptionsBuilder<TravelContext>();
-
-            var options = optionsBuilder
-                    .UseSqlServer(CONNECTION_STRING)
-                    .Options;
-            using (var context = new TravelContext(options))
-            {
-                TravelContextSeed.SeedAsync(context);
-            }
-        }
-
     }
 }
