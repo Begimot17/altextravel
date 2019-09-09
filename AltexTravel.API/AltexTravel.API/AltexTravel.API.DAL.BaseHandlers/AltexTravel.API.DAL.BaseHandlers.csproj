@@ -15,4 +15,8 @@
     <ProjectReference Include="..\AltexTravel.API.Domain\AltexTravel.API.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\" />
+  </ItemGroup>
+
 </Project>

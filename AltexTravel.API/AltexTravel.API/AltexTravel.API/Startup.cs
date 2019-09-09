@@ -1,4 +1,5 @@
-﻿using AltexTravel.API.DAL;
+﻿using AltexTravel.API.Amadeus.Settings;
+using AltexTravel.API.DAL;
 using AltexTravel.API.DAL.QueryHandlers.Features.Locations;
 using FluentValidation.AspNetCore;
 using MediatR;
@@ -25,7 +26,8 @@ namespace AltexTravel.API
         {
             //Add MediatR
             services.AddMediatR(typeof(LocationQueryHandler));
-
+            services.Configure<AmadeusSettings>(Configuration.GetSection("ApplicationSettings"));
+            services.AddOptions();
             //AddSwagger
             services.AddSwaggerGen(options =>
             {

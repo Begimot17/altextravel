@@ -4,21 +4,20 @@ using AltexTravel.API.DAL.Features.Locations;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AltexTravel.API.Amadeus
+namespace AltexTravel.API.DAL.Features.Locations
 {
     public static class LocationMapper
     {
-        public static List<IataCode> ToIataCode(this IEnumerable<IataCodeDal> locations)
+
+        public static List<IataCode> ToIata(this List<IataAmadeus> locations)
         {
-            return locations.Select(x => x.ToIataCode()).ToList();
+            return locations.Select(x => x.ToIata()).ToList();
         }
-        public static List<Location> ToLocations(this IEnumerable<LocationDal> locations)
+        public static IEnumerable<Location> ToLocation(this IEnumerable<LocationAmadeus> locations)
         {
             return locations.Select(x => x.ToLocation()).ToList();
         }
-
-
-        public static IataCode ToIataCode(this IataCodeDal model)
+        public static IataCode ToIata(this IataAmadeus model)
         {
             return (model != null) ?
                new IataCode
@@ -28,24 +27,25 @@ namespace AltexTravel.API.Amadeus
                } :
            new IataCode();
         }
-        public static Location ToLocation(this LocationDal model)
+        public static Location ToLocation(this LocationAmadeus model)
         {
             return (model.Airports != null) ?
-                new Location
-                {
-                    Name = model.Name,
-                    Code = model.Code,
-                    Type = model.Type,
-                    Airports = model.Airports.ToIataCode()
-                } :
-            new Location
-            {
-                Name = model.Name,
-                Code = model.Code,
-                Type = model.Type,
-                Airports = null
-            };
+               new Location
+               {
+                   Name = model.Name,
+                   Code = model.Code,
+                   Type = model.Type,
+                   Airports = model.Airports.ToIata()
+               } :
+           new Location
+           {
+               Name = model.Name,
+               Code = model.Code,
+               Type = model.Type,
+               Airports = null
+           };
         }
+
 
     }
 }

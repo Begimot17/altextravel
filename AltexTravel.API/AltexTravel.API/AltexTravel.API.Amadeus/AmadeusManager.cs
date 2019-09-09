@@ -1,6 +1,4 @@
 ﻿using AltexTravel.API.Amadeus.Models;
-using AltexTravel.API.DAL.Features.IataCodes;
-using AltexTravel.API.DAL.Features.Locations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,9 +14,9 @@ namespace AltexTravel.API.Amadeus
         const string apikey = "gZCS7tiyaRIIVihAoQFo2vARev7AnAVh";
         const string apisecret = "yb3SXyWAeLGblN8K";
         const string tokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token";
-        public static List<IataCodeDal> GetIatas()
+        public static List<IataAmadeus> GetIatas()
         {
-            var Iatas = new List<IataCodeDal>();
+            var Iatas = new List<IataAmadeus>();
             foreach (var item in GetLocations())
             {
                 if (item.Airports != null)
@@ -29,7 +27,7 @@ namespace AltexTravel.API.Amadeus
             }
             return Iatas;
         }
-        public static List<LocationDal> GetLocations()
+        public static List<LocationAmadeus> GetLocations()
         {
             string token = GetToken();
             var client = new HttpClient
@@ -41,7 +39,7 @@ namespace AltexTravel.API.Amadeus
             var response = client.SendAsync(request);
             string myJsonResponse = JsonConvert.DeserializeObject(response.Result.Content.ReadAsStringAsync().Result).ToString();
             client.Dispose();
-            return JsonToAmadeusModel(myJsonResponse).Data.ToLocations();
+            return JsonToAmadeusModel(myJsonResponse).Data;
 
         }
 
@@ -77,8 +75,7 @@ namespace AltexTravel.API.Amadeus
         public static AmadeusModel JsonToAmadeusModel(string strJson)
         {
             var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
-            var airports = new List<IataAmadeus>();
-            airports = data.Data.Where(x => x.Type == "AIRPORT").ToIataAmadeus();
+            var airports = data.Data.Where(x => x.Type == "AIRPORT");
             if (airports != null)
             {
                 foreach (var city in data.Data.Where(x => x.Type == "CITY"))
