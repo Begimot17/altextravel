@@ -19,31 +19,5 @@ namespace AltexTravel.API.Mappers
             Type = model.Type,
             Airports = model.Airports?.ToViewModel()
         };
-
-        public static List<IataCode> ToIatas(this List<IataAmadeus> locations) =>
-            locations.Select(x => x.ToIata()).ToList();
-
-        public static IEnumerable<Location> ToLocations(this List<LocationAmadeus> locations) =>
-            locations.Select(x => x.ToLocation());
-
-        public static IataCode ToIata(this IataAmadeus model)
-        {
-            return (model != null) ?
-               new IataCode
-               {
-                   Name = model.Name,
-                   Code = model.Code,
-               } :
-           new IataCode();
-        }
-
-        public static Location ToLocation(this LocationAmadeus model) => new Location
-        {
-            Name = model.Name,
-            Code = model.Code,
-            Type = model.Type,
-            Airports = model.Airports?.ToIatas()
-        };
-
     }
 }
