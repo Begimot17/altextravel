@@ -7,16 +7,14 @@ namespace AltexTravel.API.Mappers
     public static class IataMapper
     {
         public static IEnumerable<IataCodeViewModel> ToViewModel(this IEnumerable<Domain.IataCode> models) =>
-            models.Select(x => x.ToViewModel());
+            models.Select(x => x?.ToViewModel());
 
         public static IataCodeViewModel ToViewModel(this Domain.IataCode model) =>
-            (model != null) ?
               new IataCodeViewModel
               {
                   Name = model.Name,
                   Code = model.Code,
-              } :
-          new IataCodeViewModel();
+              };
     }
 }
 

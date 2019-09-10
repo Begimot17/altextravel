@@ -11,10 +11,11 @@ namespace AltexTravel.API.Amadeus
     public class AmadeusManager
     {
         private readonly HttpClient _client;
-        public AmadeusManager(AmadeusConfigurationProps amadeusConfigurationProps)
+        public AmadeusManager(AmadeusConfiguration amadeusConfigurationProps)
         {
-            _client = new HttpClient();
+            _client = new HttpClient(/*AmadeusConfiguration.BASE_URL*/);
         }
+
         public static List<IataAmadeus> GetIatas()
         {
             var Iatas = new List<IataAmadeus>();
@@ -24,12 +25,13 @@ namespace AltexTravel.API.Amadeus
             }
             return Iatas;
         }
+
         public static List<LocationAmadeus> GetLocations()
         {
             string token = GetToken();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(AmadeusConfigurationProps.URL);
+                client.BaseAddress = new Uri(AmadeusConfiguration.URL);
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
                 var response = client.GetAsync(string.Empty).GetAwaiter().GetResult();
                 string locationsJsonResponce = JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().GetAwaiter().GetResult()).ToString();
@@ -39,13 +41,12 @@ namespace AltexTravel.API.Amadeus
 
         private static string GetToken()
         {
-            string postData = $"grant_type=client_credentials&client_id={AmadeusConfigurationProps.API_KEY}&client_secret={AmadeusConfigurationProps.API_SECRET}";
-            using (var client = new HttpClient())
+            using (var client = new HttpClient(/*new HttpMessageHandler(AmadeusConfiguration.BASE_URL*/) )
             {
-                client.BaseAddress = new Uri(AmadeusConfigurationProps.TOKEN_URL);
+                client.BaseAddress = new Uri(AmadeusConfiguration.TOKEN_URL);
                 var request = new HttpRequestMessage(HttpMethod.Post, "")
                 {
-                    Content = new StringContent(postData,
+                    Content = new StringContent(AmadeusConfiguration.PostData,
                                         Encoding.UTF8,
                                         "application/x-www-form-urlencoded")
                 };
@@ -54,7 +55,7 @@ namespace AltexTravel.API.Amadeus
                 if (response.Result.IsSuccessStatusCode)
                 {
                     string jsonResponse = JsonConvert.DeserializeObject(response.Result.Content
-                        .ReadAsStringAsync().Result).ToString();
+                        .ReadAsStringAsync().GetAwaiter().GetResult()).ToString();
                     var jsonObject = JObject.Parse(jsonResponse);
                     string token = (string)jsonObject["access_token"];
                     return token;
@@ -68,10 +69,10 @@ namespace AltexTravel.API.Amadeus
         public static AmadeusModel JsonToAmadeusModel(string strJson)
         {
             var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
-            var airports = data.Data.Where(x => x.Type == "AIRPORT");
+            var airports = data.Data.Where(x => x.Type == LocationsEnum.AIRPORT.ToString());
             if (airports != null)
             {
-                foreach (var city in data.Data.Where(x => x.Type == "CITY"))
+                foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()))
                 {
                     city.Airports = new List<IataAmadeus>();
                     foreach (var air in airports)
