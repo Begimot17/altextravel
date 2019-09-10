@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace AltexTravel.API.Domain
 {
@@ -11,6 +9,6 @@ namespace AltexTravel.API.Domain
         public string Code { get; set; }
         public string Name { get; set; }
         public IEnumerable<IataCode> Airports { get; set; }
-        
+
     }
 }

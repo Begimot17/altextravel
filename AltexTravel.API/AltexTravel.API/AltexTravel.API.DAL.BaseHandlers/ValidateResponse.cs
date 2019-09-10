@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-using FluentValidation.Results;
-using MediatR;
+﻿using FluentValidation.Results;
+using System.Collections.Generic;
 
 namespace AltexTravel.API.DAL.BaseHandlers
 {

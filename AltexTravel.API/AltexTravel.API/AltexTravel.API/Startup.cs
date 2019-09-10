@@ -6,8 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
@@ -46,7 +44,7 @@ namespace AltexTravel.API
             //Add FluentValidation 
 
             services.AddMvc()
-  .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
 
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=Booking-API;Trusted_Connection=True;ConnectRetryCount=0";

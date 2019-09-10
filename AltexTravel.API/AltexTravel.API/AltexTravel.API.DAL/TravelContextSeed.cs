@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AltexTravel.API.DAL
 {
-    public  class TravelContextSeed
+    public class TravelContextSeed
     {
 
         public async Task SeedAsync(TravelContext context)

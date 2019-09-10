@@ -7,9 +7,7 @@ namespace AltexTravel.API.DAL
     public static class DefaultLocations
     {
         public static Location Locations { get; set; }
-        public static List<Location> GetLocations()
-        {
-            var locations = new List<Location>
+        public static List<Location> GetLocations() => new List<Location>
             {
                 new Location
                 {
@@ -51,7 +49,6 @@ namespace AltexTravel.API.DAL
                     Type="LocTypeDefault"
                 },
             };
-            return locations;
-        }
     }
 }
+

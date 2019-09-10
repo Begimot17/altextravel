@@ -7,12 +7,12 @@ namespace AltexTravel.API.DAL.Features.Locations
 {
     public static class LocationMapper
     {
-        public static List<IataCode> ToIata(this List<IataAmadeus> locations)=>
+        public static List<IataCode> ToIata(this List<IataAmadeus> locations) =>
             locations.Select(x => x.ToIata()).ToList();
-        
-        public static IEnumerable<Location> ToLocation(this IEnumerable<LocationAmadeus> locations)=>
+
+        public static IEnumerable<Location> ToLocation(this IEnumerable<LocationAmadeus> locations) =>
             locations.Select(x => x.ToLocation()).ToList();
-        
+
         public static IataCode ToIata(this IataAmadeus model)
         {
             return (model != null) ?

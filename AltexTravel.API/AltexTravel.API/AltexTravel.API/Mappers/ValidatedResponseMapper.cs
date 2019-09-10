@@ -1,11 +1,5 @@
 ﻿using AltexTravel.API.DAL.BaseHandlers;
-using AltexTravel.API.DAL.Queries.Features.Locations;
-using AltexTravel.API.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AltexTravel.API.Mappers
 {

@@ -1,7 +1,4 @@
-﻿using AltexTravel.API.Amadeus.Models;
-using AltexTravel.API.DAL.Features.IataCodes;
-using AltexTravel.API.DAL.Features.Locations;
-using AltexTravel.API.Models;
+﻿using AltexTravel.API.Models;
 using System.Collections.Generic;
 using System.Linq;
 

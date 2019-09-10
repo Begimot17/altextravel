@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AltexTravel.API.Domain
+﻿namespace AltexTravel.API.Domain
 {
     public class IataCode
     {

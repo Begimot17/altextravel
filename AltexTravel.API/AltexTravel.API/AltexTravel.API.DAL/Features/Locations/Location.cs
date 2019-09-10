@@ -1,6 +1,5 @@
-﻿using System;
+﻿using AltexTravel.API.DAL.Features.IataCodes;
 using System.Collections.Generic;
-using AltexTravel.API.DAL.Features.IataCodes;
 namespace AltexTravel.API.DAL.Features.Locations
 {
     public class Location
