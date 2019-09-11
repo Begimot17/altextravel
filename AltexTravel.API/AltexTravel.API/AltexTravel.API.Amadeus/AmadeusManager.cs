@@ -65,16 +65,18 @@ namespace AltexTravel.API.Amadeus
         public static AmadeusModel JsonToAmadeusModel(string strJson)
         {
             var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
-            var airports = data.Data?.Where(x => x.Type == LocationsEnum.AIRPORT.ToString());
-
-            foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()))
+            var airports = data.Data.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
+            if (airports.Count==0)
             {
-                city.Airports = new List<IataAmadeus>();
-                foreach (var air in airports)
+                foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()))
                 {
-                    if (air.Code == city.Code)
+                    city.Airports = new List<IataAmadeus>();
+                    foreach (var air in airports)
                     {
-                        city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Code });
+                        if (air.Code == city.Code)
+                        {
+                            city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Code });
+                        }
                     }
                 }
             }
