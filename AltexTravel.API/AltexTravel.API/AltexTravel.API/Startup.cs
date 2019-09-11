@@ -24,6 +24,9 @@ namespace AltexTravel.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.Configure<AmadeusConfiguration>(Configuration.GetSection("AmadeusConfiguration"));
+            services.AddSingleton(Configuration.GetSection("AmadeusConfiguration").Get<AmadeusConfiguration>());
+
             //Add MediatR
             services.AddMediatR(typeof(LocationQueryHandler));
 
@@ -44,7 +47,7 @@ namespace AltexTravel.API
 
             services.AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
-
+            
 
             var connection = @"Server=(localdb)\mssqllocaldb;Database=Booking-API;Trusted_Connection=True;ConnectRetryCount=0";
             //ADD EF

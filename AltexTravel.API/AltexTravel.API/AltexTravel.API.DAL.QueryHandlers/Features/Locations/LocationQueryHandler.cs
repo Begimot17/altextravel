@@ -17,8 +17,6 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Locations
         {
             _context = context;
         }
-        public async Task<LocationQueryResponce> Handle(LocationQuery request, CancellationToken cancellationToken) =>
-            await HandleAsync(request, cancellationToken);
 
         protected override async Task<LocationQueryResponce> HandleAsync(LocationQuery request, CancellationToken cancellationToken)
         {

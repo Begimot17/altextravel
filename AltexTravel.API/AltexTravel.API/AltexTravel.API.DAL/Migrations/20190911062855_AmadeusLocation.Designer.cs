@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AltexTravel.API.DAL.Migrations
 {
     [DbContext(typeof(TravelContext))]
-    [Migration("20190909142901_AmadeusLocation")]
+    [Migration("20190911062855_AmadeusLocation")]
     partial class AmadeusLocation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
