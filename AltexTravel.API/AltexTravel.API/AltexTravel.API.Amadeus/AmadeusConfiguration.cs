@@ -7,7 +7,7 @@ namespace AltexTravel.API.Amadeus
 {
     public class AmadeusConfiguration
     {
-        public const string UrlLocations = "https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT,CITY&keyword=r&page[limit]=1000";
+        public const string UrlLocations = "https://test.api.amadeus.com/v1/reference-data/locations?subType=AIRPORT,CITY&keyword=r&page[limit]=5000";
         public const string Apikey = "gZCS7tiyaRIIVihAoQFo2vARev7AnAVh";
         public const string Apisecret = "yb3SXyWAeLGblN8K";
         public const string TokenURL = "https://test.api.amadeus.com/v1/security/oauth2/token";

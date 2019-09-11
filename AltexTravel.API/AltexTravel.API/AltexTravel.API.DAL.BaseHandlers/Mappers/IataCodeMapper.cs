@@ -14,7 +14,8 @@ namespace AltexTravel.API.DAL.BaseHandlers.Mappers
             {
                 Id = model.Id,
                 Name = model.Name,
-                Code = model.Code
+                Code = model.Code,
+                Country=model.Country
             };
 
         public static IataCode ToDal(this Domain.IataCode model) =>
@@ -22,7 +23,8 @@ namespace AltexTravel.API.DAL.BaseHandlers.Mappers
         {
             Id = model.Id,
             Name = model.Name,
-            Code = model.Code
+            Code = model.Code,
+            Country=model.Country
         };
     }
 }

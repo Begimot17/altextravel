@@ -23,7 +23,9 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Locations
             var locations = await _context.Locations
                 .AsNoTracking()
                 .Include(x => x.Airports)
-                .Where(x => x.Name.Contains(request.Search) || x.Code.Contains(request.Search))
+                .Where(x => x.Name.Contains(request.Search)
+                || x.Code.Contains(request.Search)
+                || x.Country.Contains(request.Search))
                 .Take(request.Count)
                 .ToListAsync(cancellationToken);
             return new LocationQueryResponce

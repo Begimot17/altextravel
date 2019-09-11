@@ -7,6 +7,8 @@ namespace AltexTravel.API.DAL.Features.IataCodes
         public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
+        public string Country { get; set; }
+
         public virtual Location Location { get; set; }
     }
 }

@@ -18,13 +18,15 @@ namespace AltexTravel.API.DAL.Features.Locations
             {
                 Name = model.Name,
                 Code = model.Code,
+                Country=model.Country
             };
 
         public static Location ToLocation(this LocationAmadeus model) => new Location
         {
-            Name = model.Name,
-            Code = model.Code,
+            Name = model.Address.Name,
+            Code = model.Address.Code,
             Type = model.Type,
+            Country=model.Address.Country,
             Airports = model.Airports?.ToIata()
         };
 

@@ -7,10 +7,8 @@ namespace AltexTravel.API.Amadeus.Models
     {
         [JsonProperty("subType")]
         public string Type { get; set; }
-        [JsonProperty("name")]
-        public string Name { get; set; }
-        [JsonProperty("iataCode")]
-        public string Code { get; set; }
+        [JsonProperty("address")]
+        public AddressModel Address { get; set; }
         public List<IataAmadeus> Airports { get; set; }
     }
 }

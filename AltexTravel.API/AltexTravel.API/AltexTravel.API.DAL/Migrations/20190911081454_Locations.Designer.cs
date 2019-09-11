@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AltexTravel.API.DAL.Migrations
 {
     [DbContext(typeof(TravelContext))]
-    [Migration("20190911072008_Locations")]
+    [Migration("20190911081454_Locations")]
     partial class Locations
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,6 +28,8 @@ namespace AltexTravel.API.DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code");
+
+                    b.Property<string>("Country");
 
                     b.Property<int?>("LocationId");
 
@@ -47,6 +49,8 @@ namespace AltexTravel.API.DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code");
+
+                    b.Property<string>("Country");
 
                     b.Property<string>("Name");
 

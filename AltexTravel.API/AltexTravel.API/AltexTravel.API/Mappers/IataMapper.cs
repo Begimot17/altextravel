@@ -14,6 +14,7 @@ namespace AltexTravel.API.Mappers
               {
                   Name = model.Name,
                   Code = model.Code,
+                  Country=model.Country
               };
     }
 }

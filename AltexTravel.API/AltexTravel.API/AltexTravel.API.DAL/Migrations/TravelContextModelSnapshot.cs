@@ -27,6 +27,8 @@ namespace AltexTravel.API.DAL.Migrations
 
                     b.Property<string>("Code");
 
+                    b.Property<string>("Country");
+
                     b.Property<int?>("LocationId");
 
                     b.Property<string>("Name");
@@ -45,6 +47,8 @@ namespace AltexTravel.API.DAL.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Code");
+
+                    b.Property<string>("Country");
 
                     b.Property<string>("Name");
 

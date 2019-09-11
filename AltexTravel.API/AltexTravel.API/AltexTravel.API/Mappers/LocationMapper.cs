@@ -14,6 +14,7 @@ namespace AltexTravel.API.Mappers
             Name = model.Name,
             Code = model.Code,
             Type = model.Type,
+            Country=model.Country,
             Airports = model.Airports?.ToViewModel()
         };
     }
