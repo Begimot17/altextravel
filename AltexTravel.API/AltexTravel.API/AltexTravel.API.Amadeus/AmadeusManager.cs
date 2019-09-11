@@ -68,7 +68,7 @@ namespace AltexTravel.API.Amadeus
             var airports = data.Data.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
             if (airports.Count==0)
             {
-                foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()))
+                foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()).ToList())
                 {
                     city.Airports = new List<IataAmadeus>();
                     foreach (var air in airports)
