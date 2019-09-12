@@ -1,6 +1,4 @@
 ﻿using AltexTravel.API.Amadeus.Models;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -12,6 +10,12 @@ namespace AltexTravel.API.Amadeus
 {
     public class AmadeusManager
     {
+        private static AmadeusConfiguration _amadeusConfiguration;
+
+        public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
+        {
+            _amadeusConfiguration = amadeusConfiguration;
+        }
         public static List<IataAmadeus> GetIatas()
         {
             var Iatas = new List<IataAmadeus>();
@@ -27,10 +31,11 @@ namespace AltexTravel.API.Amadeus
             string token = GetToken();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(AmadeusConfiguration.UrlLocations);
+                client.BaseAddress = new Uri(_amadeusConfiguration.UrlLocations);
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
                 var response = client.GetAsync(string.Empty).GetAwaiter().GetResult();
-                string locationsJsonResponce = JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().GetAwaiter().GetResult()).ToString();
+                var httpResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                string locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
                 return JsonToAmadeusModel(locationsJsonResponce).Data;
             }
         }
@@ -39,10 +44,10 @@ namespace AltexTravel.API.Amadeus
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(AmadeusConfiguration.TokenURL);
+                client.BaseAddress = new Uri(_amadeusConfiguration.TokenURL);
                 var request = new HttpRequestMessage(HttpMethod.Post, "")
                 {
-                    Content = new StringContent(AmadeusConfiguration.Post,
+                    Content = new StringContent(_amadeusConfiguration.Post,
                                         Encoding.UTF8,
                                         "application/x-www-form-urlencoded")
                 };
