@@ -24,12 +24,8 @@ namespace AltexTravel.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<AmadeusConfiguration>(Configuration.GetSection("AmadeusConfiguration"));
             services.AddSingleton(Configuration.GetSection("AmadeusConfiguration").Get<AmadeusConfiguration>());
             services.AddSingleton<AmadeusManager>();
-
-            //var amadeusConfiguration = new AmadeusConfiguration();
-            //Configuration.GetSection("AmadeusConfiguration").Bind(amadeusConfiguration);
 
             //Add MediatR
             services.AddMediatR(typeof(LocationQueryHandler));

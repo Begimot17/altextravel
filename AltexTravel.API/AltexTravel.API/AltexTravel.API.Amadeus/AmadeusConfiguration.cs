@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace AltexTravel.API.Amadeus
 {
@@ -23,6 +20,6 @@ namespace AltexTravel.API.Amadeus
 
         public string BaseUrl { get; set; }
         public string TokenUrlQueryParams { get; set; }
-        public string TokenUrlQuery => BaseUrl + String.Format(TokenUrlQueryParams, ApiKey, ApiSecret);
+        public string TokenUrlQuery => String.Format(TokenUrlQueryParams, ApiKey, ApiSecret);
     }
 }
