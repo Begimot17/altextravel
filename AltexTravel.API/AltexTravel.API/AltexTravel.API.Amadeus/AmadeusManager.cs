@@ -1,4 +1,7 @@
 ﻿using AltexTravel.API.Amadeus.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -10,13 +13,14 @@ namespace AltexTravel.API.Amadeus
 {
     public class AmadeusManager
     {
-        private static AmadeusConfiguration _amadeusConfiguration;
+        private AmadeusConfiguration _amadeusConfiguration ;
 
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
-        }
-        public static List<IataAmadeus> GetIatas()
+            }
+
+        public List<IataAmadeus> GetIatas()
         {
             var Iatas = new List<IataAmadeus>();
             foreach (var item in GetLocations())
@@ -26,12 +30,12 @@ namespace AltexTravel.API.Amadeus
             return Iatas;
         }
 
-        public static List<LocationAmadeus> GetLocations()
+        public List<LocationAmadeus> GetLocations()
         {
             string token = GetToken();
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(_amadeusConfiguration.UrlLocations);
+                client.BaseAddress = new Uri(_amadeusConfiguration.TokenUrlQuery);
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
                 var response = client.GetAsync(string.Empty).GetAwaiter().GetResult();
                 var httpResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -40,14 +44,14 @@ namespace AltexTravel.API.Amadeus
             }
         }
 
-        private static string GetToken()
+        private string GetToken()
         {
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(_amadeusConfiguration.TokenURL);
+                client.BaseAddress = new Uri(_amadeusConfiguration.TokenUrlQuery);
                 var request = new HttpRequestMessage(HttpMethod.Post, "")
                 {
-                    Content = new StringContent(_amadeusConfiguration.Post,
+                    Content = new StringContent(_amadeusConfiguration.TokenUrlQuery,
                                         Encoding.UTF8,
                                         "application/x-www-form-urlencoded")
                 };
@@ -67,11 +71,11 @@ namespace AltexTravel.API.Amadeus
                 }
             }
         }
-        public static AmadeusModel JsonToAmadeusModel(string strJson)
+        public AmadeusModel JsonToAmadeusModel(string strJson)
         {
             var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
             var airports = data.Data.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
-            if (airports.Count!=0)
+            if (airports.Count != 0)
             {
                 foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()).ToList())
                 {
@@ -80,7 +84,7 @@ namespace AltexTravel.API.Amadeus
                     {
                         if (air.Address.Code == city.Address.Code)
                         {
-                            city.Airports.Add(new IataAmadeus { Name = air.Address.Name, Code = air.Address.Code, Country= air.Address.Country });
+                            city.Airports.Add(new IataAmadeus { Name = air.Address.Name, Code = air.Address.Code, Country = air.Address.Country });
                         }
                     }
                 }

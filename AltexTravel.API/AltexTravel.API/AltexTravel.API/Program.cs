@@ -1,4 +1,5 @@
-﻿using AltexTravel.API.DAL;
+﻿using AltexTravel.API.Amadeus;
+using AltexTravel.API.DAL;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -18,13 +19,14 @@ namespace AltexTravel.API
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
+                var amadeusManager = services.GetRequiredService<AmadeusManager>();
 
                 try
                 {
                     var context = services.
                         GetRequiredService<TravelContext>();
                     context.Database.Migrate();
-                    new TravelContextSeed().SeedAsync(context).Wait();
+                    new TravelContextSeed().SeedAsync(context, amadeusManager).Wait();
                 }
                 catch (Exception ex)
                 {

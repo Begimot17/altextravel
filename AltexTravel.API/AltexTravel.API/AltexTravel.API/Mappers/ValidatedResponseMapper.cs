@@ -1,28 +1,20 @@
 ﻿using AltexTravel.API.DAL.BaseHandlers;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace AltexTravel.API.Mappers
 {
     public static class ValidatedResponseMapper
     {
-        public static IActionResult ToAction<TResponce, TResult>(this ValidatedResponse<TResponce> responce, TResult result)
+        public static IActionResult ToAction<TResponce, TViewModel>(this ValidatedResponse<TResponce> responce, Func<TResponce, TViewModel> viewModelMapper)
         {
             if (responce.IsValid)
             {
-                return new OkObjectResult(result);
+                var viewModel = viewModelMapper(responce.Result);
+                return new OkObjectResult(viewModel);
             }
             return new BadRequestObjectResult(responce.Errors);
         }
-        public static IActionResult ToAction<TResponce>(this ValidatedResponse<TResponce> responce)
-        {
-
-            if (responce.IsValid)
-            {
-                return new OkObjectResult(responce.Result);
-            }
-            return new BadRequestObjectResult(responce.Errors);
-        }
-
 
     }
 }

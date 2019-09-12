@@ -26,6 +26,10 @@ namespace AltexTravel.API
         {
             //services.Configure<AmadeusConfiguration>(Configuration.GetSection("AmadeusConfiguration"));
             services.AddSingleton(Configuration.GetSection("AmadeusConfiguration").Get<AmadeusConfiguration>());
+            services.AddSingleton<AmadeusManager>();
+
+            //var amadeusConfiguration = new AmadeusConfiguration();
+            //Configuration.GetSection("AmadeusConfiguration").Bind(amadeusConfiguration);
 
             //Add MediatR
             services.AddMediatR(typeof(LocationQueryHandler));

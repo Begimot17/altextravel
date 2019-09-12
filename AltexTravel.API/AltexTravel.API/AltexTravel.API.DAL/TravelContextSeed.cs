@@ -9,18 +9,18 @@ namespace AltexTravel.API.DAL
     public class TravelContextSeed
     {
 
-        public async Task SeedAsync(TravelContext context)
+        public async Task SeedAsync(TravelContext context , AmadeusManager amadeusManager)
         {
             try
             {
                 if (!context.Locations.Any())
                 {
-                    context.Locations.AddRange(AmadeusManager.GetLocations().ToLocation());
+                    context.Locations.AddRange(amadeusManager.GetLocations().ToLocation());
                     await context.SaveChangesAsync();
                 }
                 if (!context.IataCodes.Any())
                 {
-                    context.IataCodes.AddRange(AmadeusManager.GetIatas().ToIata());
+                    context.IataCodes.AddRange(amadeusManager.GetIatas().ToIata());
                     await context.SaveChangesAsync();
                 }
             }
