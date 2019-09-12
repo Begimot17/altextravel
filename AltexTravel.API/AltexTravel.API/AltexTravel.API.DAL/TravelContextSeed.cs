@@ -15,7 +15,7 @@ namespace AltexTravel.API.DAL
             {
                 if (!context.Locations.Any())
                 {
-                    context.Locations.AddRange(amadeusManager.GetLocations().ToLocation());
+                    context.Locations.AddRange(amadeusManager.GetLocations().GetAwaiter().GetResult().ToLocation());
                     await context.SaveChangesAsync();
                 }
                 if (!context.IataCodes.Any())

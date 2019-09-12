@@ -6,65 +6,61 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
+
 namespace AltexTravel.API.Amadeus
 {
     public class AmadeusManager
     {
         private AmadeusConfiguration _amadeusConfiguration;
-
+        public HttpClient Client { get; set; }
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
+            Client = new HttpClient {BaseAddress= new Uri(_amadeusConfiguration.BaseUrl) };
         }
 
         public List<IataAmadeus> GetIatas()
         {
             var Iatas = new List<IataAmadeus>();
-            foreach (var item in GetLocations())
+            foreach (var item in GetLocations().GetAwaiter().GetResult())
             {
                 Iatas.AddRange(item?.Airports);
             }
             return Iatas;
         }
 
-        public List<LocationAmadeus> GetLocations()
+        public async Task<List<LocationAmadeus>> GetLocations()
         {
-            string token = GetToken();
-            using (var client = new HttpClient() { BaseAddress = new Uri(_amadeusConfiguration.UrlLocations) })
-            {
-                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
-                var response = client.GetAsync(string.Empty).GetAwaiter().GetResult();
-                var httpResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                string locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
-                return JsonToAmadeusModel(locationsJsonResponce).Data;
-            }
+            string token = await GetToken();
+            Client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+            var response = Client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
+            var httpResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            string locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
+            return JsonToAmadeusModel(locationsJsonResponce).Data;
         }
 
-        private string GetToken()
+        private async Task<string> GetToken()
         {
-            using (var client = new HttpClient() { BaseAddress = new Uri(_amadeusConfiguration.TokenUrl) })
+            var request = new HttpRequestMessage(HttpMethod.Post, _amadeusConfiguration.TokenUrl)
             {
-                client.BaseAddress = new Uri(_amadeusConfiguration.TokenUrl);
-                var request = new HttpRequestMessage(HttpMethod.Post, "")
-                {
-                    Content = new StringContent(_amadeusConfiguration.TokenUrlQuery,
-                                        Encoding.UTF8,
-                                        "application/x-www-form-urlencoded")
-                };
+                Content = new StringContent(_amadeusConfiguration.TokenUrlQuery,
+                                    Encoding.UTF8,
+                                    "application/x-www-form-urlencoded")
+            };
 
-                var response = client.SendAsync(request);
-                if (response.Result.IsSuccessStatusCode)
-                {
-                    string jsonResponse = JsonConvert.DeserializeObject(response.Result.Content
-                        .ReadAsStringAsync().GetAwaiter().GetResult()).ToString();
-                    var jsonObject = JObject.Parse(jsonResponse);
-                    string token = (string)jsonObject["access_token"];
-                    return token;
-                }
-                else
-                {
-                    return response.Result.ReasonPhrase;
-                }
+            var response = Client.SendAsync(request);
+            if (response.Result.IsSuccessStatusCode)
+            {
+                string jsonResponse = JsonConvert.DeserializeObject(response.Result.Content
+                    .ReadAsStringAsync().GetAwaiter().GetResult()).ToString();
+                var jsonObject = JObject.Parse(jsonResponse);
+                string token = (string)jsonObject["access_token"];
+                return token;
+            }
+            else
+            {
+                return response.Result.ReasonPhrase;
             }
         }
         public AmadeusModel JsonToAmadeusModel(string strJson)
