@@ -15,12 +15,12 @@ namespace AltexTravel.API.DAL
             {
                 if (!context.Locations.Any())
                 {
-                    context.Locations.AddRange(amadeusManager.GetLocations().ToLocation());
+                    context.Locations.AddRange(amadeusManager.GetLocations().GetAwaiter().GetResult().ToLocation());
                     await context.SaveChangesAsync();
                 }
                 if (!context.IataCodes.Any())
                 {
-                    context.IataCodes.AddRange(amadeusManager.GetIatas().ToIata());
+                    context.IataCodes.AddRange(amadeusManager.GetIatas().GetAwaiter().GetResult().ToIata());
                     await context.SaveChangesAsync();
                 }
             }

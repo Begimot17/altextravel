@@ -12,35 +12,37 @@ namespace AltexTravel.API.Amadeus
 {
     public class AmadeusManager
     {
+        private readonly HttpClient _client;
+
         private AmadeusConfiguration _amadeusConfiguration;
-        private readonly HttpClient Client;
+
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
-            Client = new HttpClient {BaseAddress= new Uri(_amadeusConfiguration.BaseUrl) };
+            _client = new HttpClient {BaseAddress= new Uri(_amadeusConfiguration.BaseUrl) };
         }
 
-        public List<IataAmadeus> GetIatas()
+        public async Task<List<IataAmadeus>> GetIatas()
         {
             var Iatas = new List<IataAmadeus>();
-            foreach (var item in GetLocations())
+            foreach (var item in await GetLocations())
             {
                 Iatas.AddRange(item?.Airports);
             }
             return Iatas;
         }
 
-        public List<LocationAmadeus> GetLocations()
+        public async Task<List<LocationAmadeus>> GetLocations()
         {
-            string token = GetToken();
-            Client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
-            var response = Client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
-            var httpResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            string token = await GetToken();
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+            var response = _client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
+            var httpResult = await response.Content.ReadAsStringAsync();
             string locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
             return JsonToAmadeusModel(locationsJsonResponce).Data;
         }
 
-        private string GetToken()
+        private async Task<string> GetToken()
         {
             var request = new HttpRequestMessage(HttpMethod.Post, _amadeusConfiguration.TokenUrl)
             {
@@ -49,11 +51,11 @@ namespace AltexTravel.API.Amadeus
                                     "application/x-www-form-urlencoded")
             };
 
-            var response = Client.SendAsync(request);
+            var response = _client.SendAsync(request);
             if (response.Result.IsSuccessStatusCode)
             {
-                string jsonResponse = JsonConvert.DeserializeObject(response.Result.Content
-                    .ReadAsStringAsync().GetAwaiter().GetResult()).ToString();
+                string jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
+                    .ReadAsStringAsync()).ToString();
                 var jsonObject = JObject.Parse(jsonResponse);
                 string token = (string)jsonObject["access_token"];
                 return token;
