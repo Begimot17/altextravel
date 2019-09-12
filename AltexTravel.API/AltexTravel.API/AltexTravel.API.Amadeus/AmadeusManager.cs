@@ -30,9 +30,8 @@ namespace AltexTravel.API.Amadeus
         public List<LocationAmadeus> GetLocations()
         {
             string token = GetToken();
-            using (var client = new HttpClient())
+            using (var client = new HttpClient() { BaseAddress = new Uri(_amadeusConfiguration.UrlLocations) })
             {
-                client.BaseAddress = new Uri(_amadeusConfiguration.UrlLocations);
                 client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
                 var response = client.GetAsync(string.Empty).GetAwaiter().GetResult();
                 var httpResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -43,7 +42,7 @@ namespace AltexTravel.API.Amadeus
 
         private string GetToken()
         {
-            using (var client = new HttpClient())
+            using (var client = new HttpClient() { BaseAddress = new Uri(_amadeusConfiguration.TokenUrl) })
             {
                 client.BaseAddress = new Uri(_amadeusConfiguration.TokenUrl);
                 var request = new HttpRequestMessage(HttpMethod.Post, "")
