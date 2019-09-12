@@ -13,7 +13,7 @@ namespace AltexTravel.API.Amadeus
     public class AmadeusManager
     {
         private AmadeusConfiguration _amadeusConfiguration;
-        public HttpClient Client { get; set; }
+        private readonly HttpClient Client;
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
@@ -23,16 +23,16 @@ namespace AltexTravel.API.Amadeus
         public List<IataAmadeus> GetIatas()
         {
             var Iatas = new List<IataAmadeus>();
-            foreach (var item in GetLocations().GetAwaiter().GetResult())
+            foreach (var item in GetLocations())
             {
                 Iatas.AddRange(item?.Airports);
             }
             return Iatas;
         }
 
-        public async Task<List<LocationAmadeus>> GetLocations()
+        public List<LocationAmadeus> GetLocations()
         {
-            string token = await GetToken();
+            string token = GetToken();
             Client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
             var response = Client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
             var httpResult = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -40,7 +40,7 @@ namespace AltexTravel.API.Amadeus
             return JsonToAmadeusModel(locationsJsonResponce).Data;
         }
 
-        private async Task<string> GetToken()
+        private string GetToken()
         {
             var request = new HttpRequestMessage(HttpMethod.Post, _amadeusConfiguration.TokenUrl)
             {
