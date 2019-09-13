@@ -7,10 +7,10 @@ namespace AltexTravel.API.Domain.Reccomendations
 {
     public class PriceDetails
     {
-        public double BaseFare { get; set; }
-        public List<double> Fees { get; set; }
-        public double Taxes { get; set; }
+        public decimal BaseFare { get; set; }
+        public List<decimal> Fees { get; set; }
+        public decimal Taxes { get; set; }
         public int NumberOfPassengers { get; set; }
-        public readonly double total;
+        public readonly decimal total;
     }
 }

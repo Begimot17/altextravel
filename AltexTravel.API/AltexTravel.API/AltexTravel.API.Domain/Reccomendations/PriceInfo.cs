@@ -9,6 +9,6 @@ namespace AltexTravel.API.Domain.Reccomendations
     {
         public string DataSource { get; set; }
         public PriceByPassengerType PriceByPassengerType { get; set; }
-        public double total { get; set; }
+        public decimal total { get; set; }
     }
 }
