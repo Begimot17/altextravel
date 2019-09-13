@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
-    public class RecommendationQuery : IRequest<ValidatedResponse<RecommendationQueryResponce>>
+    public class RecommendationQuery 
     {
         public string ReturnDate { get; set; }
         public string DepartureDate { get; set; }

@@ -1,5 +1,4 @@
-﻿using AltexTravel.API.DAL.Queries.Features.Recommendations;
-using AltexTravel.API.Models.SearchResult;
+﻿using AltexTravel.API.Models.SearchResult;
 using System;
 using System.Collections.Generic;
 
@@ -7,42 +6,42 @@ namespace AltexTravel.API
 {
     public class DefaultSearchResult
     {
-        public static RecommendationQueryResponce  RecommendationQuery()=>
-            new RecommendationQueryResponce
+        public static RecommendationsViewModel RecommendationQuery() =>
+            new RecommendationsViewModel
             {
-                Recommendations = new List<Domain.Reccomendations.Recommendation> {
-            new Domain.Reccomendations.Recommendation
+                Recommendations = new List<Recommendation> {
+            new Recommendation
             {
                 CachedFlightReference = "CachedFlightReference",
-                PriceDetails = new Domain.Reccomendations.PriceInfo
+                PriceDetails = new PriceInfo
                 {
                     DataSource = "DataSource",
-                    PriceByPassengerType = new Domain.Reccomendations.PriceByPassengerType
+                    PriceByPassengerType = new PriceByPassengerType
                     {
-                        Adult = new Domain.Reccomendations.PriceDetails
+                        Adult = new PriceDetails
                         {
                             BaseFare = 0,
-                            Fees = new List<double>
+                            Fees = new List<decimal>
                             {
                                 0,0,0
                             },
                             NumberOfPassengers = 0,
                             Taxes = 0,
                         },
-                        Child = new Domain.Reccomendations.PriceDetails
+                        Child = new PriceDetails
                         {
                             BaseFare = 0,
-                            Fees = new List<double>
+                            Fees = new List<decimal>
                             {
                                 0,0,0
                             },
                             NumberOfPassengers = 0,
                             Taxes = 0,
                         },
-                        Infant = new Domain.Reccomendations.PriceDetails
+                        Infant = new PriceDetails
                         {
                             BaseFare = 0,
-                            Fees =new List<double>
+                            Fees =new List<decimal>
                             {
                                 0,0,0
                             },
@@ -51,23 +50,23 @@ namespace AltexTravel.API
                         }
                      }
                 },
-                Segments = new List<Domain.Reccomendations.Segment>
+                Segments = new List<Segment>
                 {
-                    new Domain.Reccomendations.Segment
+                    new Segment
                     {
                         ElapseFlyingTime="ElapseFlyingTime",
-                        Flights=new List<Domain.Reccomendations.Flight>
+                        Flights=new List<Flight>
                         {
-                            new Domain.Reccomendations.Flight
+                            new Flight
                             {
                                 ArrivalTime=DateTime.Now,
-                                Cabin=Domain.Reccomendations.Cabins.Economy,
-                                MarketingCarrier=new Domain.Reccomendations.Airline
+                                Cabin=Cabins.Economy,
+                                MarketingCarrier=new Airline
                                 {
                                     Code="Code",
                                     Name="Name"
                                 },
-                                EquipmentType=new Domain.Reccomendations.EquipmentType
+                                EquipmentType=new EquipmentType
                                 {
                                     Code="Code",
                                     Name="Name"
@@ -77,16 +76,16 @@ namespace AltexTravel.API
                                 FlyingTime="FlyingTime",
                                 FreeBaggage="FreeBaggage",
                                 Layover="Layover",
-                                OperatingCarrier=new Domain.Reccomendations.Airline
+                                OperatingCarrier=new Airline
                                 {
                                     Code="Code",
                                     Name="Name"
                                 },
-                                Route=new Domain.Reccomendations.AirportPair
+                                Route=new AirportPair
                                 {
-                                    ArrivalPort=new Domain.Reccomendations.Airport
+                                    ArrivalPort=new Airport
                                     {
-                                        City=new Domain.Reccomendations.City
+                                        City=new City
                                         {
                                             Code="Code",
                                             CountryCode="CountryCode",
@@ -96,9 +95,9 @@ namespace AltexTravel.API
                                         Name="Name"
 
                                     },
-                                    DeparturePort=new Domain.Reccomendations.Airport
+                                    DeparturePort=new Airport
                                     {
-                                        City=new Domain.Reccomendations.City
+                                        City=new City
                                         {
                                             Code="Code",
                                             CountryCode="CountryCode",
@@ -116,7 +115,7 @@ namespace AltexTravel.API
             }
         }
             };
-        
+
     }
 }
 

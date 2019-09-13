@@ -9,6 +9,6 @@ namespace AltexTravel.API.Models.SearchResult
     {
         public string DataSource { get; set; }
         public PriceByPassengerType PriceByPassengerType { get; set; }
-        public decimal total { get; set; }
+        public decimal Total { get; set; }
     }
 }

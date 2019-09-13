@@ -21,29 +21,10 @@ namespace AltexTravel.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<Domain.Reccomendations.Recommendation>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(List<Domain.Reccomendations.Recommendation>), StatusCodes.Status400BadRequest)]
-        public IActionResult RoundTrip(string arrivalPort,
-            string cabin, bool demandDirectFlight, string departureDate, string departurePort,
-            string returnDate, string currencyCode = null, int maximumNumberOfRecommendations = 0,
-            int numberOfAdults = 0, int numberOfChildren = 0, int numberOfInfants = 0
-            )
+        [ProducesResponseType(typeof(RecommendationsViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult RoundTrip(RecommendationQuery recommendationQuery)
         {
-
-            var request = new RecommendationQuery
-            {
-                ArrivalPort = arrivalPort,
-                CurrencyCode = currencyCode,
-                Cabin = cabin,
-                DemandDirectFlight = demandDirectFlight,
-                DepartureDate = departureDate,
-                DeparturePort = departurePort,
-                MaximumNumberOfRecommendations = maximumNumberOfRecommendations,
-                NumberOfAdults = numberOfAdults,
-                NumberOfChildren = numberOfChildren,
-                NumberOfInfants = numberOfInfants,
-                ReturnDate = returnDate
-            };
             return new OkObjectResult(DefaultSearchResult.RecommendationQuery().Recommendations);
         }
     }

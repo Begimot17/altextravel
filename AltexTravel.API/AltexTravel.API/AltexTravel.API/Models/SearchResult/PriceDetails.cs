@@ -11,6 +11,6 @@ namespace AltexTravel.API.Models.SearchResult
         public List<decimal> Fees { get; set; }
         public decimal Taxes { get; set; }
         public int NumberOfPassengers { get; set; }
-        public readonly decimal total;
+        public decimal Total { get; set; }
     }
 }
