@@ -1,10 +1,12 @@
-﻿using AltexTravel.API.Models;
+﻿using AltexTravel.API.DAL.Queries.Features.Locations;
+using AltexTravel.API.Mappers;
+using AltexTravel.API.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Threading.Tasks;
 
 namespace AltexTravel.API.Controllers
 {
@@ -17,17 +19,15 @@ namespace AltexTravel.API.Controllers
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
+
         [HttpGet]
         [ProducesResponseType(typeof(List<LocationViewModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(List<LocationViewModel>), StatusCodes.Status400BadRequest)]
-        public IActionResult Locations(string search, int count)
+        public async Task<IActionResult> Locations(string search, int count)
         {
-            var locations = DefaultLocations.GetLocations();
-            if (locations==null)
-            {
-                return BadRequest();
-            }
-            return Ok(locations);
+            var request = new LocationQuery { Search = search, Count = count };
+            var responce = await _mediator.Send(request);
+            return responce.ToAction(r => r.ToViewModel());
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using AltexTravel.API.Domain;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace AltexTravel.API.DAL.BaseHandlers
 {

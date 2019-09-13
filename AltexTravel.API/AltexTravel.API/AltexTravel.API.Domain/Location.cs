@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace AltexTravel.API.Models
+namespace AltexTravel.API.Domain
 {
-    public class LocationViewModel
+    public class Location
     {
+        public int Id { get; set; }
         public string Type { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
         public string Country { get; set; }
 
-        public IEnumerable<IataCodeViewModel> Airports { get; set; }
+        public IEnumerable<IataCode> Airports { get; set; }
+
     }
 }
