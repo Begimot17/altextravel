@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AltexTravel.API.DAL.Queries.Features.Recommendations;
-using AltexTravel.API.Mappers;
+﻿using AltexTravel.API.DAL.Queries.Features.Recommendations;
 using AltexTravel.API.Models.SearchResult;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace AltexTravel.API.Controllers
 {
