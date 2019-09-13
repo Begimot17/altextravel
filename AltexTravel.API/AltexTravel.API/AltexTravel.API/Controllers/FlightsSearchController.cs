@@ -44,8 +44,7 @@ namespace AltexTravel.API.Controllers
                 NumberOfInfants = numberOfInfants,
                 ReturnDate = returnDate
             };
-            var x = new OkObjectResult(DefaultSearchResult.RecommendationQuery().Recommendations);
-            return x;
+            return new OkObjectResult(DefaultSearchResult.RecommendationQuery().Recommendations);
         }
     }
 }
