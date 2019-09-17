@@ -25,6 +25,7 @@ namespace AltexTravel.API
                 {
                     var context = services.
                         GetRequiredService<TravelContext>();
+                    context.Database.EnsureCreated();
                     context.Database.Migrate();
                     new TravelContextSeed().SeedAsync(context, amadeusManager).Wait();
                 }

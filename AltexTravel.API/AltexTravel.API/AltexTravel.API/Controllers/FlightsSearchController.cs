@@ -1,9 +1,11 @@
 ﻿using AltexTravel.API.DAL.Queries.Features.Recommendations;
+using AltexTravel.API.Mappers;
 using AltexTravel.API.Models.SearchResult;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace AltexTravel.API.Controllers
 {
@@ -17,12 +19,14 @@ namespace AltexTravel.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(RecommendationsViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult RoundTrip(RecommendationQuery recommendationQuery)
+        public async Task<IActionResult> RoundTrip(RecommendationQuery recommendationQuery)
         {
-            return new OkObjectResult(DefaultSearchResult.RecommendationQuery().Recommendations);
+            var responce = await _mediator.Send(recommendationQuery);
+            var result =responce.Result.ToViewModel();
+            return new OkObjectResult(result);
         }
     }
 }

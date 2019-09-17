@@ -10,10 +10,6 @@ namespace AltexTravel.API.Mappers
     {
         public static IEnumerable<LocationViewModel> ToViewModel(this LocationQueryResponce model)=>
             model.Locations.Select(x => x.ToViewModel());
-        
-
-        public static IEnumerable<LocationViewModel> ToViewModel(this IEnumerable<Domain.Location> models) =>
-            models.Select(x => x.ToViewModel());
 
         public static LocationViewModel ToViewModel(this Domain.Location model) => new LocationViewModel
         {

@@ -1,4 +1,5 @@
 ﻿using AltexTravel.API.Amadeus.Models;
+using AltexTravel.API.Amadeus.Models.SearchResult;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -19,7 +20,7 @@ namespace AltexTravel.API.Amadeus
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
-            _client = new HttpClient {BaseAddress= new Uri(_amadeusConfiguration.BaseUrl) };
+            _client = new HttpClient { BaseAddress = new Uri(_amadeusConfiguration.BaseUrl) };
         }
 
         public async Task<List<IataAmadeus>> GetIatas()
@@ -30,6 +31,16 @@ namespace AltexTravel.API.Amadeus
                 Iatas.AddRange(item?.Airports);
             }
             return Iatas;
+        }
+
+        public async Task<SearchResult> GetSearchResult(string queryParams)
+        {
+            string token = await GetToken();
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+            var response = _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams).GetAwaiter().GetResult();
+            var httpResult = await response.Content.ReadAsStringAsync();
+            string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
+            return JsonToSearchAmadeusModel(searchJsonResponce);
         }
 
         public async Task<List<LocationAmadeus>> GetLocations()
@@ -65,6 +76,7 @@ namespace AltexTravel.API.Amadeus
                 return response.Result.ReasonPhrase;
             }
         }
+
         public AmadeusModel JsonToAmadeusModel(string strJson)
         {
             var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
@@ -83,6 +95,13 @@ namespace AltexTravel.API.Amadeus
                     }
                 }
             }
+            return data;
+        }
+
+        public static SearchResult JsonToSearchAmadeusModel(string strJson)
+        {
+            var data = JsonConvert.DeserializeObject<SearchResult>(strJson);
+
             return data;
         }
     }

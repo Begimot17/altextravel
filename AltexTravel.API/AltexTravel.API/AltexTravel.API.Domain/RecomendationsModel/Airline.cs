@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AltexTravel.API.Models.SearchResult
+namespace AltexTravel.API.Domain.RecomendationsModel
 {
-    public class EquipmentType
+    public class Airline
     {
         public string Code { get; set; }
         public string Name { get; set; }
