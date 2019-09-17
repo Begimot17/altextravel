@@ -17,6 +17,8 @@ namespace AltexTravel.API.Amadeus
 
         private AmadeusConfiguration _amadeusConfiguration;
 
+        public string Token { get; set; }
+
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
@@ -35,8 +37,11 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<SearchResult> GetSearchResult(string queryParams)
         {
-            string token = await GetToken();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+            if (Token==null)
+            {
+                Token = await GetToken();
+            }
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var response = _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams).GetAwaiter().GetResult();
             var httpResult = await response.Content.ReadAsStringAsync();
             string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();

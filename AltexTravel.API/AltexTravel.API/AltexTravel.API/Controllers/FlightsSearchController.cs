@@ -25,7 +25,7 @@ namespace AltexTravel.API.Controllers
         public async Task<IActionResult> RoundTrip(RecommendationQuery recommendationQuery)
         {
             var responce = await _mediator.Send(recommendationQuery);
-            var result =responce.Result.ToViewModel();
+            var result = responce.Result.ToViewModel();
             return new OkObjectResult(result);
         }
     }

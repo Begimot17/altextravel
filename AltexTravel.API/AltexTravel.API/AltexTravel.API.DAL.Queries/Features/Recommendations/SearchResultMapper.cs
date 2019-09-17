@@ -1,4 +1,5 @@
 ﻿using AltexTravel.API.Amadeus.Models.SearchResult;
+using AltexTravel.API.DAL.Features.SearchResult;
 using AltexTravel.API.Domain.RecomendationsModel;
 using System;
 using System.Linq;
@@ -72,8 +73,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 
         public static Flight ToDomain(this Amadeus.Models.SearchResult.Segment model)
         {
-            //var airportArrival = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode);
-            //var airportDeparture = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode);
+            var airportArrival = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode);
+            var airportDeparture = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode);
 
             return new Flight
             {
