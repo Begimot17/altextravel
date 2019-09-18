@@ -7,6 +7,8 @@ namespace AltexTravel.API.Models.SearchResult
 {
     public class Flight
     {
+
+        public string ElapseFlyingTime { get; set; }
         public string ArrivalTime { get; set; }
         public string DepartureTime { get; set; }
 

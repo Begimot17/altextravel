@@ -35,7 +35,7 @@ namespace AltexTravel.API.Amadeus
             return Iatas;
         }
 
-        public async Task<SearchResult> GetSearchResult(string queryParams)
+        public async Task<AmadeusSearchResult> GetSearchResult(string queryParams)
         {
             if (Token==null)
             {
@@ -45,17 +45,24 @@ namespace AltexTravel.API.Amadeus
             var response = _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams).GetAwaiter().GetResult();
             var httpResult = await response.Content.ReadAsStringAsync();
             string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
-            return JsonToSearchAmadeusModel(searchJsonResponce);
+            return JsonToAmadeusSearchResultModel(searchJsonResponce);
         }
 
         public async Task<List<LocationAmadeus>> GetLocations()
         {
-            string token = await GetToken();
+            
+            var token = await GetToken();
             _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
-            var response = _client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
-            var httpResult = await response.Content.ReadAsStringAsync();
-            string locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
-            return JsonToAmadeusModel(locationsJsonResponce).Data;
+            var fullLocations = new List<LocationAmadeus>();
+            foreach (var key in _amadeusConfiguration.Keywords)
+            {
+                _amadeusConfiguration.Keyword = key;
+                var response = _client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
+                var httpResult = await response.Content.ReadAsStringAsync();
+                var locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
+                fullLocations.AddRange(JsonToAmadeusLocationModel(locationsJsonResponce).Data);
+            }
+            return fullLocations;
         }
 
         private async Task<string> GetToken()
@@ -70,10 +77,10 @@ namespace AltexTravel.API.Amadeus
             var response = _client.SendAsync(request);
             if (response.Result.IsSuccessStatusCode)
             {
-                string jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
+                var jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
                     .ReadAsStringAsync()).ToString();
                 var jsonObject = JObject.Parse(jsonResponse);
-                string token = (string)jsonObject["access_token"];
+                var token = (string)jsonObject["access_token"];
                 return token;
             }
             else
@@ -82,9 +89,9 @@ namespace AltexTravel.API.Amadeus
             }
         }
 
-        public AmadeusModel JsonToAmadeusModel(string strJson)
+        public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson)
         {
-            var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
+            var data = JsonConvert.DeserializeObject<AmadeusLocationModel>(strJson);
             var airports = data.Data.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
             if (airports.Count != 0)
             {
@@ -103,9 +110,9 @@ namespace AltexTravel.API.Amadeus
             return data;
         }
 
-        public static SearchResult JsonToSearchAmadeusModel(string strJson)
+        public AmadeusSearchResult JsonToAmadeusSearchResultModel(string strJson)
         {
-            var data = JsonConvert.DeserializeObject<SearchResult>(strJson);
+            var data = JsonConvert.DeserializeObject<AmadeusSearchResult>(strJson);
 
             return data;
         }

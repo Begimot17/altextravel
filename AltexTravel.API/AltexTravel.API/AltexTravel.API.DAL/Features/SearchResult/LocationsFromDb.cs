@@ -22,7 +22,7 @@ namespace AltexTravel.API.DAL.Features.SearchResult
             var local = _context.IataCodes
                  .AsNoTracking()
                  .Include(x => x.Location)
-                 .FirstAsync(x => x.Code.Contains(code)).GetAwaiter().GetResult();
+                 .First(x => x.Code.Contains(code));
             return local;
         }
     }

@@ -5,9 +5,10 @@ using System.Text;
 
 namespace AltexTravel.API.Amadeus.Models.SearchResult
 {
-    public class SearchResult
+    public class AmadeusSearchResult
     {
         [JsonProperty("data")]
         public List<Data> Data { get; set; }
+        
     }
 }

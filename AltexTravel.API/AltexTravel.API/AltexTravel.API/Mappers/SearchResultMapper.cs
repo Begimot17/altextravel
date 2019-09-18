@@ -67,6 +67,7 @@ namespace AltexTravel.API.Mappers
         public static Models.SearchResult.Flight ToViewModel(this Domain.RecomendationsModel.Flight model) =>
             new Models.SearchResult.Flight
             {
+                ElapseFlyingTime=model.ElapseFlyingTime,
                 ArrivalTime = model.ArrivalTime,
                 DepartureTime = model.DepartureTime,
                 Cabin = model.Cabin,

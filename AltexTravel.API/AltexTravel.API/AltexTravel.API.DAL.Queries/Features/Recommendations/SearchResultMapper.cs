@@ -7,7 +7,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
     public static class SearchResultMapper
     {
-        public static RecommendationQueryResponce ToDomain(this SearchResult model) =>
+        public static RecommendationQueryResponce ToDomain(this AmadeusSearchResult model) =>
             new RecommendationQueryResponce
             {
                 FullRecommendations =model.Data.Select(x => x?.ToDomain()).ToList() 
@@ -67,7 +67,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         public static Domain.RecomendationsModel.Segment ToDomain(this Services model) =>
             new Domain.RecomendationsModel.Segment
             {
-                ElapseFlyingTime="TODO",
                 Flights = model.Segments.Select(x => x?.ToDomain()).ToList(),
             };
 
@@ -78,9 +77,10 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 
             return new Flight
             {
+                ElapseFlyingTime=model.FlightSegment.Duration,
                 EquipmentType= new EquipmentType
                 {
-                    Code="TODO",
+                    Code=model.FlightSegment.Aircraft.Code,
                     Name= "TODO"
                 },
                 FreeBaggage="TODO",

@@ -8,7 +8,7 @@ namespace AltexTravel.API.Mappers
 {
     public static class LocationMapper
     {
-        public static IEnumerable<LocationViewModel> ToViewModel(this LocationQueryResponce model)=>
+        public static IEnumerable<LocationViewModel> ToViewModel(this LocationQueryResponce model) =>
             model.Locations.Select(x => x.ToViewModel());
 
         public static LocationViewModel ToViewModel(this Domain.Location model) => new LocationViewModel
@@ -16,7 +16,7 @@ namespace AltexTravel.API.Mappers
             Name = model.Name,
             Code = model.Code,
             Type = model.Type,
-            Country=model.Country,
+            Country = model.Country,
             Airports = model.Airports?.ToViewModel()
         };
     }
