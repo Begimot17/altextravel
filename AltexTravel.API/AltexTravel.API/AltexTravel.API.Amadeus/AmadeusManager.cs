@@ -30,6 +30,7 @@ namespace AltexTravel.API.Amadeus
             var Iatas = new List<IataAmadeus>();
             foreach (var item in await GetLocations())
             {
+
                 Iatas.AddRange(item?.Airports);
             }
             return Iatas;

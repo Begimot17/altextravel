@@ -7,9 +7,9 @@ namespace AltexTravel.API.Amadeus
     {
 
         public string UrlLocationsPath { get; set; }
+        public IEnumerable<char> Keywords = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         public char Keyword { get; set; }
         public string UrlLocations => BaseUrl + String.Format(UrlLocationsPath, Keyword);
-        public IEnumerable<char> Keywords = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         public string UrlSearchPath { get; set; }
         public string UrlSearch => BaseUrl + UrlSearchPath;
 

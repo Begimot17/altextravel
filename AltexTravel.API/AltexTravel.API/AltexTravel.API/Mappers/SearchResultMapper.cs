@@ -1,8 +1,8 @@
 ﻿using AltexTravel.API.DAL.Queries.Features.Recommendations;
-using AltexTravel.API.Domain.RecomendationsModel;
 using AltexTravel.API.Models.SearchResult;
 using System.Collections.Generic;
 using System.Linq;
+using Domain = AltexTravel.API.Domain.RecomendationsModel;
 
 namespace AltexTravel.API.Mappers
 {
@@ -11,22 +11,22 @@ namespace AltexTravel.API.Mappers
         public static List<RecommendationsViewModel> ToViewModel(this RecommendationQueryResponce model) =>
             model.FullRecommendations.Select(x => x?.ToViewModel()).ToList();
 
-        public static RecommendationsViewModel ToViewModel(this FullRecommendations model) =>
+        public static RecommendationsViewModel ToViewModel(this Domain::FullRecommendations model) =>
             new RecommendationsViewModel
             {
                 Recommendations = model.Recommendations.Select(x => x?.ToViewModel()).ToList()
             };
 
-        public static Models.SearchResult.Recommendation ToViewModel(this Domain.RecomendationsModel.Recommendation model) =>
-            new Models.SearchResult.Recommendation
+        public static Recommendation ToViewModel(this Domain::Recommendation model) =>
+            new Recommendation
             {
                 CachedFlightReference = model.CachedFlightReference,
-                PriceDetails = new Models.SearchResult.PriceInfo
+                PriceDetails = new PriceInfo
                 {
                     DataSource = model.PriceDetails.DataSource,
-                    PriceByPassengerType = new Models.SearchResult.PriceByPassengerType
+                    PriceByPassengerType = new PriceByPassengerType
                     {
-                        Adult = new Models.SearchResult.PriceDetails
+                        Adult = new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Adult.BaseFare,
                             NumberOfPassengers = model.PriceDetails.PriceByPassengerType.Adult.NumberOfPassengers,
@@ -34,7 +34,7 @@ namespace AltexTravel.API.Mappers
                             Taxes = model.PriceDetails.PriceByPassengerType.Adult.Taxes,
                             Fees = model.PriceDetails.PriceByPassengerType.Adult.Fees,
                         },
-                        Child = new Models.SearchResult.PriceDetails
+                        Child = new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Child.BaseFare,
                             NumberOfPassengers = model.PriceDetails.PriceByPassengerType.Child.NumberOfPassengers,
@@ -42,7 +42,7 @@ namespace AltexTravel.API.Mappers
                             Taxes = model.PriceDetails.PriceByPassengerType.Child.Taxes,
                             Fees = model.PriceDetails.PriceByPassengerType.Child.Fees,
                         },
-                        Infant = new Models.SearchResult.PriceDetails
+                        Infant = new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Infant.BaseFare,
                             NumberOfPassengers = model.PriceDetails.PriceByPassengerType.Infant.NumberOfPassengers,
@@ -55,19 +55,18 @@ namespace AltexTravel.API.Mappers
                 },
                 Segments = model.Segments?.ToViewModel()
             };
-        public static List<Models.SearchResult.Segment> ToViewModel(this List<Domain.RecomendationsModel.Segment> model) =>
+        public static List<Segment> ToViewModel(this List<Domain::Segment> model) =>
             model.Select(x => x?.ToViewModel()).ToList();
 
-        public static Models.SearchResult.Segment ToViewModel(this Domain.RecomendationsModel.Segment model) =>
-            new Models.SearchResult.Segment
+        public static Segment ToViewModel(this Domain::Segment model) =>
+            new Segment
             {
                 Flights = model.Flights.Select(x => x?.ToViewModel()).ToList()
             };
 
-        public static Models.SearchResult.Flight ToViewModel(this Domain.RecomendationsModel.Flight model) =>
-            new Models.SearchResult.Flight
+        public static Flight ToViewModel(this Domain::Flight model) =>
+            new Flight
             {
-                ElapseFlyingTime=model.ElapseFlyingTime,
                 ArrivalTime = model.ArrivalTime,
                 DepartureTime = model.DepartureTime,
                 Cabin = model.Cabin,
@@ -82,21 +81,21 @@ namespace AltexTravel.API.Mappers
                     Code = model.EquipmentType.Code,
                     Name = model.EquipmentType.Name
                 },
-                MarketingCarrier = new Models.SearchResult.Airline
+                MarketingCarrier = new Airline
                 {
                     Code = model.MarketingCarrier.Code,
                     Name = model.MarketingCarrier.Code
                 },
-                OperatingCarrier = new Models.SearchResult.Airline
+                OperatingCarrier = new Airline
                 {
                     Code = model.OperatingCarrier.Code,
                     Name = model.OperatingCarrier.Name
                 },
-                Route = new Models.SearchResult.AirportPair
+                Route = new AirportPair
                 {
-                    ArrivalPort = new Models.SearchResult.Airport
+                    ArrivalPort = new Airport
                     {
-                        City = new Models.SearchResult.City
+                        City = new City
                         {
                             Code = model.Route.ArrivalPort.City.Code,
                             Name = model.Route.ArrivalPort.City.Name,
@@ -105,9 +104,9 @@ namespace AltexTravel.API.Mappers
                         Name = model.Route.ArrivalPort.Name,
                         Code = model.Route.ArrivalPort.Code
                     },
-                    DeparturePort = new Models.SearchResult.Airport
+                    DeparturePort = new Airport
                     {
-                        City = new Models.SearchResult.City
+                        City = new City
                         {
                             Code = model.Route.DeparturePort.City.Code,
                             Name = model.Route.DeparturePort.City.Name,
