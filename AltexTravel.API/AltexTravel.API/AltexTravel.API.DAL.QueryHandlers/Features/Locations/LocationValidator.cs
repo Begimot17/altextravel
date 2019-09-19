@@ -7,7 +7,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Locations
     {
         public LocationValidator()
         {
-            RuleFor(x => x.Count).GreaterThan(10);
+            RuleFor(x => x.Count).GreaterThan(1);
             RuleFor(x => x.Search).NotEmpty();
         }
     }

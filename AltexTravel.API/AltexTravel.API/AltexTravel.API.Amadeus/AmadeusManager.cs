@@ -17,7 +17,6 @@ namespace AltexTravel.API.Amadeus
 
         private AmadeusConfiguration _amadeusConfiguration;
 
-        public string Token { get; set; }
 
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
@@ -25,23 +24,10 @@ namespace AltexTravel.API.Amadeus
             _client = new HttpClient { BaseAddress = new Uri(_amadeusConfiguration.BaseUrl) };
         }
 
-        public async Task<List<IataAmadeus>> GetIatas()
-        {
-            var Iatas = new List<IataAmadeus>();
-            foreach (var item in await GetLocations())
-            {
-
-                Iatas.AddRange(item?.Airports);
-            }
-            return Iatas;
-        }
 
         public async Task<AmadeusSearchResult> GetSearchResult(string queryParams)
         {
-            if (Token==null)
-            {
-                Token = await GetToken();
-            }
+            var Token = await GetToken();
             _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var response = _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams).GetAwaiter().GetResult();
             var httpResult = await response.Content.ReadAsStringAsync();
@@ -51,9 +37,9 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<List<LocationAmadeus>> GetLocations()
         {
-            
-            var token = await GetToken();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
+
+            var Token = await GetToken();
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var fullLocations = new List<LocationAmadeus>();
             foreach (var key in _amadeusConfiguration.Keywords)
             {
@@ -103,7 +89,7 @@ namespace AltexTravel.API.Amadeus
                     {
                         if (air.Address.Code == city.Address.Code)
                         {
-                            city.Airports.Add(new IataAmadeus { Name = air.Address.Name, Code = air.Address.Code, Country = air.Address.Country });
+                            city.Airports.Add(new IataAmadeus { Name = air.Address.Name, Code = air.Address.Code, Country = air.Address.Country});
                         }
                     }
                 }
