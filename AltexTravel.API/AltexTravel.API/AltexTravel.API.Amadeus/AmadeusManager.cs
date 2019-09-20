@@ -82,7 +82,7 @@ namespace AltexTravel.API.Amadeus
                     {
                         if (air.Address.Code == city.Address.Code)
                         {
-                            city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Address.Code, Country = air.Address.Country });
+                            city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Code, Country = air.Address.Country });
                         }
                     }
 
