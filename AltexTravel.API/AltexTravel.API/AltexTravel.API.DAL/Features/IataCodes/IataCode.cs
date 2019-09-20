@@ -13,18 +13,4 @@ namespace AltexTravel.API.DAL.Features.IataCodes
 
         public virtual Location Location { get; set; }
     }
-    public class ComparerIata : IEqualityComparer<IataCode>
-    {
-        public bool Equals(IataCode x, IataCode y)
-        {
-            if (Object.ReferenceEquals(x, y)) return true;
-            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null)) return false;
-            return x.Code.Equals(y.Code) || x.Name.Equals(y.Name) || x.Country.Equals(y.Country);
-        }
-
-        public int GetHashCode(IataCode routeRel)
-        {
-            return routeRel.Code.GetHashCode() * routeRel.Name.GetHashCode() * routeRel.Country.GetHashCode();
-        }
-    }
 }

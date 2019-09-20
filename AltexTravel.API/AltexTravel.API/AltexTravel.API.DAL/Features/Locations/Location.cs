@@ -13,18 +13,4 @@ namespace AltexTravel.API.DAL.Features.Locations
 
         public virtual List<IataCode> Airports { get; set; }
     }
-    public class RouteRelComparerLocal : IEqualityComparer<Location>
-    {
-        public bool Equals(Location x, Location y)
-        {
-            if (Object.ReferenceEquals(x, y)) return true;
-            if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null)) return false;
-            return x.Code.Equals(y.Code) || x.Name.Equals(y.Name) || x.Type.Equals(y.Type);
-        }
-
-        public int GetHashCode(Location location)
-        {
-            return location.Code.GetHashCode()* location.Name.GetHashCode()* location.Type.GetHashCode();
-        }
-    }
 }
