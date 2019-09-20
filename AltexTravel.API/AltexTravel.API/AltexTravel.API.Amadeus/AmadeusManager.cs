@@ -32,7 +32,7 @@ namespace AltexTravel.API.Amadeus
             foreach (var key in _amadeusConfiguration.Keywords)
             {
                 _amadeusConfiguration.Keyword = key;
-                var response = _client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
+                var response = await _client.GetAsync(_amadeusConfiguration.UrlLocations);
                 var httpResult = await response.Content.ReadAsStringAsync();
                 var locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
                 fullLocations.Add(JsonToAmadeusLocationModel(locationsJsonResponce));
