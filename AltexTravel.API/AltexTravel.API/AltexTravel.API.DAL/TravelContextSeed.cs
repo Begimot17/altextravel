@@ -20,15 +20,7 @@ namespace AltexTravel.API.DAL
                 if (!context.Locations.Any())
                 {
                     var locations = amadeusManager.GetLocations().GetAwaiter().GetResult().ToLocation().ToList();
-                    var distLocal = locations.Distinct(new RouteRelComparerLocal()).ToList();
-                    foreach (var iata in distLocal)
-                    {
-                        if (iata.Airports!=null)
-                        {
-                            iata.Airports.Distinct(new RouteRelComparerIata());
-                        }
-                    }
-                    context.Locations.AddRange(distLocal);
+                    context.Locations.AddRange(locations);
                     await context.SaveChangesAsync();
                 }
             }

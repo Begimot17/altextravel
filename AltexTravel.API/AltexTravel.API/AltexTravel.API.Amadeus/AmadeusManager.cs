@@ -40,16 +40,16 @@ namespace AltexTravel.API.Amadeus
 
             var Token = await GetToken();
             _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
-            var fullLocations = new List<LocationAmadeus>();
+            var fullLocations = new List<AmadeusLocationModel>();
             foreach (var key in _amadeusConfiguration.Keywords)
             {
                 _amadeusConfiguration.Keyword = key;
                 var response = _client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
                 var httpResult = await response.Content.ReadAsStringAsync();
                 var locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
-                fullLocations.AddRange(JsonToAmadeusLocationModel(locationsJsonResponce).Data);
+                fullLocations.Add(JsonToAmadeusLocationModel(locationsJsonResponce));
             }
-            return fullLocations;
+            return IataIntoLocation(fullLocations);
         }
 
         private async Task<string> GetToken()
@@ -76,27 +76,32 @@ namespace AltexTravel.API.Amadeus
             }
         }
 
-        public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson)
+        public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson) =>
+            JsonConvert.DeserializeObject<AmadeusLocationModel>(strJson);
+
+        public List<LocationAmadeus> IataIntoLocation(List<AmadeusLocationModel> data)
         {
-            var data = JsonConvert.DeserializeObject<AmadeusLocationModel>(strJson);
-            var airports = data.Data.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
+            var locations = data.SelectMany(x => x.Data).ToList();
+
+            locations = locations.Distinct(new RouteRelComparerLocationAmadeus()).ToList();
+            var airports = locations.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
             if (airports.Count != 0)
             {
-                foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()).ToList())
+                foreach (var city in locations.Where(x => x.Type == LocationsEnum.CITY.ToString()).ToList())
                 {
                     city.Airports = new List<IataAmadeus>();
                     foreach (var air in airports)
                     {
                         if (air.Address.Code == city.Address.Code)
                         {
-                            city.Airports.Add(new IataAmadeus { Name = air.Address.Name, Code = air.Address.Code, Country = air.Address.Country});
+                            city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Address.Code, Country = air.Address.Country });
                         }
                     }
+
                 }
             }
-            return data;
+            return locations;
         }
-
         public AmadeusSearchResult JsonToAmadeusSearchResultModel(string strJson)
         {
             var data = JsonConvert.DeserializeObject<AmadeusSearchResult>(strJson);
