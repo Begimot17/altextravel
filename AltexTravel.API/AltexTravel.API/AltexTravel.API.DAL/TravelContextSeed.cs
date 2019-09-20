@@ -1,6 +1,10 @@
 ﻿using AltexTravel.API.Amadeus;
+using AltexTravel.API.DAL.Features.IataCodes;
 using AltexTravel.API.DAL.Features.Locations;
+using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,12 +19,8 @@ namespace AltexTravel.API.DAL
             {
                 if (!context.Locations.Any())
                 {
-                    context.Locations.AddRange(amadeusManager.GetLocations().GetAwaiter().GetResult().ToLocation());
-                    await context.SaveChangesAsync();
-                }
-                if (!context.IataCodes.Any())
-                {
-                    context.IataCodes.AddRange(amadeusManager.GetIatas().GetAwaiter().GetResult().ToIata());
+                    var locations = amadeusManager.GetLocations().GetAwaiter().GetResult().ToLocation().ToList();
+                    context.Locations.AddRange(locations);
                     await context.SaveChangesAsync();
                 }
             }

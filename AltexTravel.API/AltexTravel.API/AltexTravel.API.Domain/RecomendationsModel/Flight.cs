@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AltexTravel.API.Models.SearchResult
+namespace AltexTravel.API.Domain.RecomendationsModel
 {
     public class Flight
     {
-
         public string ElapseFlyingTime { get; set; }
+
         public string ArrivalTime { get; set; }
         public string DepartureTime { get; set; }
 
         public string Cabin { get; set; }
-        public Equipment EquipmentType { get; set; }
+        public EquipmentType EquipmentType { get; set; }
         public string FareBasis { get; set; }
         public int FlightNumber { get; set; }
         public TimeSpan FlyingTime { get; set; }

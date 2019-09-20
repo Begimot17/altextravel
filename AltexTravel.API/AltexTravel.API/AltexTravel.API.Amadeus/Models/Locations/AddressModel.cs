@@ -13,5 +13,7 @@ namespace AltexTravel.API.Amadeus.Models
         public string Code { get; set; }
         [JsonProperty("countryName")]
         public string Country { get; set; }
+       
+
     }
 }

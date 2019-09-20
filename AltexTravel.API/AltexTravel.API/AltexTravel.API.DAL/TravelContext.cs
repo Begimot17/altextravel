@@ -9,7 +9,8 @@ namespace AltexTravel.API.DAL
         public TravelContext(DbContextOptions<TravelContext> options)
             : base(options)
         {
-
+            ChangeTracker.AutoDetectChangesEnabled = false;
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public DbSet<IataCode> IataCodes { get; set; }
         public DbSet<Location> Locations { get; set; }
