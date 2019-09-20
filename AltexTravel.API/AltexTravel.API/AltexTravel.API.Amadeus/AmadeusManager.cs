@@ -24,17 +24,6 @@ namespace AltexTravel.API.Amadeus
             _client = new HttpClient { BaseAddress = new Uri(_amadeusConfiguration.BaseUrl) };
         }
 
-
-        public async Task<AmadeusSearchResult> GetSearchResult(string queryParams)
-        {
-            var Token = await GetToken();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
-            var response = _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams).GetAwaiter().GetResult();
-            var httpResult = await response.Content.ReadAsStringAsync();
-            string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
-            return JsonToAmadeusSearchResultModel(searchJsonResponce);
-        }
-
         public async Task<List<LocationAmadeus>> GetLocations()
         {
 
@@ -101,12 +90,6 @@ namespace AltexTravel.API.Amadeus
                 }
             }
             return locations;
-        }
-        public AmadeusSearchResult JsonToAmadeusSearchResultModel(string strJson)
-        {
-            var data = JsonConvert.DeserializeObject<AmadeusSearchResult>(strJson);
-
-            return data;
         }
     }
 }

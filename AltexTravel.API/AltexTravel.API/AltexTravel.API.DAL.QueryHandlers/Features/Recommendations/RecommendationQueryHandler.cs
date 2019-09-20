@@ -25,8 +25,8 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 
         protected override async Task<RecommendationQueryResponce> HandleAsync(RecommendationQuery request, CancellationToken cancellationToken)
         {
-            var searchResult = await _amadeusManager.GetSearchResult(SearchQueryToUrl.GetUrlPath(request));
-            return searchResult.ToDomain();
+            
+            return null;
         }
     }
 }

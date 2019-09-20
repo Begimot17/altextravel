@@ -24,9 +24,7 @@ namespace AltexTravel.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoundTrip(RecommendationQuery recommendationQuery)
         {
-            var responce = await _mediator.Send(recommendationQuery);
-            var result = responce.Result.ToViewModel();
-            return new OkObjectResult(result);
+            return new OkObjectResult(new RecommendationsViewModel());
         }
     }
 }
