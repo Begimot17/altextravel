@@ -1,10 +1,6 @@
 ﻿using AltexTravel.API.Amadeus;
-using AltexTravel.API.DAL.Features.IataCodes;
 using AltexTravel.API.DAL.Features.Locations;
-using EFCore.BulkExtensions;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

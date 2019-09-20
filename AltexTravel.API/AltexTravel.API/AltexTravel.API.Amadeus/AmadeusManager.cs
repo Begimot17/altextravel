@@ -71,7 +71,7 @@ namespace AltexTravel.API.Amadeus
         {
             var locations = data.SelectMany(x => x.Data).ToList();
 
-            //locations = locations.Distinct(new RouteRelComparerLocationAmadeus()).ToList();
+            locations = locations.Distinct(new RouteRelComparerLocationAmadeus()).ToList();
             var airports = locations.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
             if (airports.Count != 0)
             {
