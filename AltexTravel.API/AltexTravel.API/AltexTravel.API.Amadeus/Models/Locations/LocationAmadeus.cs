@@ -23,7 +23,7 @@ namespace AltexTravel.API.Amadeus.Models
             if (Object.ReferenceEquals(x, y)) return true;
             if (Object.ReferenceEquals(x, null) || Object.ReferenceEquals(y, null)) return false;
             return x.Type.Equals(y.Type)
-                || x.Name.Equals(y.Address.Name)
+                || x.Name.Equals(y.Name)
                 || x.Address.Country.Equals(y.Address.Country)
                 || x.Address.Code.Equals(y.Address.Code);
         }

@@ -22,9 +22,9 @@ namespace AltexTravel.API.DAL.Features.Locations
             return x.Code.Equals(y.Code) || x.Name.Equals(y.Name) || x.Type.Equals(y.Type);
         }
 
-        public int GetHashCode(Location routeRel)
+        public int GetHashCode(Location location)
         {
-            return routeRel.Code.GetHashCode()* routeRel.Name.GetHashCode()* routeRel.Type.GetHashCode();
+            return location.Code.GetHashCode()* location.Name.GetHashCode()* location.Type.GetHashCode();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace AltexTravel.API.DAL.Features.IataCodes
 
         public virtual Location Location { get; set; }
     }
-    public class RouteRelComparerIata : IEqualityComparer<IataCode>
+    public class ComparerIata : IEqualityComparer<IataCode>
     {
         public bool Equals(IataCode x, IataCode y)
         {
