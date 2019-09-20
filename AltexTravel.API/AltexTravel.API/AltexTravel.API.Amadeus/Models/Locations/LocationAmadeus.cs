@@ -16,7 +16,7 @@ namespace AltexTravel.API.Amadeus.Models
         public AddressModel Address { get; set; }
         public List<IataAmadeus> Airports { get; set; }
     }
-    public class RouteRelComparerLocationAmadeus : IEqualityComparer<LocationAmadeus>
+    public class ComparerLocationAmadeus : IEqualityComparer<LocationAmadeus>
     {
         public bool Equals(LocationAmadeus x, LocationAmadeus y)
         {
@@ -28,12 +28,12 @@ namespace AltexTravel.API.Amadeus.Models
                 || x.Address.Code.Equals(y.Address.Code);
         }
 
-        public int GetHashCode(LocationAmadeus routeRel)
+        public int GetHashCode(LocationAmadeus location)
         {
-            return routeRel.Type.GetHashCode()
-                * routeRel.Name.GetHashCode()
-                * routeRel.Address.Country.GetHashCode()
-                * routeRel.Address.Code.GetHashCode();
+            return location.Type.GetHashCode()
+                * location.Name.GetHashCode()
+                * location.Address.Country.GetHashCode()
+                * location.Address.Code.GetHashCode();
         }
     }
 }
