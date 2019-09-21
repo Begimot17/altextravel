@@ -1,4 +1,6 @@
 ﻿using AltexTravel.API.DAL.Features.Locations;
+using System;
+using System.Collections.Generic;
 
 namespace AltexTravel.API.DAL.Features.IataCodes
 {

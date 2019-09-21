@@ -1,8 +1,9 @@
 ﻿using AltexTravel.API.DAL.Features.IataCodes;
+using System;
 using System.Collections.Generic;
 namespace AltexTravel.API.DAL.Features.Locations
 {
-    public class Location
+    public class Location 
     {
         public int Id { get; set; }
         public string Type { get; set; }

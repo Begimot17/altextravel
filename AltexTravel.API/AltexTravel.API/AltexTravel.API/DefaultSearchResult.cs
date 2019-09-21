@@ -59,21 +59,21 @@ namespace AltexTravel.API
                         {
                             new Flight
                             {
-                                ArrivalTime=DateTime.Now,
-                                Cabin=Cabins.Economy,
+                                ArrivalTime=" time",
+                                Cabin="Cabin",
                                 MarketingCarrier=new Airline
                                 {
                                     Code="Code",
                                     Name="Name"
                                 },
-                                EquipmentType=new EquipmentType
+                                EquipmentType=new Equipment
                                 {
                                     Code="Code",
                                     Name="Name"
                                 },
                                 FareBasis="FareBasis",
-                                FlightNumber="FlightNumber",
-                                FlyingTime="FlyingTime",
+                                FlightNumber=123,
+                                FlyingTime=new TimeSpan(3,2,1),
                                 FreeBaggage="FreeBaggage",
                                 Layover="Layover",
                                 OperatingCarrier=new Airline

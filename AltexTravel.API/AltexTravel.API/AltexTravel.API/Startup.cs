@@ -48,11 +48,9 @@ namespace AltexTravel.API
             services.AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
 
-
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=Booking-API;Trusted_Connection=True;ConnectRetryCount=0";
             //ADD EF
             services.AddDbContext<TravelContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(Configuration.GetSection("ConnectionStrings:traveldb").Value));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

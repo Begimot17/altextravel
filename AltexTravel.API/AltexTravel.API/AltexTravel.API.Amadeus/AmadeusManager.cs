@@ -16,30 +16,28 @@ namespace AltexTravel.API.Amadeus
 
         private AmadeusConfiguration _amadeusConfiguration;
 
+
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
-            _client = new HttpClient {BaseAddress= new Uri(_amadeusConfiguration.BaseUrl) };
+            _client = new HttpClient { BaseAddress = new Uri(_amadeusConfiguration.BaseUrl) };
         }
 
-        public async Task<List<IataAmadeus>> GetIatas()
+        public async Task<List<LocationAmadeus>> GetLocationsAsync()
         {
-            var Iatas = new List<IataAmadeus>();
-            foreach (var item in await GetLocations())
+
+            var Token = await GetToken();
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
+            var fullLocations = new List<AmadeusLocationModel>();
+            foreach (var key in _amadeusConfiguration.Keywords)
             {
-                Iatas.AddRange(item?.Airports);
+                _amadeusConfiguration.Keyword = key;
+                var response = await _client.GetAsync(_amadeusConfiguration.UrlLocations);
+                var httpResult = await response.Content.ReadAsStringAsync();
+                var locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
+                fullLocations.Add(JsonToAmadeusLocationModel(locationsJsonResponce));
             }
-            return Iatas;
-        }
-
-        public async Task<List<LocationAmadeus>> GetLocations()
-        {
-            string token = await GetToken();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + token);
-            var response = _client.GetAsync(_amadeusConfiguration.UrlLocations).GetAwaiter().GetResult();
-            var httpResult = await response.Content.ReadAsStringAsync();
-            string locationsJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
-            return JsonToAmadeusModel(locationsJsonResponce).Data;
+            return IataIntoLocation(fullLocations);
         }
 
         private async Task<string> GetToken()
@@ -54,10 +52,10 @@ namespace AltexTravel.API.Amadeus
             var response = _client.SendAsync(request);
             if (response.Result.IsSuccessStatusCode)
             {
-                string jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
+                var jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
                     .ReadAsStringAsync()).ToString();
                 var jsonObject = JObject.Parse(jsonResponse);
-                string token = (string)jsonObject["access_token"];
+                var token = (string)jsonObject["access_token"];
                 return token;
             }
             else
@@ -65,25 +63,32 @@ namespace AltexTravel.API.Amadeus
                 return response.Result.ReasonPhrase;
             }
         }
-        public AmadeusModel JsonToAmadeusModel(string strJson)
+
+        public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson) =>
+            JsonConvert.DeserializeObject<AmadeusLocationModel>(strJson);
+
+        public List<LocationAmadeus> IataIntoLocation(List<AmadeusLocationModel> data)
         {
-            var data = JsonConvert.DeserializeObject<AmadeusModel>(strJson);
-            var airports = data.Data.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
+            var locations = data.SelectMany(x => x.Data).ToList();
+
+            locations = locations.Distinct(new AmadeusLocationComparer()).ToList();
+            var airports = locations.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
             if (airports.Count != 0)
             {
-                foreach (var city in data.Data.Where(x => x.Type == LocationsEnum.CITY.ToString()).ToList())
+                foreach (var city in locations.Where(x => x.Type == LocationsEnum.CITY.ToString()).ToList())
                 {
                     city.Airports = new List<IataAmadeus>();
                     foreach (var air in airports)
                     {
                         if (air.Address.Code == city.Address.Code)
                         {
-                            city.Airports.Add(new IataAmadeus { Name = air.Address.Name, Code = air.Address.Code, Country = air.Address.Country });
+                            city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Code, Country = air.Address.Country });
                         }
                     }
+
                 }
             }
-            return data;
+            return locations;
         }
     }
 }

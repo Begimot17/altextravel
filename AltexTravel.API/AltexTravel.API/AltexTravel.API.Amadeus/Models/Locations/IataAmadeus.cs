@@ -1,4 +1,7 @@
-﻿namespace AltexTravel.API.Amadeus.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace AltexTravel.API.Amadeus.Models
 {
     public class IataAmadeus
     { 
