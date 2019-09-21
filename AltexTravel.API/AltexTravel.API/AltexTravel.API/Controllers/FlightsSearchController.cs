@@ -18,7 +18,7 @@ namespace AltexTravel.API.Controllers
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(typeof(RecommendationsViewModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoundTrip(RecommendationQuery recommendationQuery)
