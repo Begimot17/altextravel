@@ -23,7 +23,7 @@ namespace AltexTravel.API.Amadeus
             _client = new HttpClient { BaseAddress = new Uri(_amadeusConfiguration.BaseUrl) };
         }
 
-        public async Task<List<LocationAmadeus>> GetLocations()
+        public async Task<List<LocationAmadeus>> GetLocationsAsync()
         {
 
             var Token = await GetToken();
@@ -71,7 +71,7 @@ namespace AltexTravel.API.Amadeus
         {
             var locations = data.SelectMany(x => x.Data).ToList();
 
-            locations = locations.Distinct(new ComparerLocationAmadeus()).ToList();
+            locations = locations.Distinct(new AmadeusLocationComparer()).ToList();
             var airports = locations.Where(x => x.Type == LocationsEnum.AIRPORT.ToString()).ToList();
             if (airports.Count != 0)
             {

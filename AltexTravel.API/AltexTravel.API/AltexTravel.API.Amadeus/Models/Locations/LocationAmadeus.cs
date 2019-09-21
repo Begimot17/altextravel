@@ -16,7 +16,7 @@ namespace AltexTravel.API.Amadeus.Models
         public AddressModel Address { get; set; }
         public List<IataAmadeus> Airports { get; set; }
     }
-    public class ComparerLocationAmadeus : IEqualityComparer<LocationAmadeus>
+    public class AmadeusLocationComparer : IEqualityComparer<LocationAmadeus>
     {
         public bool Equals(LocationAmadeus x, LocationAmadeus y)
         {

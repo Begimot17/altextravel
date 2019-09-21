@@ -15,7 +15,7 @@ namespace AltexTravel.API.DAL
             {
                 if (!context.Locations.Any())
                 {
-                    var locations = await amadeusManager.GetLocations();
+                    var locations = await amadeusManager.GetLocationsAsync();
                     context.Locations.AddRange(locations.ToLocation().ToList());
                     await context.SaveChangesAsync();
                 }
