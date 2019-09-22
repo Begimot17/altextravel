@@ -1,25 +1,27 @@
-﻿using AltexTravel.API.Amadeus.Models.SearchResult;
+﻿using Amadeus = AltexTravel.API.Amadeus.Models.SearchResult;
 using AltexTravel.API.DAL.Features.SearchResult;
-using AltexTravel.API.Domain.RecomendationsModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using AltexTravel.API.Domain.RecomendationsModel;
+
 namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
     public static class SearchResultMapper
     {
-        public static RecommendationQueryResponce ToDomain(this AmadeusSearchResult model) =>
+        public static RecommendationQueryResponce ToDomain(this Amadeus::AmadeusSearchResult model) =>
             new RecommendationQueryResponce
             {
                 FullRecommendations =model.Data.Select(x => x?.ToDomain()).ToList() 
             };
 
-        public static FullRecommendations ToDomain(this Data model) =>
+        public static FullRecommendations ToDomain(this Amadeus::Data model) =>
             new FullRecommendations
             {
                 Recommendations = model.OfferItems.Select(x => x?.ToDomain()).ToList()
             };
 
-        public static Recommendation ToDomain(this OfferItems model) =>
+        public static Recommendation ToDomain(this Amadeus::OfferItems model) =>
             new Recommendation
             {
                 Segments = model.Services.Select(x => x?.ToDomain()).ToList(),
@@ -35,7 +37,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                             NumberOfPassengers = 228,
                             Total = 228,
                             Taxes = 228,
-                            Fees = new System.Collections.Generic.List<decimal> {
+                            Fees = new List<decimal> {
                                 228
                             },
                         },
@@ -45,7 +47,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                             NumberOfPassengers = 228,
                             Total = 228,
                             Taxes = 228,
-                            Fees = new System.Collections.Generic.List<decimal> {
+                            Fees = new List<decimal> {
                                 228
                             },
                         },
@@ -55,7 +57,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                             NumberOfPassengers = 228,
                             Total = 228,
                             Taxes = 228,
-                            Fees = new System.Collections.Generic.List<decimal> {
+                            Fees = new List<decimal> {
                                 228
                             },
                         }
@@ -64,17 +66,14 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 },
             };
 
-        public static Domain.RecomendationsModel.Segment ToDomain(this Services model) =>
-            new Domain.RecomendationsModel.Segment
+        public static Segment ToDomain(this Amadeus::Services model) =>
+            new Segment
             {
                 Flights = model.Segments.Select(x => x?.ToDomain()).ToList(),
             };
 
-        public static Flight ToDomain(this Amadeus.Models.SearchResult.Segment model)
+        public static Flight ToDomain(this Amadeus::Segment model)
         {
-            var airportArrival = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode);
-            var airportDeparture = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode);
-
             return new Flight
             {
                 ElapseFlyingTime=model.FlightSegment.Duration,
@@ -83,9 +82,9 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                     Code=model.FlightSegment.Aircraft.Code,
                     Name= "TODO"
                 },
-                FreeBaggage="TODO",
-                Layover="TODO",
-                Rules="TODO",
+                FreeBaggage=null,
+                Layover=null,
+                Rules=null,
                 
                 ArrivalTime = model.FlightSegment.Arrival.At,
                 DepartureTime = model.FlightSegment.Departure.At,
@@ -112,10 +111,10 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                         {
                             Code = model.FlightSegment.Arrival.IataCode,
                             CountryCode = model.FlightSegment.CarrierCode,
-                            Name = "TODO"
+                            Name = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Country
                         },
-                        Code = "TODO",
-                        Name = "TODO"
+                        Code = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Code,
+                        Name = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Name
                     },
                     DeparturePort = new Airport
                     {
@@ -123,11 +122,11 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                         {
                             Code = model.FlightSegment.Departure.IataCode,
                             CountryCode = model.FlightSegment.CarrierCode,
-                            Name= "TODO"
+                            Name= LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Country
 
                         },
-                        Code= "TODO",
-                        Name= "TODO"
+                        Code = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Code,
+                        Name = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Name
                     },
 
                 }

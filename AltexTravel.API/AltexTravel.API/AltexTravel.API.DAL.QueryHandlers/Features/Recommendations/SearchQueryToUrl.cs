@@ -10,20 +10,20 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
         public static string GetUrlPath(RecommendationQuery query)
         {
             var urlPath = new StringBuilder();
-            urlPath.Append(QueryToPath("ReturnDate", query.ReturnDate.ToString()));
-            urlPath.Append(QueryToPath("DepartureDate", query.DepartureDate.ToString()));
-            urlPath.Append(QueryToPath("ArrivalPort", query.ArrivalPort));
-            urlPath.Append(QueryToPath("DeparturePort", query.DeparturePort));
-            urlPath.Append(QueryToPath("Cabin", query.Cabin.ToString()));
-            urlPath.Append(QueryToPath("DemandDirectFlight", query.DemandDirectFlight));
-            if (query.CurrencyCode != null)
-                urlPath.Append(QueryToPath("currency", query.CurrencyCode));
+            urlPath.Append(QueryToPath("origin", query.ArrivalPort));
+            urlPath.Append(QueryToPath("destination", query.DeparturePort));
+            urlPath.Append(QueryToPath("departureDate", query.DepartureDate.ToString("yyyy-MM-dd")));
+            urlPath.Append(QueryToPath("returnDate", query.ReturnDate.ToString("yyyy-MM-dd")));
             if (query.NumberOfAdults != 0)
                 urlPath.Append(QueryToPath("adults", query.NumberOfAdults));
             if (query.NumberOfChildren != 0)
                 urlPath.Append(QueryToPath("children", query.NumberOfChildren));
             if (query.NumberOfInfants != 0)
                 urlPath.Append(QueryToPath("infants", query.NumberOfInfants));
+            urlPath.Append(QueryToPath("travelClass", query.Cabin.ToString()));
+            if (query.CurrencyCode != null)
+                urlPath.Append(QueryToPath("currency", query.CurrencyCode));
+            
             return urlPath.ToString().TrimEnd('&');
         }
         public static string QueryToPath(string key, string value) =>

@@ -2,9 +2,9 @@
 {
     public enum Cabins : byte
     {
-        Economy = 1,
-        PremiumEconomy = 2,
-        Business = 3,
-        First = 4
+        ECONOMY = 1,
+        PREMIUM_ECONOMY = 2,
+        BUSINESS = 3,
+        FIRST = 4
     }
 }

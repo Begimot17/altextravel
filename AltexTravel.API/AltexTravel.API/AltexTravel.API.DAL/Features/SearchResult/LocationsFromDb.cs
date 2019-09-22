@@ -1,4 +1,5 @@
 ﻿using AltexTravel.API.DAL.Features.IataCodes;
+using AltexTravel.API.DAL.Features.Locations;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
@@ -12,11 +13,10 @@ namespace AltexTravel.API.DAL.Features.SearchResult
         {
             _context = context;
         }
-        public static IataCode GetLocations(string code)
+        public static Location GetLocations(string code)
         {
-            var local = _context.IataCodes
+            var local = _context.Locations
                  .AsNoTracking()
-                 .Include(x => x.Location)
                  .First(x => x.Code.Contains(code));
             return local;
         }

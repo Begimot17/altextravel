@@ -19,7 +19,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         [Required]
         public Cabins Cabin { get; set; }
         public string CurrencyCode { get; set; }
-        [Required]
         public bool DemandDirectFlight { get; set; }
         public int MaximumNumberOfRecommendations { get; set; }
         public int NumberOfAdults { get; set; }
