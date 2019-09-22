@@ -1,4 +1,5 @@
 ﻿using AltexTravel.API.Amadeus.Models;
+using AltexTravel.API.Amadeus.Models.SearchResult;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,7 +17,7 @@ namespace AltexTravel.API.Amadeus
 
         private AmadeusConfiguration _amadeusConfiguration;
 
-
+        private string Token { get; set; }
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
@@ -25,8 +26,7 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<List<LocationAmadeus>> GetLocationsAsync()
         {
-
-            var Token = await GetToken();
+            Token = await GetToken();
             _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var fullLocations = new List<AmadeusLocationModel>();
             foreach (var key in _amadeusConfiguration.Keywords)
@@ -38,6 +38,18 @@ namespace AltexTravel.API.Amadeus
                 fullLocations.Add(JsonToAmadeusLocationModel(locationsJsonResponce));
             }
             return IataIntoLocation(fullLocations);
+        }
+        public async Task<AmadeusSearchResult> GetSearchResultAsync(string queryParams)
+        {
+            if (Token == null)
+            {
+                Token = await GetToken();
+            }
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
+            var response = await _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams);
+            var httpResult = await response.Content.ReadAsStringAsync();
+            string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
+            return JsonToAmadeusSearchResultModel(searchJsonResponce);
         }
 
         private async Task<string> GetToken()
@@ -66,6 +78,8 @@ namespace AltexTravel.API.Amadeus
 
         public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson) =>
             JsonConvert.DeserializeObject<AmadeusLocationModel>(strJson);
+        public AmadeusSearchResult JsonToAmadeusSearchResultModel(string strJson) =>
+            JsonConvert.DeserializeObject<AmadeusSearchResult>(strJson);
 
         public List<LocationAmadeus> IataIntoLocation(List<AmadeusLocationModel> data)
         {
@@ -90,5 +104,7 @@ namespace AltexTravel.API.Amadeus
             }
             return locations;
         }
+
+
     }
 }
