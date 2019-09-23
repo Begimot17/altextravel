@@ -1,65 +1,75 @@
-﻿using AltexTravel.API.DAL.Features.SearchResult;
+﻿using AltexTravel.API.Amadeus.Models.SearchResult;
+using AltexTravel.API.DAL.Features.SearchResult;
 using AltexTravel.API.Domain.RecomendationsModel;
 using System.Collections.Generic;
 using System.Linq;
 using Amadeus = AltexTravel.API.Amadeus.Models.SearchResult;
+using Segment = AltexTravel.API.Domain.RecomendationsModel.Segment;
 
 namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
     public static class SearchResultMapper
     {
-        public static RecommendationQueryResponce ToDomain(this Amadeus::AmadeusSearchResult model) =>
-            new RecommendationQueryResponce
-            {
-                FullRecommendations = model.Data.SelectMany(x => x.OfferItems.ToList().Select(y => y?.ToDomain())).ToList()
-            };
+        public static RecommendationQuery Request { get; set; }
+        public static Dictionaries Dictionaries { get; set; }
 
-        public static Recommendation ToDomain(this Amadeus::OfferItems model) =>
+        public static RecommendationQueryResponce ToDomain(this AmadeusSearchResult model, RecommendationQuery request)
+        {
+            Request = request;
+            Dictionaries = model.Dictionaries;
+            return new RecommendationQueryResponce
+            {
+                FullRecommendations = model.Data.SelectMany(x => x?.OfferItems.ToList().Select(y => y?.ToDomain())).ToList()
+            };
+        }
+
+        public static Recommendation ToDomain(this OfferItems model) =>
             new Recommendation
             {
                 Segments = model.Services.Select(x => x?.ToDomain()).ToList(),
                 CachedFlightReference = "TODO",
-                PriceDetails = new PriceInfo
+                PriceDetails = new List<PriceInfo> {
+                new PriceInfo
                 {
-                    DataSource = "TODO",
+                    DataSource = "Amadeus",
                     PriceByPassengerType = new PriceByPassengerType
                     {
-                        Adult = model.PricePerAdult != null ? new PriceDetails
+                        Adult = Request.NumberOfAdults != 0 ? new PriceDetails
                         {
                             BaseFare = 228,
-                            NumberOfPassengers = 228,
+                            NumberOfPassengers = Request.NumberOfAdults,
                             Total = (decimal)model.PricePerAdult.Total,
                             Taxes = (decimal)model.PricePerAdult.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
-                            },
-                        } : null,
-                        Child = model.PricePerChild != null ? new PriceDetails
+                            }
+                        } : new PriceDetails{ },
+                        Child = Request.NumberOfChildren != 0 ? new PriceDetails
                         {
                             BaseFare = 228,
-                            NumberOfPassengers = 228,
+                            NumberOfPassengers = Request.NumberOfChildren,
                             Total = (decimal)model.PricePerChild.Total,
                             Taxes = (decimal)model.PricePerChild.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
-                            },
-                        } : null,
-                        Infant = model.PricePerInfant != null ? new PriceDetails
+                            }
+                        } : new PriceDetails{ },
+                        Infant = Request.NumberOfInfants != 0 ? new PriceDetails
                         {
                             BaseFare = 228,
-                            NumberOfPassengers = 228,
+                            NumberOfPassengers = Request.NumberOfInfants,
                             Total = (decimal)model.PricePerInfant.Total,
                             Taxes = (decimal)model.PricePerInfant.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
-                            },
-                        } : null
+                            }
+                        } : new PriceDetails{ }
                     },
-                    Total = model.Price.Total
+                    Total = model.Price.Total}
                 },
             };
 
-        public static Segment ToDomain(this Amadeus::Services model) =>
+        public static Segment ToDomain(this Services model) =>
             new Segment
             {
                 Flights = model.Segments.Select(x => x?.ToDomain()).ToList(),
@@ -72,7 +82,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 EquipmentType = new EquipmentType
                 {
                     Code = model.FlightSegment.Aircraft.Code,
-                    Name = "TODO"
+                    Name = Dictionaries.Aircraft.First(x => x.Key == model.FlightSegment.Aircraft.Code).Value
                 },
                 FreeBaggage = null,
                 Layover = null,
@@ -89,13 +99,14 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 MarketingCarrier = new Airline
                 {
                     Code = model.FlightSegment.CarrierCode,
-                    Name = "TODO"
+                    Name = Dictionaries.Carriers.First(x => x.Key == model.FlightSegment.CarrierCode).Value
 
                 },
                 OperatingCarrier = new Airline
                 {
                     Code = model.FlightSegment.Operating.CarrierCode,
-                    Name = "TODO"
+                    Name = Dictionaries.Carriers.FirstOrDefault(x => x.Key == model.FlightSegment.Operating.CarrierCode).Value
+                    ?? Dictionaries.Carriers.First(x => x.Key == model.FlightSegment.CarrierCode).Value
                 },
                 Route = new AirportPair
                 {

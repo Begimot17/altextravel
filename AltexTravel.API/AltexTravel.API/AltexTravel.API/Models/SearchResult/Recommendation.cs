@@ -9,6 +9,6 @@ namespace AltexTravel.API.Models.SearchResult
     {
         public string CachedFlightReference { get; set; }
         public List<Segment> Segments { get; set; }
-        public PriceInfo PriceDetails { get; set; }
+        public List<PriceInfo> PriceDetails { get; set; }
     }
 }

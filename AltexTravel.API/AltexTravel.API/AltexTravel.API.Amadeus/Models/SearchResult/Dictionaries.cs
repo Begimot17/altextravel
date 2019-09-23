@@ -12,6 +12,15 @@ namespace AltexTravel.API.Amadeus.Models.SearchResult
         [JsonProperty("aircraft")]
         public Dictionary<string,string> Aircraft { get; set; }
         [JsonProperty("locations")]
-        public Dictionary<string,string> Locations { get; set; }
+        public Dictionary<string,Location> Locations { get; set; }
+    }
+
+    public class Location
+    {
+        [JsonProperty("subType")]
+        public string SubType  { get; set; }
+
+        [JsonProperty("detailedName")]
+        public string DetailedName  { get; set; }
     }
 }

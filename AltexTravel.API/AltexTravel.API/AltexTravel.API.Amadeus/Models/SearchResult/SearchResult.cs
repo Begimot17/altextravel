@@ -10,8 +10,8 @@ namespace AltexTravel.API.Amadeus.Models.SearchResult
         [JsonProperty("data")]
         public List<Data> Data { get; set; }
 
-        //[JsonProperty("dictionaries")]
-        //public Dictionaries Dictionaries { get; set; }
+        [JsonProperty("dictionaries")]
+        public Dictionaries Dictionaries { get; set; }
 
 
     }
