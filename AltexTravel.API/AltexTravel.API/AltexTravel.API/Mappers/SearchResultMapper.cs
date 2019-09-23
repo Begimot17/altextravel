@@ -8,13 +8,16 @@ namespace AltexTravel.API.Mappers
 {
     public static class SearchResultMapper
     {
-        public static List<RecommendationsViewModel> ToViewModel(this RecommendationQueryResponce model) =>
-            model.FullRecommendations.Select(x => x?.ToViewModel()).ToList();
+        public static RecommendationsViewModel ToViewModel(this RecommendationQueryResponce model) =>
+            new RecommendationsViewModel
+            {
+                Recommendations = model.FullRecommendations.Select(x => x?.ToViewModel()).ToList()
+            };
 
         public static RecommendationsViewModel ToViewModel(this Domain::FullRecommendations model) =>
             new RecommendationsViewModel
             {
-                Recommendations = model.Recommendation.Select(x=>x?.ToViewModel()).ToList()
+                Recommendations = model.Recommendation.Select(x => x?.ToViewModel()).ToList()
             };
 
         public static Recommendation ToViewModel(this Domain::Recommendation model) =>
@@ -34,14 +37,14 @@ namespace AltexTravel.API.Mappers
                             Taxes = model.PriceDetails.PriceByPassengerType.Adult.Taxes,
                             Fees = model.PriceDetails.PriceByPassengerType.Adult.Fees,
                         } : null,
-                        Child = model.PriceDetails.PriceByPassengerType.Child!=null? new PriceDetails
+                        Child = model.PriceDetails.PriceByPassengerType.Child != null ? new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Child.BaseFare,
                             NumberOfPassengers = model.PriceDetails.PriceByPassengerType.Child.NumberOfPassengers,
                             Total = model.PriceDetails.PriceByPassengerType.Child.Total,
                             Taxes = model.PriceDetails.PriceByPassengerType.Child.Taxes,
                             Fees = model.PriceDetails.PriceByPassengerType.Child.Fees,
-                        }:null,
+                        } : null,
                         Infant = model.PriceDetails.PriceByPassengerType.Infant != null ? new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Infant.BaseFare,

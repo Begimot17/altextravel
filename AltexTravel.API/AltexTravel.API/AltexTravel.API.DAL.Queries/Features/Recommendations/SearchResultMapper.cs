@@ -12,13 +12,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         public static RecommendationQueryResponce ToDomain(this Amadeus::AmadeusSearchResult model) =>
             new RecommendationQueryResponce
             {
-                FullRecommendations = model.Data.Select(x => x?.ToDomain()).ToList()
-            };
-
-        public static FullRecommendations ToDomain(this Amadeus::Data model) =>
-            new FullRecommendations
-            {
-                Recommendation = model.OfferItems.Select(x=>x.ToDomain()).ToList()
+                FullRecommendations = model.Data.SelectMany(x => x.OfferItems.ToList().Select(y=>y?.ToDomain())).ToList()
             };
        
         public static Recommendation ToDomain(this Amadeus::OfferItems model) =>
@@ -76,7 +70,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         {
             return new Flight
             {
-                ElapseFlyingTime = model.FlightSegment.Duration.FlyingTimeConvert(),
                 EquipmentType = new EquipmentType
                 {
                     Code = model.FlightSegment.Aircraft.Code,
@@ -85,6 +78,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 FreeBaggage = null,
                 Layover = null,
                 Rules = null,
+
+                ElapseFlyingTime = model.FlightSegment.Duration.FlyingTimeConvert(),
 
                 ArrivalTime = model.FlightSegment.Arrival.At,
                 DepartureTime = model.FlightSegment.Departure.At,
