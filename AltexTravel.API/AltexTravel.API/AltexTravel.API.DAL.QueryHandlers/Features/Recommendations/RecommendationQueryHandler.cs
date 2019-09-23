@@ -1,5 +1,6 @@
 ﻿using AltexTravel.API.Amadeus;
 using AltexTravel.API.DAL.BaseHandlers;
+using AltexTravel.API.DAL.Features.SearchResult;
 using AltexTravel.API.DAL.Queries;
 using AltexTravel.API.DAL.Queries.Features.Recommendations;
 using FluentValidation;
@@ -26,7 +27,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
         protected override async Task<RecommendationQueryResponce> HandleAsync(RecommendationQuery request, CancellationToken cancellationToken)
         {
             var searchResult = await _amadeusManager.GetSearchResultAsync(SearchQueryToUrl.GetUrlPath(request));
-            return searchResult.ToDomain();
+            return searchResult.ToDomain().GetLocation(_context);
         }
     }
 }

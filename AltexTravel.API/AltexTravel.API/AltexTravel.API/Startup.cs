@@ -1,5 +1,6 @@
 ﻿using AltexTravel.API.Amadeus;
 using AltexTravel.API.DAL;
+using AltexTravel.API.DAL.Features.SearchResult;
 using AltexTravel.API.DAL.QueryHandlers.Features.Locations;
 using FluentValidation.AspNetCore;
 using MediatR;
