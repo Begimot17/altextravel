@@ -18,9 +18,9 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         public static FullRecommendations ToDomain(this Amadeus::Data model) =>
             new FullRecommendations
             {
-                Recommendations = model.OfferItems.Select(x => x?.ToDomain()).ToList()
+                Recommendation = model.OfferItems.Select(x=>x.ToDomain()).ToList()
             };
-
+       
         public static Recommendation ToDomain(this Amadeus::OfferItems model) =>
             new Recommendation
             {
@@ -31,7 +31,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                     DataSource = "TODO",
                     PriceByPassengerType = new PriceByPassengerType
                     {
-                        Adult = new PriceDetails
+                        Adult = model.PricePerAdult != null ? new PriceDetails
                         {
                             BaseFare = 28,
                             NumberOfPassengers = 228,
@@ -40,8 +40,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                             Fees = new List<decimal> {
                                 228
                             },
-                        },
-                        Child = new PriceDetails
+                        } : null,
+                        Child = model.PricePerChild != null ? new PriceDetails
                         {
                             BaseFare = 228,
                             NumberOfPassengers = 228,
@@ -50,8 +50,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                             Fees = new List<decimal> {
                                 228
                             },
-                        },
-                        Infant = new PriceDetails
+                        } : null,
+                        Infant = model.PricePerInfant!=null? new PriceDetails
                         {
                             BaseFare = 228,
                             NumberOfPassengers = 228,
@@ -60,7 +60,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                             Fees = new List<decimal> {
                                 228
                             },
-                        }
+                        }:null
                     },
                     Total = model.Price.Total
                 },
@@ -76,7 +76,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         {
             return new Flight
             {
-                ElapseFlyingTime = model.FlightSegment.Duration,
+                ElapseFlyingTime = model.FlightSegment.Duration.FlyingTimeConvert(),
                 EquipmentType = new EquipmentType
                 {
                     Code = model.FlightSegment.Aircraft.Code,
@@ -89,9 +89,9 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 ArrivalTime = model.FlightSegment.Arrival.At,
                 DepartureTime = model.FlightSegment.Departure.At,
                 Cabin = model.PricingDetailPerAdult.TravelClass,
-                FareBasis = model.PricingDetailPerAdult.FareClass,
+                FareBasis = model.PricingDetailPerAdult.FareBasis,
                 FlightNumber = model.FlightSegment.Number,
-                FlyingTime = DifferenceTime(model.FlightSegment.Departure.At, model.FlightSegment.Arrival.At),
+                FlyingTime = ConvertDataTime.DifferenceTime(model.FlightSegment.Departure.At, model.FlightSegment.Arrival.At),
                 MarketingCarrier = new Airline
                 {
                     Code = model.FlightSegment.CarrierCode,
@@ -138,12 +138,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 }
             };
         }
-        public static TimeSpan DifferenceTime(string firstTime, string lastTime)
-        {
-            var firstDate = DateTime.Parse(firstTime);
-            var lastDate = DateTime.Parse(lastTime);
-            var difference = lastDate - firstDate;
-            return difference;
-        }
+
     }
 }

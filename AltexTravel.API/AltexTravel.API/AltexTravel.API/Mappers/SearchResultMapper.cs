@@ -14,7 +14,7 @@ namespace AltexTravel.API.Mappers
         public static RecommendationsViewModel ToViewModel(this Domain::FullRecommendations model) =>
             new RecommendationsViewModel
             {
-                Recommendations = model.Recommendations.Select(x => x?.ToViewModel()).ToList()
+                Recommendations = model.Recommendation.Select(x=>x?.ToViewModel()).ToList()
             };
 
         public static Recommendation ToViewModel(this Domain::Recommendation model) =>
@@ -26,30 +26,30 @@ namespace AltexTravel.API.Mappers
                     DataSource = model.PriceDetails.DataSource,
                     PriceByPassengerType = new PriceByPassengerType
                     {
-                        Adult = new PriceDetails
+                        Adult = model.PriceDetails.PriceByPassengerType.Adult != null ? new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Adult.BaseFare,
                             NumberOfPassengers = model.PriceDetails.PriceByPassengerType.Adult.NumberOfPassengers,
                             Total = model.PriceDetails.PriceByPassengerType.Adult.Total,
                             Taxes = model.PriceDetails.PriceByPassengerType.Adult.Taxes,
                             Fees = model.PriceDetails.PriceByPassengerType.Adult.Fees,
-                        },
-                        Child = new PriceDetails
+                        } : null,
+                        Child = model.PriceDetails.PriceByPassengerType.Child!=null? new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Child.BaseFare,
                             NumberOfPassengers = model.PriceDetails.PriceByPassengerType.Child.NumberOfPassengers,
                             Total = model.PriceDetails.PriceByPassengerType.Child.Total,
                             Taxes = model.PriceDetails.PriceByPassengerType.Child.Taxes,
                             Fees = model.PriceDetails.PriceByPassengerType.Child.Fees,
-                        },
-                        Infant = new PriceDetails
+                        }:null,
+                        Infant = model.PriceDetails.PriceByPassengerType.Infant != null ? new PriceDetails
                         {
                             BaseFare = model.PriceDetails.PriceByPassengerType.Infant.BaseFare,
                             NumberOfPassengers = model.PriceDetails.PriceByPassengerType.Infant.NumberOfPassengers,
                             Total = model.PriceDetails.PriceByPassengerType.Infant.Total,
                             Taxes = model.PriceDetails.PriceByPassengerType.Infant.Taxes,
                             Fees = model.PriceDetails.PriceByPassengerType.Infant.Fees,
-                        }
+                        } : null
                     },
                     Total = model.PriceDetails.Total
                 },
@@ -67,6 +67,7 @@ namespace AltexTravel.API.Mappers
         public static Flight ToViewModel(this Domain::Flight model) =>
             new Flight
             {
+                ElapseFlyingTime = model.ElapseFlyingTime,
                 ArrivalTime = model.ArrivalTime,
                 DepartureTime = model.DepartureTime,
                 Cabin = model.Cabin,

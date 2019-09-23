@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 
 namespace AltexTravel.API
 {
@@ -13,7 +14,6 @@ namespace AltexTravel.API
     {
         public static void Main(string[] args)
         {
-
             var host = CreateWebHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
