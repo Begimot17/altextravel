@@ -23,7 +23,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             urlPath.Append(QueryToPath("travelClass", query.Cabin.ToString()));
             if (query.CurrencyCode != null)
                 urlPath.Append(QueryToPath("currency", query.CurrencyCode));
-            
+
             return urlPath.ToString().TrimEnd('&');
         }
         public static string QueryToPath(string key, string value) =>

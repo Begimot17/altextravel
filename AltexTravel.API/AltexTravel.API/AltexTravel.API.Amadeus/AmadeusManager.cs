@@ -26,7 +26,10 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<List<LocationAmadeus>> GetLocationsAsync()
         {
-            Token = await GetToken();
+            if (Token == null || Token == "Bad Request")
+            {
+                Token = await GetToken();
+            }
             _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var fullLocations = new List<AmadeusLocationModel>();
             foreach (var key in _amadeusConfiguration.Keywords)
@@ -41,7 +44,7 @@ namespace AltexTravel.API.Amadeus
         }
         public async Task<AmadeusSearchResult> GetSearchResultAsync(string queryParams)
         {
-            if (Token == null)
+            if (Token == null || Token == "Bad Request")
             {
                 Token = await GetToken();
             }

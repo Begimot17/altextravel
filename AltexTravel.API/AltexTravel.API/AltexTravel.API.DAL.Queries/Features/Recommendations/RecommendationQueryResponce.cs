@@ -5,6 +5,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
     public class RecommendationQueryResponce
     {
-      public List <Recommendation> FullRecommendations { get; set; }
+        public List<Recommendation> FullRecommendations { get; set; }
     }
 }
