@@ -2,7 +2,7 @@
 
 namespace AltexTravel.API.Amadeus.Models.SearchResult
 {
-    public class PricingDetailPerAdult
+    public class PricingDetailPer
     {
         [JsonProperty("travelClass")]
         public string TravelClass { get; set; }

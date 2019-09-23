@@ -15,5 +15,11 @@ namespace AltexTravel.API.Amadeus.Models.SearchResult
 
         [JsonProperty("pricePerAdult")]
         public PricePerAdult PricePerAdult { get; set; }
+
+        [JsonProperty("pricePerChild")]
+        public PricePerAdult PricePerChild { get; set; }
+
+        [JsonProperty("pricePerInfant")]
+        public PricePerAdult PricePerInfant { get; set; }
     }
 }

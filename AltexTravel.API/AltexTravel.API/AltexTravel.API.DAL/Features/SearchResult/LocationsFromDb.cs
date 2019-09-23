@@ -13,6 +13,7 @@ namespace AltexTravel.API.DAL.Features.SearchResult
         {
             _context = context;
         }
+
         public static Location GetLocations(string code)
         {
             var local = _context.Locations

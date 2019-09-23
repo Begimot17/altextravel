@@ -12,7 +12,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         public static RecommendationQueryResponce ToDomain(this Amadeus::AmadeusSearchResult model) =>
             new RecommendationQueryResponce
             {
-                FullRecommendations =model.Data.Select(x => x?.ToDomain()).ToList() 
+                FullRecommendations = model.Data.Select(x => x?.ToDomain()).ToList()
             };
 
         public static FullRecommendations ToDomain(this Amadeus::Data model) =>
@@ -25,7 +25,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
             new Recommendation
             {
                 Segments = model.Services.Select(x => x?.ToDomain()).ToList(),
-                CachedFlightReference="TODO",
+                CachedFlightReference = "TODO",
                 PriceDetails = new PriceInfo
                 {
                     DataSource = "TODO",
@@ -33,10 +33,10 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                     {
                         Adult = new PriceDetails
                         {
-                            BaseFare = 228,
+                            BaseFare = 28,
                             NumberOfPassengers = 228,
-                            Total = 228,
-                            Taxes = 228,
+                            Total = (decimal)model.PricePerAdult.Total,
+                            Taxes = (decimal)model.PricePerAdult.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
                             },
@@ -45,8 +45,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                         {
                             BaseFare = 228,
                             NumberOfPassengers = 228,
-                            Total = 228,
-                            Taxes = 228,
+                            Total = (decimal)model.PricePerChild.Total,
+                            Taxes = (decimal)model.PricePerChild.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
                             },
@@ -55,8 +55,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                         {
                             BaseFare = 228,
                             NumberOfPassengers = 228,
-                            Total = 228,
-                            Taxes = 228,
+                            Total = (decimal)model.PricePerInfant.Total,
+                            Taxes = (decimal)model.PricePerInfant.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
                             },
@@ -76,16 +76,16 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         {
             return new Flight
             {
-                ElapseFlyingTime=model.FlightSegment.Duration,
-                EquipmentType= new EquipmentType
+                ElapseFlyingTime = model.FlightSegment.Duration,
+                EquipmentType = new EquipmentType
                 {
-                    Code=model.FlightSegment.Aircraft.Code,
-                    Name= "TODO"
+                    Code = model.FlightSegment.Aircraft.Code,
+                    Name = "TODO"
                 },
-                FreeBaggage=null,
-                Layover=null,
-                Rules=null,
-                
+                FreeBaggage = null,
+                Layover = null,
+                Rules = null,
+
                 ArrivalTime = model.FlightSegment.Arrival.At,
                 DepartureTime = model.FlightSegment.Departure.At,
                 Cabin = model.PricingDetailPerAdult.TravelClass,
@@ -95,13 +95,13 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 MarketingCarrier = new Airline
                 {
                     Code = model.FlightSegment.CarrierCode,
-                    Name= "TODO"
+                    Name = "TODO"
 
                 },
                 OperatingCarrier = new Airline
                 {
                     Code = model.FlightSegment.Operating.CarrierCode,
-                    Name= "TODO"
+                    Name = "TODO"
                 },
                 Route = new AirportPair
                 {
@@ -111,10 +111,13 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                         {
                             Code = model.FlightSegment.Arrival.IataCode,
                             CountryCode = model.FlightSegment.CarrierCode,
-                            Name = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Country
+                            //Name = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Country
+                            Name = "TODO"
                         },
-                        Code = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Code,
-                        Name = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Name
+                        // Code = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Code,
+                        Code = "TODO",
+                        //Name = LocationsFromDb.GetLocations(model.FlightSegment.Arrival.IataCode).Name
+                        Name = "TODO"
                     },
                     DeparturePort = new Airport
                     {
@@ -122,11 +125,14 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                         {
                             Code = model.FlightSegment.Departure.IataCode,
                             CountryCode = model.FlightSegment.CarrierCode,
-                            Name= LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Country
+                            //Name= LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Country
+                            Name = "TODO"
 
                         },
-                        Code = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Code,
-                        Name = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Name
+                        // Code = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Code,
+                        Code = "TODO",
+                        //Name = LocationsFromDb.GetLocations(model.FlightSegment.Departure.IataCode).Name
+                        Name = "TODO"
                     },
 
                 }
