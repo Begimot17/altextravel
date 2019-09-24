@@ -7,10 +7,16 @@ namespace AltexTravel.API.Amadeus.Models.SearchResult
 {
     public class Segment
     {
-        [JsonProperty("flightSegment")] 
+        [JsonProperty("flightSegment")]
         public FlightSegment FlightSegment { get; set; }
 
         [JsonProperty("pricingDetailPerAdult")]
-        public PricingDetailPerAdult PricingDetailPerAdult { get; set; }
+        public PricingDetail PricingDetailPerAdult { get; set; }
+
+        [JsonProperty("pricingDetailPerChild")]
+        public PricingDetail PricingDetailPerChild { get; set; }
+
+        [JsonProperty("pricingDetailPerInfant")]
+        public PricingDetail PricingDetailPerInfant { get; set; }
     }
 }

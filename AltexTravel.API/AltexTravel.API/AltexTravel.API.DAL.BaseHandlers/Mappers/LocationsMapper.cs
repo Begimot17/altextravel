@@ -14,7 +14,7 @@ namespace AltexTravel.API.DAL.BaseHandlers.Mappers
             Name = model.Name,
             Code = model.Code,
             Type = model.Type,
-            Country=model.Country,
+            Country = model.Country,
             Airports = model.Airports?.ToDomain()
         };
     }

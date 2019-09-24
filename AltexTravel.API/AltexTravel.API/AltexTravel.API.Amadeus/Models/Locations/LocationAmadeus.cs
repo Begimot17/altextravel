@@ -20,8 +20,8 @@ namespace AltexTravel.API.Amadeus.Models
     {
         public bool Equals(LocationAmadeus x, LocationAmadeus y)
         {
-            if (object.ReferenceEquals(x, y)) return true;
-            if (object.ReferenceEquals(x, null) || object.ReferenceEquals(y, null)) return false;
+            if (ReferenceEquals(x, y)) return true;
+            if (ReferenceEquals(x, null) || ReferenceEquals(y, null)) return false;
             return x.Type.Equals(y.Type)
                 || x.Name.Equals(y.Name)
                 || x.Address.Country.Equals(y.Address.Country)

@@ -13,6 +13,15 @@ namespace AltexTravel.API.DAL.Features.Locations
         public static IEnumerable<Location> ToLocation(this IEnumerable<LocationAmadeus> locations) =>
             locations.Select(x => x?.ToLocation()).ToList();
 
+        public static Location ToLocation(this LocationAmadeus model) => new Location
+        {
+            Name = model.Name,
+            Code = model.Code,
+            Type = model.Type,
+            Country = model.Address.Country,
+            Airports = model.Airports?.ToIata()
+        };
+
         public static IataCode ToIata(this IataAmadeus model) =>
             new IataCode
             {
@@ -20,15 +29,6 @@ namespace AltexTravel.API.DAL.Features.Locations
                 Code = model.Code,
                 Country = model.Country
             };
-
-        public static Location ToLocation(this LocationAmadeus model) => new Location
-        {
-            Name = model.Address.Name,
-            Code = model.Code,
-            Type = model.Type,
-            Country = model.Address.Country,
-            Airports = model.Airports?.ToIata()
-        };
 
 
     }

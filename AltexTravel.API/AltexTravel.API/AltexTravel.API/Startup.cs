@@ -32,16 +32,16 @@ namespace AltexTravel.API
 
             //AddSwagger
             services.AddSwaggerGen(options =>
+        {
+            options.DescribeAllEnumsAsStrings();
+            options.SwaggerDoc("v1", new Info
             {
-                options.DescribeAllEnumsAsStrings();
-                options.SwaggerDoc("v1", new Info
-                {
-                    Title = "AltexTravel.API - API HTTP API",
-                    Version = "v1",
-                    Description = "The Catalog Microservice HTTP API. This is a Data-Driven/CRUD microservice sample",
-                    TermsOfService = "Terms Of Service"
-                });
+                Title = "AltexTravel.API - API HTTP API",
+                Version = "v1",
+                Description = "The Catalog Microservice HTTP API. This is a Data-Driven/CRUD microservice sample",
+                TermsOfService = "Terms Of Service"
             });
+        });
 
             //Add FluentValidation 
 

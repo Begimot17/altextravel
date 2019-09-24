@@ -1,4 +1,5 @@
 ﻿using AltexTravel.API.Amadeus.Models;
+using AltexTravel.API.Amadeus.Models.SearchResult;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,7 +17,7 @@ namespace AltexTravel.API.Amadeus
 
         private AmadeusConfiguration _amadeusConfiguration;
 
-
+        private string Token;
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
@@ -25,9 +26,9 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<List<LocationAmadeus>> GetLocationsAsync()
         {
+            if (Token == null)
+                SetToken();
 
-            var Token = await GetToken();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var fullLocations = new List<AmadeusLocationModel>();
             foreach (var key in _amadeusConfiguration.Keywords)
             {
@@ -40,7 +41,18 @@ namespace AltexTravel.API.Amadeus
             return IataIntoLocation(fullLocations);
         }
 
-        private async Task<string> GetToken()
+        public async Task<AmadeusSearchResult> GetSearchResultAsync(string queryParams)
+        {
+            if (Token == null)
+                SetToken();
+
+            var response = await _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams);
+            var httpResult = await response.Content.ReadAsStringAsync();
+            string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
+            return JsonToAmadeusSearchResultModel(searchJsonResponce);
+        }
+
+        private async void SetToken()
         {
             var request = new HttpRequestMessage(HttpMethod.Post, _amadeusConfiguration.TokenUrl)
             {
@@ -48,24 +60,29 @@ namespace AltexTravel.API.Amadeus
                                     Encoding.UTF8,
                                     "application/x-www-form-urlencoded")
             };
-
             var response = _client.SendAsync(request);
+
             if (response.Result.IsSuccessStatusCode)
             {
                 var jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
                     .ReadAsStringAsync()).ToString();
                 var jsonObject = JObject.Parse(jsonResponse);
-                var token = (string)jsonObject["access_token"];
-                return token;
+
+                Token = (string)jsonObject["access_token"];
+                _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             }
             else
             {
-                return response.Result.ReasonPhrase;
+                Token = null;
             }
+
         }
 
         public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson) =>
             JsonConvert.DeserializeObject<AmadeusLocationModel>(strJson);
+
+        public AmadeusSearchResult JsonToAmadeusSearchResultModel(string strJson) =>
+            JsonConvert.DeserializeObject<AmadeusSearchResult>(strJson);
 
         public List<LocationAmadeus> IataIntoLocation(List<AmadeusLocationModel> data)
         {

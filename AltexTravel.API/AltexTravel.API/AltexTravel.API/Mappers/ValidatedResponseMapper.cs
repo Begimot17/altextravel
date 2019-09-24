@@ -15,6 +15,5 @@ namespace AltexTravel.API.Mappers
             }
             return new BadRequestObjectResult(responce.Errors);
         }
-
     }
 }

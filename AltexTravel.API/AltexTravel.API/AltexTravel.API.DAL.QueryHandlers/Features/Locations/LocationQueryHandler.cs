@@ -26,6 +26,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Locations
                 .Where(x => x.Name.Contains(request.Search)
                 || x.Code.Contains(request.Search)
                 || x.Country.Contains(request.Search))
+                .OrderBy(x => x.Code)
                 .Take(request.Count)
                 .ToListAsync(cancellationToken);
             return new LocationQueryResponce
