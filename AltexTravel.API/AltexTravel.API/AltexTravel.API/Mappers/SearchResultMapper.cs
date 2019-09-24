@@ -11,7 +11,9 @@ namespace AltexTravel.API.Mappers
         public static RecommendationsViewModel ToViewModel(this RecommendationQueryResponce model) =>
             new RecommendationsViewModel
             {
-                Recommendations = model.FullRecommendations.Select(x => x?.ToViewModel()).ToList()
+                Recommendations = model.FullRecommendations!= null 
+                ?model.FullRecommendations.Select(x => x?.ToViewModel()).ToList()
+                :new List<Recommendation>()
             };
 
         public static Recommendation ToViewModel(this Domain::Recommendation model) =>
