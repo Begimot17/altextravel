@@ -25,7 +25,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
             return $"{timeList[1].DoubleInt()}:{timeList[2].DoubleInt()}:00";
         }
         public static string DoubleInt(this int x) =>
-            x < 10 ? $"0{x}" : $"{x }";
+             x < 10 || x > 0 ? $"0{x}" : $"{x}";
 
     }
 }
