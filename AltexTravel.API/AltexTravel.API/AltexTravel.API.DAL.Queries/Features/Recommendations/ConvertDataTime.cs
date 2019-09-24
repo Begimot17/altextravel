@@ -26,6 +26,5 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         }
         public static string DoubleInt(this int x) =>
              x < 10 || x > 0 ? $"0{x}" : $"{x}";
-
     }
 }

@@ -88,7 +88,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 Layover = null,
                 Rules = null,
 
-                ElapseFlyingTime = model.FlightSegment.Duration.ToString(),
+                ElapseFlyingTime = model.FlightSegment.Duration.FlyingTimeConvert(),
 
                 ArrivalTime = model.FlightSegment.Arrival.At,
                 DepartureTime = model.FlightSegment.Departure.At,

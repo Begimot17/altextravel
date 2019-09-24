@@ -52,7 +52,7 @@ namespace AltexTravel.API.Amadeus
 
         private async Task<bool> GetToken()
         {
-            if (Token != null || Token != "Bad Request")
+            if (Token != null)
             {
                 return true;
             }
