@@ -90,12 +90,12 @@ namespace AltexTravel.API.Mappers
                 MarketingCarrier = new Airline
                 {
                     Code = model.MarketingCarrier.Code,
-                    Name = model.MarketingCarrier.Name
+                    Name = model.MarketingCarrier.Name.StringToTitleCase()
                 },
                 OperatingCarrier = new Airline
                 {
                     Code = model.OperatingCarrier.Code,
-                    Name = model.OperatingCarrier.Name
+                    Name = model.OperatingCarrier.Name.StringToTitleCase()
                 },
                 Route = new AirportPair
                 {
@@ -104,10 +104,10 @@ namespace AltexTravel.API.Mappers
                         City = new City
                         {
                             Code = model.Route.ArrivalPort.City.Code,
-                            Name = model.Route.ArrivalPort.City.Name,
+                            Name = model.Route.ArrivalPort.City.Name.StringToTitleCase(),
                             CountryCode = model.Route.ArrivalPort.City.CountryCode
                         },
-                        Name = model.Route.ArrivalPort.Name,
+                        Name = model.Route.ArrivalPort.Name.StringToTitleCase(),
                         Code = model.Route.ArrivalPort.Code
                     },
                     DeparturePort = new Airport
@@ -115,10 +115,10 @@ namespace AltexTravel.API.Mappers
                         City = new City
                         {
                             Code = model.Route.DeparturePort.City.Code,
-                            Name = model.Route.DeparturePort.City.Name,
+                            Name = model.Route.DeparturePort.City.Name.StringToTitleCase(),
                             CountryCode = model.Route.DeparturePort.City.CountryCode
                         },
-                        Name = model.Route.DeparturePort.Name,
+                        Name = model.Route.DeparturePort.Name.StringToTitleCase(),
                         Code = model.Route.DeparturePort.Code
                     },
 
