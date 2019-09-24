@@ -17,7 +17,7 @@ namespace AltexTravel.API.Amadeus
 
         private AmadeusConfiguration _amadeusConfiguration;
 
-        private string Token { get; set; }
+        private string Token;
         public AmadeusManager(AmadeusConfiguration amadeusConfiguration)
         {
             _amadeusConfiguration = amadeusConfiguration;
@@ -26,10 +26,7 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<List<LocationAmadeus>> GetLocationsAsync()
         {
-            if (Token == null || Token == "Bad Request")
-            {
-                Token = await GetToken();
-            }
+            await GetToken();
             _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var fullLocations = new List<AmadeusLocationModel>();
             foreach (var key in _amadeusConfiguration.Keywords)
@@ -42,12 +39,10 @@ namespace AltexTravel.API.Amadeus
             }
             return IataIntoLocation(fullLocations);
         }
+
         public async Task<AmadeusSearchResult> GetSearchResultAsync(string queryParams)
         {
-            if (Token == null || Token == "Bad Request")
-            {
-                Token = await GetToken();
-            }
+            await GetToken();
             _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             var response = await _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams);
             var httpResult = await response.Content.ReadAsStringAsync();
@@ -55,8 +50,12 @@ namespace AltexTravel.API.Amadeus
             return JsonToAmadeusSearchResultModel(searchJsonResponce);
         }
 
-        private async Task<string> GetToken()
+        private async Task<bool> GetToken()
         {
+            if (Token != null || Token != "Bad Request")
+            {
+                return true;
+            }
             var request = new HttpRequestMessage(HttpMethod.Post, _amadeusConfiguration.TokenUrl)
             {
                 Content = new StringContent(_amadeusConfiguration.TokenUrlQuery,
@@ -70,17 +69,19 @@ namespace AltexTravel.API.Amadeus
                 var jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
                     .ReadAsStringAsync()).ToString();
                 var jsonObject = JObject.Parse(jsonResponse);
-                var token = (string)jsonObject["access_token"];
-                return token;
+
+                Token = (string)jsonObject["access_token"];
+                return true;
             }
             else
             {
-                return response.Result.ReasonPhrase;
+                return false;
             }
         }
 
         public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson) =>
             JsonConvert.DeserializeObject<AmadeusLocationModel>(strJson);
+
         public AmadeusSearchResult JsonToAmadeusSearchResultModel(string strJson) =>
             JsonConvert.DeserializeObject<AmadeusSearchResult>(strJson);
 
@@ -107,7 +108,5 @@ namespace AltexTravel.API.Amadeus
             }
             return locations;
         }
-
-
     }
 }
