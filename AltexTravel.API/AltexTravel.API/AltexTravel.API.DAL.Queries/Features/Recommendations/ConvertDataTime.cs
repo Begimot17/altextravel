@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -14,16 +15,13 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
             var difference = lastDate - firstDate;
             return difference;
         }
+
         public static string FlyingTimeConvert(this string time)
         {
-            var timeSplit = time.Split('D', 'T', 'H', 'M');
-            var timeList = timeSplit.Where(x => x != "").Select(x => Int32.Parse(x)).ToList();
-            if (timeList[0] != 0)
-            {
-                timeList[1] += timeList[0] * 24;
-            }
-            return $"{timeList[1].DoubleInt()}:{timeList[2].DoubleInt()}:00";
+            var flyingTime = TimeSpan.ParseExact(time, @"d\D\Th\Hm\M", CultureInfo.CurrentCulture);
+            return string.Format("{0:00}:{1:00}:00", (flyingTime.Days * 24) + flyingTime.Hours, flyingTime.Minutes);
         }
+
         public static string DoubleInt(this int x) =>
              x < 10 && x >= 0 ? $"0{x}" : $"{x}";
     }

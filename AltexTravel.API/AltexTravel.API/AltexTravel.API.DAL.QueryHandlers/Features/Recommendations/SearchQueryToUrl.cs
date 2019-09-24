@@ -26,12 +26,8 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 
             return urlPath.ToString().TrimEnd('&');
         }
-        public static string QueryToPath(string key, string value) =>
-             $"{key}={value}&";
-        public static string QueryToPath(string key, int value) =>
-             $"{key}={value}&";
-        public static string QueryToPath(string key, bool value) =>
-             $"{key}={value.ToString()}&";
 
+        public static string QueryToPath<TValue>(string key, TValue value) =>
+             $"{key}={value}&";
     }
 }
