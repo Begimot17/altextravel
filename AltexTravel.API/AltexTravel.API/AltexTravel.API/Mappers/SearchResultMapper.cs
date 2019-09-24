@@ -30,30 +30,30 @@ namespace AltexTravel.API.Mappers
             DataSource = model.DataSource,
             PriceByPassengerType = new PriceByPassengerType
             {
-                Adult = new PriceDetails
+                Adult = model.PriceByPassengerType.Adult == null ? new PriceDetails
                 {
                     BaseFare = model.PriceByPassengerType.Adult.BaseFare,
                     NumberOfPassengers = model.PriceByPassengerType.Adult.NumberOfPassengers,
                     Total = model.PriceByPassengerType.Adult.Total,
                     Taxes = model.PriceByPassengerType.Adult.Taxes,
                     Fees = model.PriceByPassengerType.Adult.Fees,
-                },
-                Child = new PriceDetails
+                } : null,
+                Child = model.PriceByPassengerType.Adult == null ? new PriceDetails
                 {
                     BaseFare = model.PriceByPassengerType.Child.BaseFare,
                     NumberOfPassengers = model.PriceByPassengerType.Child.NumberOfPassengers,
                     Total = model.PriceByPassengerType.Child.Total,
                     Taxes = model.PriceByPassengerType.Child.Taxes,
                     Fees = model.PriceByPassengerType.Child.Fees,
-                },
-                Infant = new PriceDetails
+                } : null,
+                Infant = model.PriceByPassengerType.Adult == null ? new PriceDetails
                 {
                     BaseFare = model.PriceByPassengerType.Infant.BaseFare,
                     NumberOfPassengers = model.PriceByPassengerType.Infant.NumberOfPassengers,
                     Total = model.PriceByPassengerType.Infant.Total,
                     Taxes = model.PriceByPassengerType.Infant.Taxes,
                     Fees = model.PriceByPassengerType.Infant.Fees,
-                }
+                } : null
             },
             Total = model.Total
         };

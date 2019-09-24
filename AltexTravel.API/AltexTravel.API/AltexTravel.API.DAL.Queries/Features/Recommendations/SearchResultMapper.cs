@@ -4,7 +4,7 @@ using AltexTravel.API.Domain.RecomendationsModel;
 using System.Collections.Generic;
 using System.Linq;
 using Amadeus = AltexTravel.API.Amadeus.Models.SearchResult;
-using Segment = AltexTravel.API.Domain.RecomendationsModel.Segment;
+using Domain = AltexTravel.API.Domain.RecomendationsModel;
 
 namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
@@ -38,39 +38,39 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                         {
                             BaseFare = 228,
                             NumberOfPassengers = Request.NumberOfAdults,
-                            Total = (decimal)model.PricePerAdult.Total,
-                            Taxes = (decimal)model.PricePerAdult.TotalTaxes,
+                            Total = model.PricePerAdult.Total,
+                            Taxes = model.PricePerAdult.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
                             }
-                        } : new PriceDetails{ },
+                        } : null,
                         Child = Request.NumberOfChildren != 0 ? new PriceDetails
                         {
                             BaseFare = 228,
                             NumberOfPassengers = Request.NumberOfChildren,
-                            Total = (decimal)model.PricePerChild.Total,
-                            Taxes = (decimal)model.PricePerChild.TotalTaxes,
+                            Total = model.PricePerChild.Total,
+                            Taxes = model.PricePerChild.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
                             }
-                        } : new PriceDetails{ },
+                        } : null,
                         Infant = Request.NumberOfInfants != 0 ? new PriceDetails
                         {
                             BaseFare = 228,
                             NumberOfPassengers = Request.NumberOfInfants,
-                            Total = (decimal)model.PricePerInfant.Total,
-                            Taxes = (decimal)model.PricePerInfant.TotalTaxes,
+                            Total = model.PricePerInfant.Total,
+                            Taxes = model.PricePerInfant.TotalTaxes,
                             Fees = new List<decimal> {
                                 228
                             }
-                        } : new PriceDetails{ }
+                        } : null
                     },
                     Total = model.Price.Total}
                 },
             };
 
-        public static Segment ToDomain(this Services model) =>
-            new Segment
+        public static Domain::Segment ToDomain(this Services model) =>
+            new Domain::Segment
             {
                 Flights = model.Segments.Select(x => x?.ToDomain()).ToList(),
             };
@@ -88,7 +88,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 Layover = null,
                 Rules = null,
 
-                ElapseFlyingTime = model.FlightSegment.Duration.FlyingTimeConvert(),
+                ElapseFlyingTime = model.FlightSegment.Duration.ToString(),
 
                 ArrivalTime = model.FlightSegment.Arrival.At,
                 DepartureTime = model.FlightSegment.Departure.At,
@@ -104,7 +104,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 },
                 OperatingCarrier = new Airline
                 {
-                    Code = model.FlightSegment.Operating.CarrierCode,
+                    Code = model.FlightSegment.Operating.CarrierCode
+                    ?? Dictionaries.Carriers.First(x => x.Key == model.FlightSegment.CarrierCode).Key,
                     Name = Dictionaries.Carriers.FirstOrDefault(x => x.Key == model.FlightSegment.Operating.CarrierCode).Value
                     ?? Dictionaries.Carriers.First(x => x.Key == model.FlightSegment.CarrierCode).Value
                 },
