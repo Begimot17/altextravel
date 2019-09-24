@@ -18,7 +18,7 @@ namespace AltexTravel.API.Mappers
             new Recommendation
             {
                 CachedFlightReference = model.CachedFlightReference,
-                PriceDetails = model.PriceDetails.ToViewModel(),
+                PriceDetails = model.PriceDetails?.ToViewModel(),
                 Segments = model.Segments?.ToViewModel()
             };
 
