@@ -31,7 +31,6 @@ namespace AltexTravel.API.Controllers
             {
                 return new OkObjectResult(new RecommendationsViewModel { Recommendations= new List<Recommendation>()});
             }
-
             var result = responce.Result?.ToViewModel();
             return new OkObjectResult(result);
         }
