@@ -30,8 +30,8 @@ namespace AltexTravel.API
             //Add MediatR
             services.AddMediatR(typeof(LocationQueryHandler));
 
-            //AddSwagger
-            services.AddSwaggerGen(options =>
+                //AddSwagger
+                services.AddSwaggerGen(options =>
             {
                 options.DescribeAllEnumsAsStrings();
                 options.SwaggerDoc("v1", new Info
@@ -43,48 +43,48 @@ namespace AltexTravel.API
                 });
             });
 
-            //Add FluentValidation 
+                //Add FluentValidation 
 
-            services.AddMvc()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
+                services.AddMvc()
+                    .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
 
-            //ADD EF
-            services.AddDbContext<TravelContext>
-                (options => options.UseSqlServer(Configuration.GetSection("ConnectionStrings:traveldb").Value));
-        }
+                //ADD EF
+                services.AddDbContext<TravelContext>
+                    (options => options.UseSqlServer(Configuration.GetSection("ConnectionStrings:traveldb").Value));
+            }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
+            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
             {
-                app.UseDeveloperExceptionPage();
+                if (env.IsDevelopment())
+                {
+                    app.UseDeveloperExceptionPage();
+                }
+                else
+                {
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                    app.UseHsts();
+                }
+                var pathBase = Configuration["PathBase"];
+
+
+                app.UseHttpsRedirection();
+
+                app.UseMvc();
+
+                //AddSwagger
+                app.UseStaticFiles();
+
+                //AddSwagger
+                app.UseSwagger()
+                  .UseSwaggerUI(c =>
+                  {
+                      c.SwaggerEndpoint("../swagger/v1/swagger.json", "Identity.API");
+                      c.RoutePrefix = string.Empty;
+                  });
+
+                app.UseAuthentication();
+
             }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            var pathBase = Configuration["PathBase"];
-
-
-            app.UseHttpsRedirection();
-
-            app.UseMvc();
-
-            //AddSwagger
-            app.UseStaticFiles();
-
-            //AddSwagger
-            app.UseSwagger()
-              .UseSwaggerUI(c =>
-              {
-                  c.SwaggerEndpoint("../swagger/v1/swagger.json", "Identity.API");
-                  c.RoutePrefix = string.Empty;
-              });
-
-            app.UseAuthentication();
-
         }
     }
-}

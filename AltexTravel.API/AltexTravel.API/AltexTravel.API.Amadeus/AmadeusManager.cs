@@ -26,8 +26,9 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<List<LocationAmadeus>> GetLocationsAsync()
         {
-            await GetToken();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
+            if (Token == null)
+                SetToken();
+
             var fullLocations = new List<AmadeusLocationModel>();
             foreach (var key in _amadeusConfiguration.Keywords)
             {
@@ -42,28 +43,25 @@ namespace AltexTravel.API.Amadeus
 
         public async Task<AmadeusSearchResult> GetSearchResultAsync(string queryParams)
         {
-            await GetToken();
-            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
+            if (Token == null)
+                SetToken();
+
             var response = await _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams);
             var httpResult = await response.Content.ReadAsStringAsync();
             string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
             return JsonToAmadeusSearchResultModel(searchJsonResponce);
         }
 
-        private async Task<bool> GetToken()
+        private async void SetToken()
         {
-            if (Token != null)
-            {
-                return true;
-            }
             var request = new HttpRequestMessage(HttpMethod.Post, _amadeusConfiguration.TokenUrl)
             {
                 Content = new StringContent(_amadeusConfiguration.TokenUrlQuery,
                                     Encoding.UTF8,
                                     "application/x-www-form-urlencoded")
             };
-
             var response = _client.SendAsync(request);
+
             if (response.Result.IsSuccessStatusCode)
             {
                 var jsonResponse = JsonConvert.DeserializeObject(await response.Result.Content
@@ -71,13 +69,13 @@ namespace AltexTravel.API.Amadeus
                 var jsonObject = JObject.Parse(jsonResponse);
 
                 Token = (string)jsonObject["access_token"];
-                return true;
+                _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", "Bearer " + Token);
             }
             else
             {
                 Token = null;
-                return false;
             }
+
         }
 
         public AmadeusLocationModel JsonToAmadeusLocationModel(string strJson) =>

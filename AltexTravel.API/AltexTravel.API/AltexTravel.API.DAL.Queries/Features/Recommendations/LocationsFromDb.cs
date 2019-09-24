@@ -2,33 +2,40 @@
 using AltexTravel.API.DAL.Queries.Features.Recommendations;
 using AltexTravel.API.Domain.RecomendationsModel;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AltexTravel.API.DAL.Features.SearchResult
 {
     public static class LocationsFromDb
     {
-        public static RecommendationQueryResponce GetLocation(this RecommendationQueryResponce model, TravelContext context) =>
-            new RecommendationQueryResponce
+        private static List<IataCode> Iatacodes;
+        public static RecommendationQueryResponce GetLocation(this RecommendationQueryResponce model, TravelContext context)
+        {
+            Iatacodes = context.IataCodes
+                .AsNoTracking()
+                .Include(x => x.Location).ToList();
+            return new RecommendationQueryResponce
             {
-                FullRecommendations = model.FullRecommendations.Select(x => x.ToLocation(context)).ToList()
+                FullRecommendations = model.FullRecommendations.Select(x => x.ToLocation()).ToList()
             };
+        }
 
-        public static Recommendation ToLocation(this Recommendation model, TravelContext context) =>
+        public static Recommendation ToLocation(this Recommendation model) =>
             new Recommendation
             {
                 PriceDetails = model.PriceDetails,
                 CachedFlightReference = model.CachedFlightReference,
-                Segments = model.Segments.Select(x => x.ToLocation(context)).ToList()
+                Segments = model.Segments.Select(x => x.ToLocation()).ToList()
             };
 
-        public static Segment ToLocation(this Segment model, TravelContext context) =>
+        public static Segment ToLocation(this Segment model) =>
             new Segment
             {
-                Flights = model.Flights.Select(x => x?.ToLocation(context)).ToList(),
+                Flights = model.Flights.Select(x => x?.ToLocation()).ToList(),
             };
 
-        public static Flight ToLocation(this Flight model, TravelContext context)
+        public static Flight ToLocation(this Flight model)
         {
             return new Flight
             {
@@ -62,13 +69,13 @@ namespace AltexTravel.API.DAL.Features.SearchResult
                 },
                 Route = new AirportPair
                 {
-                    ArrivalPort = GetAirport(context, model.Route.ArrivalPort.Code),
-                    DeparturePort = GetAirport(context, model.Route.DeparturePort.Code)
+                    ArrivalPort = GetAirport(model.Route.ArrivalPort.Code),
+                    DeparturePort = GetAirport(model.Route.DeparturePort.Code)
                 }
             };
         }
 
-        public static Airport GetAirport(TravelContext context, string code)
+        public static Airport GetAirport(string code)
         {
             var airdefault = new Airport
             {
@@ -81,10 +88,8 @@ namespace AltexTravel.API.DAL.Features.SearchResult
                 Code = code,
                 Name = "---",
             };
-            var air = context.IataCodes
-                .AsNoTracking()
-                .Include(x => x.Location)
-                .FirstOrDefault(x => x.Code == code).ToAir() ?? airdefault;
+            var air = Iatacodes
+                    .FirstOrDefault(x => x.Code == code).ToAir() ?? airdefault;
             return air;
         }
         public static Airport ToAir(this IataCode model) =>
