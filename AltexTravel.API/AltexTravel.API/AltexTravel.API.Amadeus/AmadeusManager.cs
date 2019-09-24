@@ -75,6 +75,7 @@ namespace AltexTravel.API.Amadeus
             }
             else
             {
+                Token = null;
                 return false;
             }
         }
