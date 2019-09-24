@@ -21,8 +21,5 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
             var flyingTime = TimeSpan.ParseExact(time, @"d\D\Th\Hm\M", CultureInfo.CurrentCulture);
             return string.Format("{0:00}:{1:00}:00", (flyingTime.Days * 24) + flyingTime.Hours, flyingTime.Minutes);
         }
-
-        public static string DoubleInt(this int x) =>
-             x < 10 && x >= 0 ? $"0{x}" : $"{x}";
     }
 }
