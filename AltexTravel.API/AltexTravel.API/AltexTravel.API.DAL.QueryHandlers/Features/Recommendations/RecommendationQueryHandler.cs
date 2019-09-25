@@ -1,13 +1,8 @@
 ﻿using AltexTravel.API.Amadeus;
 using AltexTravel.API.DAL.BaseHandlers;
 using AltexTravel.API.DAL.Features.SearchResult;
-using AltexTravel.API.DAL.Queries;
 using AltexTravel.API.DAL.Queries.Features.Recommendations;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -31,7 +26,8 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             {
                 return new RecommendationQueryResponce();
             }
-            return searchResult.ToDomain(request).GetLocation(_context);
+            var responce = searchResult.ToDomain(request);
+            return responce.GetFiltration(request).GetLocation(_context);
         }
     }
 }

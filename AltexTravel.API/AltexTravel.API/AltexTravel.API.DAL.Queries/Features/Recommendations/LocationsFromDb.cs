@@ -89,7 +89,7 @@ namespace AltexTravel.API.DAL.Features.SearchResult
                 Name = "---",
             };
             var air = Iatacodes
-                    .FirstOrDefault(x => x.Code == code).ToAir() ?? airdefault;
+                    .FirstOrDefault(x => x.Code == code)?.ToAir() ?? airdefault;
             return air;
         }
         public static Airport ToAir(this IataCode model) =>
