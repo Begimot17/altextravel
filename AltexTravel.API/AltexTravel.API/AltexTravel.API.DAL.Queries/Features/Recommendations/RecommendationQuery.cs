@@ -25,8 +25,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         public int NumberOfAdults { get; set; }
         public int NumberOfChildren { get; set; }
         public int NumberOfInfants { get; set; }
-
-
+        //Params for filters
         public List<NumberOfStops> NumberOfStops { get; set; }
         public decimal MaxPrice { get; set; }
         public decimal MinPrice { get; set; }

@@ -26,8 +26,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             {
                 return new RecommendationQueryResponce();
             }
-            var responce = searchResult.ToDomain(request);
-            return responce.GetFiltration(request).GetLocation(_context);
+            return searchResult.ToDomain(request).GetFiltration(request).GetLocation(_context);
         }
     }
 }
