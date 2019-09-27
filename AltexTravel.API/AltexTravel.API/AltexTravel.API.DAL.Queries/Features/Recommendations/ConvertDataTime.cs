@@ -27,7 +27,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         {
             var timeDep = segment.Segments[0].FlightSegment.Departure.At;
             var depTime = DateTime.Parse(timeDep);
-
             var timeArriv = segment.Segments[segment.Segments.Count - 1].FlightSegment.Arrival.At;
             var arrivTime = DateTime.Parse(timeArriv);
             return arrivTime - depTime;
