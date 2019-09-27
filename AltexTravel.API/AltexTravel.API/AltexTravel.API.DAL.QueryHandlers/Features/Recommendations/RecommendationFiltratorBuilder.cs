@@ -65,8 +65,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
         {
             if (duration > new TimeSpan(0, 0, 0))
                 return recommendations.Where(rec => rec.Segments
-                    .All(seg => seg.Flights
-                    .All(fly => duration >= fly.FlyingTime))).ToList();
+                    .All(fly => duration >= fly.ElapseFlyingTime)).ToList();
             return recommendations;
         }
 
