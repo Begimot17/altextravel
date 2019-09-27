@@ -16,13 +16,9 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             queryParams.Add("departureDate", query.DepartureDate.ToString("yyyy-MM-dd"));
             queryParams.Add("returnDate", query.ReturnDate.ToString("yyyy-MM-dd"));
             queryParams.Add("travelClass", query.Cabin.ToString());
-            if (query.NumberOfAdults != 0)
                 queryParams.Add("adults", query.NumberOfAdults);
-            if (query.NumberOfChildren != 0)
                 queryParams.Add("children", query.NumberOfChildren);
-            if (query.NumberOfInfants != 0)
                 queryParams.Add("infants", query.NumberOfInfants);
-            if (query.CurrencyCode != null)
                 queryParams.Add("currency", query.CurrencyCode);
             return queryParams; 
         }
