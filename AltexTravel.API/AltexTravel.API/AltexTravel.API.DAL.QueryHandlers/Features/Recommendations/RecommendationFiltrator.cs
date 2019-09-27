@@ -65,7 +65,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             if (duration > new TimeSpan(0,0,0) )
                 return recommendations.Where(x => x.Segments
                     .All(y => y.Flights
-                    .All(q => duration == q.FlyingTime))).ToList();
+                    .All(q => duration >= q.FlyingTime))).ToList();
             return recommendations;
         }
 
@@ -78,7 +78,5 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
                 || ((byte)z == 3 && y.Flights.Count >= 3)))).ToList();
             return recommendations;
         }
-
-
     }
 }
