@@ -1,10 +1,6 @@
 ﻿using AltexTravel.API.Amadeus.Models.SearchResult;
-using AltexTravel.API.Domain.RecomendationsModel;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 
 namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
@@ -18,11 +14,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
             return difference;
         }
 
-        //public static string FlyingTimeConvert(this string time)
-        //{
-        //    var flyingTime = TimeSpan.ParseExact(time, @"d\D\Th\Hm\M", CultureInfo.CurrentCulture);
-        //    return string.Format("{0:00}:{1:00}:00", (flyingTime.Days * 24) + flyingTime.Hours, flyingTime.Minutes);
-        //}
         public static TimeSpan FlyingTimeConvert(this Services segment)
         {
             var depTime = DateTime.Parse(segment.Segments.First().FlightSegment.Departure.At);
