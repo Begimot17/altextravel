@@ -25,10 +25,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         //}
         public static TimeSpan FlyingTimeConvert(this Services segment)
         {
-            var timeDep = segment.Segments[0].FlightSegment.Departure.At;
-            var depTime = DateTime.Parse(timeDep);
-            var timeArriv = segment.Segments[segment.Segments.Count - 1].FlightSegment.Arrival.At;
-            var arrivTime = DateTime.Parse(timeArriv);
+            var depTime = DateTime.Parse(segment.Segments.First().FlightSegment.Departure.At);
+            var arrivTime = DateTime.Parse(segment.Segments.Last().FlightSegment.Arrival.At);
             return arrivTime - depTime;
         }
     }
