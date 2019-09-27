@@ -6,8 +6,8 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
 {
     public enum NumberOfStops : byte
     {
-        Nonstop = 1,
-        Onestop = 2,
-        ManyStops = 3
+        Nonstop = 0,
+        Onestop = 1,
+        ManyStops = 2
     }
 }

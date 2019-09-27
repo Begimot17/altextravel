@@ -6,11 +6,11 @@ using System.Text;
 
 namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 {
-    public static class RecommendationFilratorFactory
+    public static class RecommendationFilratorProvider
     {
-        public static RecommendationQueryResponce ReccomendationFilrator(this RecommendationQueryResponce recommendations, RecommendationQuery query)
+        public static RecommendationQueryResponce RecommendationFilrator(this RecommendationQueryResponce recommendations, RecommendationQuery query)
         {
-            recommendations.FullRecommendations=recommendations.FullRecommendations
+            recommendations.FullRecommendations = recommendations.FullRecommendations
                         .FilterByMinPrice(query.MinPrice)
                         .FilterByAirlines(query.Airlines)
                         .FilterByArrival(query.Arrival)
