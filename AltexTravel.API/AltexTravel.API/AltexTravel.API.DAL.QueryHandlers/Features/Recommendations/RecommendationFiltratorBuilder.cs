@@ -26,6 +26,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
                     .ToList();
             return recommendations;
         }
+
         public static List<Recommendation> FilterByAirlines(this List<Recommendation> recommendations, List<string> airlines)
         {
             if (airlines != null)
@@ -78,6 +79,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
                 || (ns == NumberOfStops.ManyStops && seg.Flights.Count >= NumberOfStops.ManyStops.ToFlights())))).ToList();
             return recommendations;
         }
+
         public static byte ToFlights(this NumberOfStops num) =>
             (byte)num++;
     }

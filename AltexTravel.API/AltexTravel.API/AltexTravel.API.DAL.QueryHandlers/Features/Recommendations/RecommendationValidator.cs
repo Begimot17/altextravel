@@ -16,7 +16,6 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             RuleFor(x => x.ReturnDate).NotEmpty();
             RuleFor(x => x.DepartureDate).NotEmpty();
             RuleFor(x => x.DeparturePort).NotEmpty();
-
         }
     }
 }

@@ -81,17 +81,18 @@ namespace AltexTravel.API.DAL.Features.SearchResult
             {
                 City = new City
                 {
-                    Code = "---",
-                    CountryCode = "---",
-                    Name = "---"
+                    Code = "default",
+                    CountryCode = "default",
+                    Name = "default"
                 },
                 Code = code,
-                Name = "---",
+                Name = "default",
             };
             var air = Iatacodes
                     .FirstOrDefault(x => x.Code == code)?.ToAir() ?? airdefault;
             return air;
         }
+
         public static Airport ToAir(this IataCode model) =>
             new Airport
             {

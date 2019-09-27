@@ -123,6 +123,5 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 }
             };
         }
-
     }
 }
