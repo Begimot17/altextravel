@@ -7,7 +7,7 @@ namespace AltexTravel.API.Domain.RecomendationsModel
 {
     public class Flight
     {
-        public string ElapseFlyingTime { get; set; }
+        public TimeSpan ElapseFlyingTime { get; set; }
 
         public string ArrivalTime { get; set; }
         public string DepartureTime { get; set; }
