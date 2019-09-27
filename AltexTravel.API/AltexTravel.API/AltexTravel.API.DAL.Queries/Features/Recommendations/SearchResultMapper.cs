@@ -72,6 +72,7 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
         public static Domain::Segment ToDomain(this Services model) =>
             new Domain::Segment
             {
+                ElapseFlyingTime = model.FlyingTimeConvert(),
                 Flights = model.Segments.Select(x => x?.ToDomain()).ToList(),
             };
 
@@ -87,9 +88,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                 FreeBaggage = null,
                 Layover = null,
                 Rules = null,
-
-                ElapseFlyingTime = model.FlightSegment.Duration.FlyingTimeConvert(),
-
                 ArrivalTime = model.FlightSegment.Arrival.At,
                 DepartureTime = model.FlightSegment.Departure.At,
                 Cabin = model.PricingDetailPerAdult.TravelClass,

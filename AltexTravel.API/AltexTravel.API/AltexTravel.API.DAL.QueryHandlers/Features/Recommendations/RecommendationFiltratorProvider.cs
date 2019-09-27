@@ -6,7 +6,7 @@ using System.Text;
 
 namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 {
-    public static class RecommendationFilratorProvider
+    public static class RecommendationFiltratorProvider
     {
         public static RecommendationQueryResponce RecommendationFilrator(this RecommendationQueryResponce recommendations, RecommendationQuery query)
         {

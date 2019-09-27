@@ -32,6 +32,7 @@ namespace AltexTravel.API.DAL.Features.SearchResult
         public static Segment ToLocation(this Segment model) =>
             new Segment
             {
+                ElapseFlyingTime=model.ElapseFlyingTime,
                 Flights = model.Flights.Select(x => x?.ToLocation()).ToList(),
             };
 

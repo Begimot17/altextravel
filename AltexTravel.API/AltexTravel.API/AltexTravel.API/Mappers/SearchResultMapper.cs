@@ -66,13 +66,13 @@ namespace AltexTravel.API.Mappers
         public static Segment ToViewModel(this Domain::Segment model) =>
             new Segment
             {
+                ElapseFlyingTime = model.ElapseFlyingTime,
                 Flights = model.Flights.Select(x => x?.ToViewModel()).ToList()
             };
 
         public static Flight ToViewModel(this Domain::Flight model) =>
             new Flight
             {
-                ElapseFlyingTime = model.ElapseFlyingTime,
                 ArrivalTime = model.ArrivalTime,
                 DepartureTime = model.DepartureTime,
                 Cabin = model.Cabin,
