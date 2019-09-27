@@ -1,5 +1,6 @@
 ﻿using AltexTravel.API.Amadeus.Models;
 using AltexTravel.API.Amadeus.Models.SearchResult;
+using Flurl;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -41,12 +42,11 @@ namespace AltexTravel.API.Amadeus
             return IataIntoLocation(fullLocations);
         }
 
-        public async Task<AmadeusSearchResult> GetSearchResultAsync(string queryParams)
+        public async Task<AmadeusSearchResult> GetSearchResultAsync(Dictionary<string, object> queryParams)
         {
             if (Token == null)
                 SetToken();
-
-            var response = await _client.GetAsync(_amadeusConfiguration.UrlSearch + queryParams);
+            var response = await _client.GetAsync(_amadeusConfiguration.UrlSearch.SetQueryParams(queryParams));
             var httpResult = await response.Content.ReadAsStringAsync();
             string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
             return JsonToAmadeusSearchResultModel(searchJsonResponce);
