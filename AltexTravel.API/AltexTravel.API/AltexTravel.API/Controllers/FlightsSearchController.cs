@@ -15,12 +15,10 @@ namespace AltexTravel.API.Controllers
     public class FlightsSearchController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IMemoryCache _cache;
 
-        public FlightsSearchController(IMediator mediator, IMemoryCache cache)
+        public FlightsSearchController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
-            _cache = cache;
         }
 
         [HttpGet]
