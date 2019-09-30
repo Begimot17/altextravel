@@ -1,15 +1,13 @@
 ﻿using AltexTravel.API.DAL.Queries.Features.Recommendations;
-using AltexTravel.API.DAL.QueryHandlers.Features.Recommendations;
 using AltexTravel.API.Mappers;
 using AltexTravel.API.Models.SearchResult;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nancy.Json;
 
 namespace AltexTravel.API.Controllers
 {
@@ -31,13 +29,14 @@ namespace AltexTravel.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoundTrip([FromQuery]RecommendationQuery recommendationQuery)
         {
-            var json = new JavaScriptSerializer().Serialize(recommendationQuery);
-            var recommendations = _cache.Get<RecommendationsViewModel>(json);
+            var json = JsonConvert.SerializeObject(recommendationQuery);
+            var hashCode1 = json.GetHashCode();
+            var recommendations = _cache.Get<RecommendationsViewModel>(hashCode1);
             if (recommendations == null)
             {
                 var responce = await _mediator.Send(recommendationQuery);
                 recommendations = responce.Result?.ToViewModel();
-                _cache.Set(json, recommendations, new MemoryCacheEntryOptions()
+                _cache.Set(hashCode1, recommendations, new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(3)));
             }
             return new OkObjectResult(recommendations);
