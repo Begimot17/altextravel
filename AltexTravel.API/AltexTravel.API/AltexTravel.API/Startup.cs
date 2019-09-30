@@ -44,7 +44,6 @@ namespace AltexTravel.API
         });
 
             //Add FluentValidation 
-
             services.AddMvc()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LocationValidator>());
 
