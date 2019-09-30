@@ -21,7 +21,7 @@ namespace AltexTravel.API.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw ex;
             }
         }
     }

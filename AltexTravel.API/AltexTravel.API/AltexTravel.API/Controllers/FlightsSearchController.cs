@@ -4,7 +4,6 @@ using AltexTravel.API.Models.SearchResult;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Threading.Tasks;
 
