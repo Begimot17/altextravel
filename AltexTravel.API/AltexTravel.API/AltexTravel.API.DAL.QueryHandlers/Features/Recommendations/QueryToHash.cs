@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AltexTravel.API.Mappers
+namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 {
     public static class QueryToHash
     {
