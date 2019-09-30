@@ -31,12 +31,14 @@ namespace AltexTravel.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RoundTrip([FromQuery]RecommendationQuery recommendationQuery)
         {
-            var recommendations = _cache.Get<RecommendationsViewModel>(recommendationQuery.GetHash());
+            var hash = recommendationQuery.GetHash();
+            var recommendations = _cache.Get<RecommendationsViewModel>(hash);
             if (recommendations == null)
             {
                 var responce = await _mediator.Send(recommendationQuery);
                 recommendations = responce.Result?.ToViewModel();
-                _cache.Set(recommendationQuery.GetHash(), recommendations, new MemoryCacheEntryOptions()
+                if (recommendations.Recommendations != null)
+                    _cache.Set(hash, recommendations, new MemoryCacheEntryOptions()
                     .SetAbsoluteExpiration(TimeSpan.FromMinutes(3)));
             }
             return new OkObjectResult(recommendations);
