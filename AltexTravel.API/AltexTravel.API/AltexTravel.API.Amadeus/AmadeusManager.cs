@@ -46,7 +46,6 @@ namespace AltexTravel.API.Amadeus
         {
             if (Token == null)
                 SetToken();
-            Console.WriteLine(_amadeusConfiguration.UrlSearch.SetQueryParams(queryParams));
             var response = await _client.GetAsync(_amadeusConfiguration.UrlSearch.SetQueryParams(queryParams));
             var httpResult = await response.Content.ReadAsStringAsync();
             string searchJsonResponce = JsonConvert.DeserializeObject(httpResult).ToString();
