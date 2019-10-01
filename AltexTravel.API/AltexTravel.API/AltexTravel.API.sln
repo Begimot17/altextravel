@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltexTravel.API", "AltexTravel.API\AltexTravel.API.csproj", "{85193154-B1D5-4C68-B661-676DC41D2915}"
 EndProject
@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltexTravel.API.DAL.QueryHa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltexTravel.API.Domain", "AltexTravel.API.Domain\AltexTravel.API.Domain.csproj", "{85F1A958-0E3E-4046-8A98-9C13B35572B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AltexTravel.API.Amadeus", "AltexTravel.API.Amadeus\AltexTravel.API.Amadeus.csproj", "{DEDECFDB-6A16-41C5-80A9-8CAD2D53B7D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AltexTravel.API.Amadeus", "AltexTravel.API.Amadeus\AltexTravel.API.Amadeus.csproj", "{DEDECFDB-6A16-41C5-80A9-8CAD2D53B7D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
