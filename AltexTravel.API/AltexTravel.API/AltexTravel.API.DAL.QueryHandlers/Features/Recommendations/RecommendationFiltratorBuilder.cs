@@ -6,10 +6,6 @@ using System.Linq;
 
 namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 {
-    interface IInterface
-    {
-        int MyProperty { get; set; }
-    }
     public static class RecommendationFiltratorBuilder
     {
         public static List<Recommendation> FilterByMinPrice(this List<Recommendation> recommendations, decimal minPrice)
