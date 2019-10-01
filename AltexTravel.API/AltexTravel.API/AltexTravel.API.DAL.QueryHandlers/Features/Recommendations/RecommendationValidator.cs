@@ -12,7 +12,7 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             RuleFor(x => x.Cabin).NotEmpty();
             RuleFor(x => x.DemandDirectFlight).NotEmpty();
             RuleFor(x => x.ReturnDate).NotEmpty().GreaterThanOrEqualTo(x=>x.ReturnDate);
-            RuleFor(x => x.DepartureDate).NotEmpty().GreaterThanOrEqualTo(x => x.ReturnDate);
+            RuleFor(x => x.DepartureDate).NotEmpty().GreaterThanOrEqualTo(x => x.DepartureDate);
             RuleFor(x => x.DeparturePort).NotEmpty();
         }
     }

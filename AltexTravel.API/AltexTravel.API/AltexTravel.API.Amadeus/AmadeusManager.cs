@@ -102,7 +102,6 @@ namespace AltexTravel.API.Amadeus
                             city.Airports.Add(new IataAmadeus { Name = air.Name, Code = air.Code, Country = air.Address.Country });
                         }
                     }
-
                 }
             }
             return locations;

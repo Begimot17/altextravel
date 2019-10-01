@@ -116,7 +116,6 @@ namespace AltexTravel.API.DAL.Queries.Features.Recommendations
                     {
                         Code = model.FlightSegment.Departure.IataCode,
                     },
-
                 }
             };
         }
