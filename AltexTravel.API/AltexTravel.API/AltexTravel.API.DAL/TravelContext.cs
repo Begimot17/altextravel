@@ -13,6 +13,5 @@ namespace AltexTravel.API.DAL
         }
         public DbSet<IataCode> IataCodes { get; set; }
         public DbSet<Location> Locations { get; set; }
-
     }
 }

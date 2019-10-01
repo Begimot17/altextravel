@@ -9,7 +9,6 @@ namespace AltexTravel.API.DAL.BaseHandlers
         where TRequest : IRequest<ValidatedEmptyResponse>
     {
         private readonly IValidator<TRequest> _validator;
-
         protected BaseCommandHandler(IValidator<TRequest> validator)
         {
             _validator = validator;

@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AltexTravel.API.Controllers
@@ -15,6 +14,7 @@ namespace AltexTravel.API.Controllers
     public class FlightsSearchController : ControllerBase
     {
         private readonly IMediator _mediator;
+
         public FlightsSearchController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
@@ -26,8 +26,8 @@ namespace AltexTravel.API.Controllers
         public async Task<IActionResult> RoundTrip([FromQuery]RecommendationQuery recommendationQuery)
         {
             var responce = await _mediator.Send(recommendationQuery);
-            var result = responce.Result?.ToViewModel();
-            return new OkObjectResult(result);
+            var recommendations = responce.Result?.ToViewModel();
+            return new OkObjectResult(recommendations);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace AltexTravel.API.DAL
 {
     public class TravelContextSeed
     {
-
         public async Task SeedAsync(TravelContext context, AmadeusManager amadeusManager)
         {
             try
@@ -22,7 +21,7 @@ namespace AltexTravel.API.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                throw ex;
             }
         }
     }

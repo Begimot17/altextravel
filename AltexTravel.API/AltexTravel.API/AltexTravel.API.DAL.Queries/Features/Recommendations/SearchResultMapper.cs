@@ -1,5 +1,4 @@
 ﻿using AltexTravel.API.Amadeus.Models.SearchResult;
-using AltexTravel.API.DAL.Features.SearchResult;
 using AltexTravel.API.Domain.RecomendationsModel;
 using System.Collections.Generic;
 using System.Linq;

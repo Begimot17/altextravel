@@ -1,7 +1,5 @@
-﻿using AltexTravel.API.DAL.BaseHandlers;
-using AltexTravel.API.DAL.Queries.Features.Locations;
+﻿using AltexTravel.API.DAL.Queries.Features.Locations;
 using AltexTravel.API.Models;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,7 +8,6 @@ namespace AltexTravel.API.Mappers
 {
     public static class LocationMapper
     {
-        public static TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
         public static IEnumerable<LocationViewModel> ToViewModel(this LocationQueryResponce model) =>
             model.Locations.Select(x => x.ToViewModel());
 

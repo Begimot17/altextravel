@@ -1,8 +1,5 @@
 ﻿using AltexTravel.API.DAL.Queries.Features.Recommendations;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 {

@@ -5,7 +5,6 @@ namespace AltexTravel.API.Amadeus
 {
     public class AmadeusConfiguration
     {
-
         public string UrlLocationsPath { get; set; }
         public IEnumerable<char> Keywords = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         public char Keyword { get; set; }
