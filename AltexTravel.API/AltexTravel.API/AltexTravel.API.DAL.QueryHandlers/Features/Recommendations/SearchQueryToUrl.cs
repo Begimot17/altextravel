@@ -13,11 +13,11 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
             queryParams.Add("departureDate", query.DepartureDate.ToString("yyyy-MM-dd"));
             queryParams.Add("returnDate", query.ReturnDate.ToString("yyyy-MM-dd"));
             queryParams.Add("travelClass", query.Cabin.ToString());
-                queryParams.Add("adults", query.NumberOfAdults);
-                queryParams.Add("children", query.NumberOfChildren);
-                queryParams.Add("infants", query.NumberOfInfants);
-                queryParams.Add("currency", query.CurrencyCode);
-            return queryParams; 
+            queryParams.Add("adults", query.NumberOfAdults);
+            queryParams.Add("children", query.NumberOfChildren);
+            queryParams.Add("infants", query.NumberOfInfants);
+            queryParams.Add("currency", query.CurrencyCode);
+            return queryParams;
         }
     }
 }

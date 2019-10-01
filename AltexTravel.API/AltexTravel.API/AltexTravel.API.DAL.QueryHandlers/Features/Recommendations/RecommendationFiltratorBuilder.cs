@@ -1,9 +1,8 @@
-﻿using System;
+﻿using AltexTravel.API.DAL.Queries.Features.Recommendations;
+using AltexTravel.API.Domain.RecomendationsModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using AltexTravel.API.DAL.Queries.Features.Recommendations;
-using AltexTravel.API.Domain.RecomendationsModel;
 
 namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
 {
