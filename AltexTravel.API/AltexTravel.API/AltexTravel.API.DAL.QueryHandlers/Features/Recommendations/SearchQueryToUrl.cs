@@ -8,8 +8,8 @@ namespace AltexTravel.API.DAL.QueryHandlers.Features.Recommendations
         public static Dictionary<string, object> GetQueryParams(this RecommendationQuery query)
         {
             var queryParams = new Dictionary<string, object>();
-            queryParams.Add("origin", query.ArrivalPort);
-            queryParams.Add("destination", query.DeparturePort);
+            queryParams.Add("origin", query.DeparturePort);
+            queryParams.Add("destination", query.ArrivalPort);
             queryParams.Add("departureDate", query.DepartureDate.ToString("yyyy-MM-dd"));
             queryParams.Add("returnDate", query.ReturnDate.ToString("yyyy-MM-dd"));
             queryParams.Add("travelClass", query.Cabin.ToString());
